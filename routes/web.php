@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 | Base URL redirects to the home page
 */
 Route::get('/', function () {
-    return redirect('/home');
+    return redirect('/domov');
 });
 
 /*
