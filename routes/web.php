@@ -13,14 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-/*
-| Base URL redirects to the home page
-*/
-Route::get('/', function () {
-    return redirect('/domov');
-});
-
 /*
 | Home page
 */
@@ -29,15 +21,9 @@ Route::get('/domov', function () {
 });
 
 /*
-| Intro page
+| Base URL redirects to the home page
 */
-Route::get('/uvod', function () {
-    return view('intro');
-});
+Route::get('{any}', function() {
+    return redirect('/domov');
+ })->where('any', '.*');
 
-/*
-| Map page
-*/
-Route::get('/mapa', function () {
-    return view('map');
-});
