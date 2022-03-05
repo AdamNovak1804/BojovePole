@@ -19,6 +19,10 @@
             font-weight: 900;
         }
 
+        h2 {
+            font-weight: 700;
+        }
+
         h3 {
             font-weight: 900;
         }

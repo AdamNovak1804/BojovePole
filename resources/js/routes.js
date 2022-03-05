@@ -4,6 +4,7 @@ import Map from './components/Map';
 import Data from './components/Data';
 import Account from './components/Account';
 import Login from './components/Login';
+import Registration from './components/Registration';
 import DataPagination from './components/DataPagination';
 
 export default
@@ -37,6 +38,10 @@ export default
                 {
                     path: '/ucet/prihlasenie',
                     component: Login
+                },
+                {
+                    path: '/ucet/registracia',
+                    component: Registration
                 }
             ]
         }
