@@ -3,6 +3,7 @@ import Intro from './components/Intro';
 import Map from './components/Map';
 import Data from './components/Data';
 import Account from './components/Account';
+import Login from './components/Login';
 import DataPagination from './components/DataPagination';
 
 export default
@@ -30,8 +31,14 @@ export default
             component: DataPagination
         },
         {
-            path: '/ucet',
-            component: Account
+            path: '/ucet/',
+            component: Account,
+            children: [
+                {
+                    path: '/ucet/prihlasenie',
+                    component: Login
+                }
+            ]
         }
     ]
 

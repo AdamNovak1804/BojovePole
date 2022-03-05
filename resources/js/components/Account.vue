@@ -1,17 +1,13 @@
 <style scoped>
 
-    .main-head{
-        height: 150px;
-    }
-
-    .sidenav {
+    ::v-deep .sidenav {
         height: 100%;
         background-color: #000;
         overflow-x: hidden;
         padding-top: 20px;
     }
 
-    .main {
+    ::v-deep .main {
         display: flex;
         justify-content: center;
         align-content: center;
@@ -20,25 +16,25 @@
     }
 
     @media screen and (max-height: 450px) {
-        .sidenav {padding-top: 15px;}
+        ::v-deep .sidenav {padding-top: 15px;}
     }
 
     @media screen and (max-width: 450px) {
-        .login-form{
+        ::v-deep .login-form{
             margin-top: 40%;
         }
 
-        .register-form {
+        ::v-deep .register-form {
             margin-top: 10%;
         }
     }
 
     @media screen and (min-width: 768px) {
-        .main {
+        ::v-deep .main {
             margin-left: 50%;
         }
 
-        .sidenav {
+        ::v-deep .sidenav {
             width: 50%;
             position: fixed;
             z-index: 1;
@@ -46,32 +42,32 @@
             left: 0;
         }
 
-        .login-form {
+        ::v-deep .login-form {
             margin-top: 80%;
         }
 
-        .register-form {
+        ::v-deep .register-form {
             margin-top: 20%;
         }
     }
 
-    .login-main-text {
+    ::v-deep .login-main-text {
         margin-top: 20%;
         padding: 60px;
         color: #fff;
     }
 
-    .login-main-text h2 {
+    ::v-deep .login-main-text h2 {
         font-weight: 300;
     }
 
-    .btn-login {
+    ::v-deep .btn-login {
         color: #EDE0A6;
         background-color: #540202 !important;
         width: 100%;
     }
 
-    .link-center {
+    ::v-deep .link-center {
         margin-bottom: 20px;
         align-self: center;
         text-align: center;
@@ -79,11 +75,7 @@
         color: #540202;
     }
 
-    ::placeholder {
-        color: #998067;
-    }
-
-    input[type=text], input[type=password], input[type=text]:focus, input[type=password]:focus {
+    ::v-deep input[type=text], ::v-deep input[type=password], ::v-deep input[type=text]:focus, ::v-deep input[type=password]:focus {
         width: 100%;
         padding: 12px 20px;
         margin: 8px 0;
@@ -93,7 +85,7 @@
         border-bottom: 2px solid #540202;
     }
 
-    form {
+    ::v-deep form {
         width: 60%;
         margin: 0 auto;
     }
@@ -101,33 +93,7 @@
 </style>
 
 <template>
-    <div>
-        <div class="sidenav">
-            <div class="login-main-text">
-                <h2>Prečo je dobré<br> mať vytvorený účet?</h2>
-                <p>Po vytvorení účtu novo registrovaný používateľ získa možnosť pridať vlastný obsah, ako aj komunikovať s ostatnými používateľmi.</p>
-            </div>
-        </div>
-        <div class="main">
-            <div class="col-md-6 col-sm-12">
-                <div class="login-form">
-                    <h1 class="text-center">Prihlásiť sa</h1>
-                    <router-link to="/registracia" class="link-center">
-                        Nemáte účet?
-                    </router-link>
-                    <form>
-                        <div class="form-group">
-                            <input type="text" placeholder="Zadajte prihlasovací Email">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" placeholder="Zadajte heslo">
-                        </div>
-                        <button type="submit" class="btn btn-login mt-4">Prihlásiť sa</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <router-view></router-view>
 </template>
 
 <script>

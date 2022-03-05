@@ -25,7 +25,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/ucet" class="nav-link" active-class="active">
+                        <router-link to="/ucet/prihlasenie" class="nav-link" active-class="active">
                             Účet
                         </router-link>
                     </li>

@@ -52,6 +52,11 @@
             background-position: center center;
             background-repeat: no-repeat;
         }
+
+        ::placeholder {
+            color: #998067;
+        }
+
     </style>
 </head>
 <body>
