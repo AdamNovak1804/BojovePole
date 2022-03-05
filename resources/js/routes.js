@@ -3,6 +3,7 @@ import Intro from './components/Intro';
 import Map from './components/Map';
 import Data from './components/Data';
 import Account from './components/Account';
+import DataPagination from './components/DataPagination';
 
 export default
 {
@@ -23,6 +24,10 @@ export default
         {
             path: '/data',
             component: Data
+        },
+        {
+            path: '/data/boje',
+            component: DataPagination
         },
         {
             path: '/ucet',
