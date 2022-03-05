@@ -25,20 +25,20 @@
 
     @media screen and (max-width: 450px) {
         .login-form{
-            margin-top: 10%;
+            margin-top: 40%;
         }
 
-        .register-form{
+        .register-form {
             margin-top: 10%;
         }
     }
 
-    @media screen and (min-width: 768px){
-        .main{
+    @media screen and (min-width: 768px) {
+        .main {
             margin-left: 50%;
         }
 
-        .sidenav{
+        .sidenav {
             width: 50%;
             position: fixed;
             z-index: 1;
@@ -46,22 +46,22 @@
             left: 0;
         }
 
-        .login-form{
+        .login-form {
             margin-top: 80%;
         }
 
-        .register-form{
+        .register-form {
             margin-top: 20%;
         }
     }
 
-    .login-main-text{
+    .login-main-text {
         margin-top: 20%;
         padding: 60px;
         color: #fff;
     }
 
-    .login-main-text h2{
+    .login-main-text h2 {
         font-weight: 300;
     }
 
@@ -89,7 +89,13 @@
         margin: 8px 0;
         box-sizing: border-box;
         border: none;
+        outline: none;
         border-bottom: 2px solid #540202;
+    }
+
+    form {
+        width: 60%;
+        margin: 0 auto;
     }
 
 </style>
@@ -116,7 +122,7 @@
                         <div class="form-group">
                             <input type="password" placeholder="Zadajte heslo">
                         </div>
-                        <button type="submit" class="btn btn-login">Prihlásiť sa</button>
+                        <button type="submit" class="btn btn-login mt-4">Prihlásiť sa</button>
                     </form>
                 </div>
             </div>
