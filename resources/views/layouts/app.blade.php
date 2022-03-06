@@ -71,7 +71,7 @@
             color: #998067;
         }
 
-        input[type=text], input[type=password], input[type=text]:focus, input[type=password]:focus
+        input[type=text], input[type=password], input[type=email], input[type=text]:focus, input[type=password]:focus, input[type=email]:focus
         {
             width: 100%;
             padding: 12px 20px;
@@ -80,6 +80,13 @@
             border: none;
             outline: none;
             border-bottom: 2px solid #540202;
+        }
+
+        .btn-action
+        {
+            color: #EDE0A6;
+            background-color: #540202 !important;
+            width: 100%;
         }
 
     </style>

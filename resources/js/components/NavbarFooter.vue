@@ -1,3 +1,16 @@
+<style scoped>
+
+    input[type=email], input[type=email]:focus {
+        background-color: #507B58;
+    }
+
+    ::placeholder
+    {
+        color: #EDE0A6;
+    }
+
+</style>
+
 <template>
     <footer>
         <div class="container">
@@ -34,15 +47,25 @@
                 </div>
                 <div class="col-12 col-lg-4 text-center">
                     <h3 class="mb-4 mt-4">Sociálne siete</h3>
-                    <p>Hiii</p>
+                    <div class="d-flex justify-content-center">
+                        <a href="#" class="m-2">
+                            <img :src="require('../../../public/img/facebook.png').default" width="50px" height="50px" alt="Facebook Logo">
+                        </a>
+                        <a href="#" class="m-2">
+                            <img :src="require('../../../public/img/twitter.png').default" width="50px" height="50px" alt="Twitter Logo">
+                        </a>
+                        <a href="#" class="m-2">
+                            <img :src="require('../../../public/img/reddit.png').default" width="50px" height="50px" alt="Reddit Logo">
+                        </a>
+                    </div>
                 </div>
                 <div class="col-sm">
                     <h3 class="mb-4 mt-4 text-center">Odoberať newsletter</h3>
                     <form>
-                        <div class="form-group">
+                        <div class="col-6 offset-3">
                             <label for="email-input">E-mailová adresa</label>
-                            <input type="email" class="form-control" id="email-input" placeholder="Zadajte E-mail">
-                            <button type="submit" class="btn btn-primary mt-2">Prihlásiť sa na odber</button>
+                            <input type="email" id="email-input" placeholder="Zadajte E-mail">
+                            <button type="submit" class="btn btn-action mt-2">Prihlásiť sa na odber</button>
                         </div>
                     </form>
                 </div>
@@ -57,6 +80,7 @@
 <script>
 
     export default {
+
         mounted() {
             console.log('Component mounted.')
         }

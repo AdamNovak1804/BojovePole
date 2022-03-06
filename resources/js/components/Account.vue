@@ -15,12 +15,6 @@
         height: 100%;
     }
 
-    ::v-deep .btn-action {
-        color: #EDE0A6;
-        background-color: #540202 !important;
-        width: 100%;
-    }
-
 </style>
 
 <template>
