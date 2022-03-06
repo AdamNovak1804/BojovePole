@@ -9,36 +9,45 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@100;400;700;900&display=swap" rel="stylesheet">
     <style>
-        * {
+        *
+        {
             color: #540202;
             font-family: 'Libre Franklin', sans-serif;
         }
 
-        h1 {
+        h1
+        {
             font-size: 64px;
             font-weight: 900;
         }
 
-        h2 {
+        h2
+        {
             font-weight: 700;
         }
 
-        h3 {
+        h3
+        {
             font-weight: 900;
         }
-        .navbar-custom {
+
+        .navbar-custom
+        {
             background-color: #EDE0A6;
         }
 
-        footer {
+        footer
+        {
             background-color: #507B58;
         }
 
-        .footer-link {
+        .footer-link
+        {
             color: #EDE0A6;
         }
 
-        .footer-link:hover {
+        .footer-link:hover
+        {
             color: #540202;
         }
 
@@ -57,8 +66,20 @@
             background-repeat: no-repeat;
         }
 
-        ::placeholder {
+        ::placeholder
+        {
             color: #998067;
+        }
+
+        input[type=text], input[type=password], input[type=text]:focus, input[type=password]:focus
+        {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: none;
+            outline: none;
+            border-bottom: 2px solid #540202;
         }
 
     </style>

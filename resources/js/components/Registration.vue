@@ -84,6 +84,7 @@
                 </div>
             </div>
         </div>
+        <navbar-footer></navbar-footer>
     </div>
 </template>
 

@@ -8,10 +8,13 @@
     }
 
     @media screen and (max-height: 450px) {
-        ::v-deep .sidenav {padding-top: 15px;}
+        ::v-deep .sidenav {
+            padding-top: 15px;
+        }
     }
 
     @media screen and (min-width: 768px) {
+
         .main {
             margin-left: 50%;
         }
@@ -23,7 +26,7 @@
         .sidenav {
             width: 50%;
             position: fixed;
-            z-index: 1;
+            z-index: -1;
             top: 0;
             left: 0;
         }
@@ -83,6 +86,7 @@
                 </div>
             </div>
         </div>
+        <navbar-footer></navbar-footer>
     </div>
 </template>
 
