@@ -1,13 +1,15 @@
 <style scoped>
 
-    @media screen and (max-width: 450px) {
-
-        ::v-deep h1 {
+    @media screen and (max-width: 450px)
+    {
+        ::v-deep h1
+        {
             font-size: 48px;
         }
     }
 
-    ::v-deep .main {
+    ::v-deep .main
+    {
         display: flex;
         justify-content: center;
         align-content: center;
@@ -23,8 +25,8 @@
 
 <script>
 
-export default {
+    export default {
 
-}
+    }
 
 </script>

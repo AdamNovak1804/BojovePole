@@ -31,32 +31,6 @@
             font-weight: 900;
         }
 
-        .navbar-custom
-        {
-            background-color: #EDE0A6;
-        }
-
-        footer
-        {
-            background-color: #507B58;
-        }
-
-        .footer-link
-        {
-            color: #EDE0A6;
-        }
-
-        .footer-link:hover
-        {
-            color: #540202;
-        }
-
-        .footer-copyright
-        {
-            font-weight: 100;
-            color: #540202;
-        }
-
         .center-cropped
         {
             width: 100%;
