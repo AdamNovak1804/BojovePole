@@ -63,6 +63,11 @@
             width: 100%;
         }
 
+        .btn-action:hover
+        {
+            color: #FFF;
+        }
+
     </style>
 </head>
 <body>

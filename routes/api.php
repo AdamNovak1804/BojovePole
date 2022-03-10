@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\Battle;
+use App\Models\User;
+use App\Models\FamilyMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +23,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/battles', function() {
     return Battle::index();
+});
+
+Route::get('/users', function() {
+    return User::index();
+});
+
+Route::get('/family_members', function() {
+    return FamilyMember::index();
 });

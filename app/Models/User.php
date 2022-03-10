@@ -41,4 +41,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany('App\Models\FamilyMember', 'users_family_members', 'user_id', 'family_member_id');
+    }
+
+    public static function index()
+    {
+        return User::all();
+    }
 }
