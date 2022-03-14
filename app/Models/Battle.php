@@ -20,6 +20,11 @@ class Battle extends Model
         return $this->belongsTo('App\Models\Country', 'Side2', 'idCountries');
     }
 
+    public function units()
+    {
+        return $this->belongsToMany('App\Models\Unit', 'units_battles', 'unit_id', 'battle_id');
+    }
+
     public static function index()
     {
         return Battle::with('side1', 'side2')->get()->toJson();

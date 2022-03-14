@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Message extends Model
+class Request extends Model
 {
     use HasFactory;
 
@@ -21,6 +21,6 @@ class Message extends Model
 
     public static function index()
     {
-        return Message::all()->toJson();
+        return Request::all()->toJson();
     }
 }

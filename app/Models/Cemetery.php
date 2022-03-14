@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Figure extends Model
+class Cemetery extends Model
 {
     use HasFactory;
 
-    public function country()
+    public function family_members()
     {
-        return $this->belongsTo('App\Models\Country');
+        return $this->hasMany('App\Models\FamilyMember');
     }
 }

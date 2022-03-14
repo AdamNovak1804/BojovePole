@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFamilyMembersTable extends Migration
+class CreateFiguresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class CreateFamilyMembersTable extends Migration
      */
     public function up()
     {
-        Schema::create('family_members', function (Blueprint $table) {
+        Schema::create('figures', function (Blueprint $table) {
             $table->id();
             $table->boolean('visible');
             $table->string('name', 45);
+            $table->enum('sex', ['male', 'female']);
             $table->date('date_of_birth')->nullable();
             $table->date('date_of_death')->nullable();
-            $table->text('biography')->nullable();
+            $table->enum('type', ['politician', 'army_staff', 'actor', 'artist']);
+            $table->text('description')->nullable();
             $table->json('gallery')->nullable();
             $table->timestamps();
         });
@@ -32,6 +34,6 @@ class CreateFamilyMembersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('family_members');
+        Schema::dropIfExists('figures');
     }
 }
