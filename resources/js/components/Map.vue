@@ -18,6 +18,8 @@
 
     .map-nav
     {
+        float: right;
+        margin-right: 10px;
         border-radius: 25px;
         background-color: #EDE0A6;
         box-shadow: 0px 2px 3px #999;
@@ -33,6 +35,14 @@
         padding-left: 5px;
     }
 
+    .btn-collapse
+    {
+        float: right;
+        height: 50px;
+        width: 50px;
+        background-color: #FFF;
+    }
+
 </style>
 
 <template>
@@ -41,45 +51,45 @@
         <l-map :zoom="zoom" :center="center">
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
             <l-control position="topright">
-                <b-button v-b-toggle.collapse-1 variant="primary">Toggle Collapse</b-button>
-                <b-collapse id="collapse-1">
-                    <b-card>
-                        <h3 class="text-center">Legenda</h3>
-                        <ul>
-                            <li>
-                                <input type="checkbox" id="units" name="units" value="True">
-                                <label for="units">
-                                    Vojenské útvary
-                                </label>
-                            </li>
-                            <li>
-                                <input type="checkbox" id="battles" name="battles" value="True">
-                                <label for="battles">
-                                    Bitky
-                                </label>
-                            </li>
-                            <li>
-                                <input type="checkbox" id="cemeteries" name="cemeteries" value="True">
-                                <label for="cemeteries">
-                                    Cintoríny
-                                </label>
-                            </li>
-                            <li>
-                                <input type="checkbox" id="sights" name="sights" value="True">
-                                <label for="sights">
-                                    Pamiatky
-                                </label>
-                            </li>
-                            <li>
-                                <input type="checkbox" id="territories" name="territories" value="True">
-                                <label for="territories">
-                                    Frontová línia
-                                </label>
-                            </li>
-                        </ul>
-                    </b-card>
-                </b-collapse>
-                <div class="map-nav">
+                <div style="width: 500px">
+                    <b-button v-b-toggle.collapse-1 variant="primary" class="btn-collapse"></b-button>
+                    <b-collapse id="collapse-1">
+                        <b-card class="map-nav">
+                            <h3 class="text-center">Legenda</h3>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="units" name="units" value="True">
+                                    <label for="units">
+                                        Vojenské útvary
+                                    </label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="battles" name="battles" value="True">
+                                    <label for="battles">
+                                        Bitky
+                                    </label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="cemeteries" name="cemeteries" value="True">
+                                    <label for="cemeteries">
+                                        Cintoríny
+                                    </label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="sights" name="sights" value="True">
+                                    <label for="sights">
+                                        Pamiatky
+                                    </label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="territories" name="territories" value="True">
+                                    <label for="territories">
+                                        Frontová línia
+                                    </label>
+                                </li>
+                            </ul>
+                        </b-card>
+                    </b-collapse>
                 </div>
             </l-control>
         </l-map>
