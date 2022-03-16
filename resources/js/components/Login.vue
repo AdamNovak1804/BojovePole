@@ -61,6 +61,7 @@
 
 <template>
     <div>
+        <navbar-header></navbar-header>
         <div class="sidenav">
             <div class="login-main-text">
                 <h2>Prečo je dobré<br> mať vytvorený účet?</h2>

@@ -20,7 +20,10 @@
 </style>
 
 <template>
-    <router-view></router-view>
+    <div>
+        <navbar-header></navbar-header>
+        <router-view></router-view>
+    </div>
 </template>
 
 <script>

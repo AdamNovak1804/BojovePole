@@ -8,6 +8,7 @@
 
 <template>
     <div>
+        <navbar-header></navbar-header>
         <div class="main">
             <div class="justify-center">
                 <div class="registration-form p-4">

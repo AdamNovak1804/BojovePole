@@ -12,6 +12,6 @@ class Territory extends Model
 
     public function country()
     {
-        return $this->belongsTo('App\Models\Country', 'Country', 'idCountries');
+        return $this->belongsTo('App\Models\Country');
     }
 }
