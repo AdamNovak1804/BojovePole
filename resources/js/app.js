@@ -11,6 +11,7 @@ window.Vue = require('vue').default;
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routes from './routes';
+import { VBToggle } from 'bootstrap-vue';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -31,6 +32,8 @@ Vue.component('home', require('./components/Home.vue').default);
 Vue.component('intro', require('./components/Intro.vue').default);
 Vue.component('navbar-header', require('./components/NavbarHeader.vue').default);
 Vue.component('navbar-footer', require('./components/NavbarFooter.vue').default);
+
+Vue.directive('b-toggle', VBToggle);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

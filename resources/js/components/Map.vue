@@ -42,40 +42,44 @@
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
             <l-control position="topright">
                 <b-button v-b-toggle.collapse-1 variant="primary">Toggle Collapse</b-button>
+                <b-collapse id="collapse-1">
+                    <b-card>
+                        <h3 class="text-center">Legenda</h3>
+                        <ul>
+                            <li>
+                                <input type="checkbox" id="units" name="units" value="True">
+                                <label for="units">
+                                    Vojenské útvary
+                                </label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="battles" name="battles" value="True">
+                                <label for="battles">
+                                    Bitky
+                                </label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="cemeteries" name="cemeteries" value="True">
+                                <label for="cemeteries">
+                                    Cintoríny
+                                </label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="sights" name="sights" value="True">
+                                <label for="sights">
+                                    Pamiatky
+                                </label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="territories" name="territories" value="True">
+                                <label for="territories">
+                                    Frontová línia
+                                </label>
+                            </li>
+                        </ul>
+                    </b-card>
+                </b-collapse>
                 <div class="map-nav">
-                    <h3 class="text-center">Legenda</h3>
-                    <ul>
-                        <li>
-                            <input type="checkbox" id="units" name="units" value="True">
-                            <label for="units">
-                                Vojenské útvary
-                            </label>
-                        </li>
-                        <li>
-                            <input type="checkbox" id="battles" name="battles" value="True">
-                            <label for="battles">
-                                Bitky
-                            </label>
-                        </li>
-                        <li>
-                            <input type="checkbox" id="cemeteries" name="cemeteries" value="True">
-                            <label for="cemeteries">
-                                Cintoríny
-                            </label>
-                        </li>
-                        <li>
-                            <input type="checkbox" id="sights" name="sights" value="True">
-                            <label for="sights">
-                                Pamiatky
-                            </label>
-                        </li>
-                        <li>
-                            <input type="checkbox" id="territories" name="territories" value="True">
-                            <label for="territories">
-                                Frontová línia
-                            </label>
-                        </li>
-                    </ul>
                 </div>
             </l-control>
         </l-map>
@@ -85,6 +89,7 @@
 <script>
     import L from 'leaflet';
     import { LMap, LTileLayer, LMarker, LControl } from 'vue2-leaflet';
+    import { BButton, VBToggle, BCard, BCollapse } from 'bootstrap-vue';
 
     export default {
 
@@ -103,6 +108,10 @@
             LTileLayer,
             LMarker,
             LControl,
+            BButton,
+            VBToggle,
+            BCard,
+            BCollapse,
         },
 
     };
