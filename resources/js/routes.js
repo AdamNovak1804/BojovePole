@@ -6,6 +6,7 @@ import Account from './components/Account';
 import Login from './components/Login';
 import Registration from './components/Registration';
 import DataPagination from './components/DataPagination';
+import AddForm from './components/AddForm';
 
 export default
 {
@@ -30,6 +31,10 @@ export default
         {
             path: '/data/boje',
             component: DataPagination
+        },
+        {
+            path: '/pridat',
+            component: AddForm
         },
         {
             path: '/ucet/',

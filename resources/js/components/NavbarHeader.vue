@@ -4,6 +4,7 @@
     {
         background-color: #EDE0A6;
         box-shadow: 0px 2px 3px #999;
+        height: 110px;
     }
 
     .nav-link-custom {

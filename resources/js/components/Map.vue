@@ -43,46 +43,67 @@
         background-color: #FFF;
     }
 
+    .map-controls
+    {
+        width: 300px;
+    }
+
+    .map
+    {
+        height: calc(100vh - 110px);
+    }
+
+    .btn-add, .btn-add:hover
+    {
+        border: none;
+        background-image: url('../../../public/img/add.png');
+        background-size: cover;
+        border-radius: 50%;
+        height: 75px;
+        width: 75px;
+        box-shadow: 0px 2px 3px #999;
+    }
+
 </style>
 
 <template>
     <div>
         <navbar-header></navbar-header>
-        <l-map :zoom="zoom" :center="center">
+        <l-map class="map" :zoom="zoom" :center="center">
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
             <l-control position="topright">
-                <div style="width: 500px">
+                <div class="map-controls">
                     <b-button v-b-toggle.collapse-1 variant="primary" class="btn-collapse"></b-button>
                     <b-collapse id="collapse-1">
                         <b-card class="map-nav">
                             <h3 class="text-center">Legenda</h3>
                             <ul>
                                 <li>
-                                    <input type="checkbox" id="units" name="units" value="True">
+                                    <input type="checkbox" id="units" name="units" value="True" checked>
                                     <label for="units">
                                         Vojenské útvary
                                     </label>
                                 </li>
                                 <li>
-                                    <input type="checkbox" id="battles" name="battles" value="True">
+                                    <input type="checkbox" id="battles" name="battles" value="True" checked>
                                     <label for="battles">
                                         Bitky
                                     </label>
                                 </li>
                                 <li>
-                                    <input type="checkbox" id="cemeteries" name="cemeteries" value="True">
+                                    <input type="checkbox" id="cemeteries" name="cemeteries" value="True" checked>
                                     <label for="cemeteries">
                                         Cintoríny
                                     </label>
                                 </li>
                                 <li>
-                                    <input type="checkbox" id="sights" name="sights" value="True">
+                                    <input type="checkbox" id="sights" name="sights" value="True" checked>
                                     <label for="sights">
                                         Pamiatky
                                     </label>
                                 </li>
                                 <li>
-                                    <input type="checkbox" id="territories" name="territories" value="True">
+                                    <input type="checkbox" id="territories" name="territories" value="True" checked>
                                     <label for="territories">
                                         Frontová línia
                                     </label>
@@ -91,6 +112,11 @@
                         </b-card>
                     </b-collapse>
                 </div>
+            </l-control>
+            <l-control position="bottomright">
+                <router-link to="/pridat">
+                    <button class="btn-add"></button>
+                </router-link>
             </l-control>
         </l-map>
     </div>
