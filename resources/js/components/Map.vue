@@ -123,9 +123,6 @@
 </template>
 
 <script>
-    import L from 'leaflet';
-    import { LMap, LTileLayer, LMarker, LControl } from 'vue2-leaflet';
-    import { BButton, VBToggle, BCard, BCollapse } from 'bootstrap-vue';
 
     export default {
 
@@ -138,17 +135,7 @@
                 attribution: '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
                 marker: L.latLng(48.811280, 19.506797),
             }
-        },
-        components: {
-            LMap,
-            LTileLayer,
-            LMarker,
-            LControl,
-            BButton,
-            VBToggle,
-            BCard,
-            BCollapse,
-        },
+        }
 
     };
 

@@ -11,7 +11,10 @@ window.Vue = require('vue').default;
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routes from './routes';
-import { VBToggle } from 'bootstrap-vue';
+
+import L from 'leaflet';
+import { LMap, LTileLayer, LMarker, LControl } from 'vue2-leaflet';
+import { BButton, VBToggle, BCard, BCollapse } from 'bootstrap-vue';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -32,6 +35,15 @@ Vue.component('home', require('./components/Home.vue').default);
 Vue.component('intro', require('./components/Intro.vue').default);
 Vue.component('navbar-header', require('./components/NavbarHeader.vue').default);
 Vue.component('navbar-footer', require('./components/NavbarFooter.vue').default);
+
+Vue.component('l-map', LMap);
+Vue.component('l-tile-layer', LTileLayer);
+Vue.component('l-marker', LMarker);
+Vue.component('l-control', LControl);
+
+Vue.component('b-button', BButton);
+Vue.component('b-card', BCard);
+Vue.component('b-collapse', BCollapse);
 
 Vue.directive('b-toggle', VBToggle);
 

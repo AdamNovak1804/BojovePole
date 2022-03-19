@@ -46,7 +46,9 @@
                 </div>
                 <div class="row">
                     <div class="col-12 col-lg-6 col-md-6">
-                        Tu bude mapa
+                        <l-map>
+
+                        </l-map>
                     </div>
                     <div class="col-12 col-lg-6 col-md-6">
                         <form action="">
@@ -90,6 +92,7 @@
                                 </label>
                                 <br>
                                 <input type="file" multiple>
+                                <button type="submit">Pridať</button>
                             </div>
                             <div v-else-if="type === '2'" class="form-group col-md-6 col-12">
                                 <h1>bitky</h1>
