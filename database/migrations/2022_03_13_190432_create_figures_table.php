@@ -16,6 +16,7 @@ class CreateFiguresTable extends Migration
         Schema::create('figures', function (Blueprint $table) {
             $table->id();
             $table->boolean('visible');
+            $table->enum('reliablity', ['0', '1', '2', '3', '4', '5']);
             $table->string('name', 45);
             $table->enum('sex', ['male', 'female']);
             $table->date('date_of_birth')->nullable();

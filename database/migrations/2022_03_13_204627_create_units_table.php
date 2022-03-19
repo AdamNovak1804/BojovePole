@@ -16,6 +16,7 @@ class CreateUnitsTable extends Migration
         Schema::create('units', function (Blueprint $table) {
             $table->id();
             $table->boolean('visible');
+            $table->enum('reliablity', ['0', '1', '2', '3', '4', '5']);
             $table->string('name', 45);
             $table->enum('type', ['a', 'b', 'c']);
             $table->string('location', 45)->nullable();

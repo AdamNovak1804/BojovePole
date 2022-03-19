@@ -16,6 +16,7 @@ class CreateBattlesTable extends Migration
         Schema::create('battles', function (Blueprint $table) {
             $table->id();
             $table->boolean('visible');
+            $table->enum('reliablity', ['0', '1', '2', '3', '4', '5']);
             $table->string('title', 45);
             $table->enum('outcome', ['side1_victory', 'stalemate', 'side2_victory']);
             $table->text('description')->nullable();

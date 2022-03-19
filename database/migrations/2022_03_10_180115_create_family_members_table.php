@@ -16,6 +16,7 @@ class CreateFamilyMembersTable extends Migration
         Schema::create('family_members', function (Blueprint $table) {
             $table->id();
             $table->boolean('visible');
+            $table->enum('reliablity', ['0', '1', '2', '3', '4', '5']);
             $table->string('name', 45);
             $table->date('date_of_birth')->nullable();
             $table->date('date_of_death')->nullable();

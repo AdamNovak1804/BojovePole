@@ -16,6 +16,7 @@ class CreateCemeteriesTable extends Migration
         Schema::create('cemeteries', function (Blueprint $table) {
             $table->id();
             $table->boolean('visible');
+            $table->enum('reliablity', ['0', '1', '2', '3', '4', '5']);
             $table->string('name', 45);
             $table->text('description')->nullable();
             $table->decimal('longtitude', 11, 8);
