@@ -35,6 +35,8 @@ Vue.component('home', require('./components/Home.vue').default);
 Vue.component('intro', require('./components/Intro.vue').default);
 Vue.component('navbar-header', require('./components/NavbarHeader.vue').default);
 Vue.component('navbar-footer', require('./components/NavbarFooter.vue').default);
+Vue.component('view-map', require('./components/ViewMap.vue').default);
+Vue.component('add-map', require('./components/AddMap.vue').default);
 
 Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);
