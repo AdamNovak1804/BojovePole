@@ -14,14 +14,14 @@
                 <div class="registration-form p-4">
                     <h1 class="text-center">Registrovať sa</h1>
                     <p class="text-center">Položky označené * sú povinné</p>
-                    <form method="POST">
+                    <form method="POST" @submit.prevent="postForm">
                         <div class="container">
                             <div class="row align-items-center">
                                 <div class="col-2 text-end">
-                                    <label for="username" class="control-label">*</label>
+                                    <label for="name" class="control-label">*</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" id="username" placeholder="Používateľské meno">
+                                    <input v-model="form.name" name="name" type="text" id="name" placeholder="Používateľské meno">
                                 </div>
                             </div>
                             <div class="row align-items-center">
@@ -29,7 +29,7 @@
                                     <label for="email" class="control-label">*</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" id="email" placeholder="Prihlasovací Email">
+                                    <input v-model="form.email" name="email" type="text" id="email" placeholder="Prihlasovací Email">
                                 </div>
                             </div>
                             <div class="row align-items-center">
@@ -37,15 +37,15 @@
                                     <label for="password" class="control-label">*</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="password" id="password" placeholder="Heslo">
+                                    <input v-model="form.password" name="password" type="password" id="password" placeholder="Heslo">
                                 </div>
                             </div>
                             <div class="row align-items-center">
                                 <div class="col-2 text-end">
-                                    <label for="confirmpassword" class="control-label">*</label>
+                                    <label for="password_confirmation" class="control-label">*</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="password" id="confirmpassword" placeholder="Potvrdenie hesla">
+                                    <input v-model="form.password_confirmation" name="password_confirmation" type="password" id="password_confirmation" placeholder="Potvrdenie hesla">
                                 </div>
                             </div>
                             <div class="row align-items-center">
@@ -91,8 +91,28 @@
 
 <script>
 
-export default {
+    export default {
+        data() {
+            return {
+                form: {
+                    name: '',
+                    email: '',
+                    password: '',
+                    password_confirmation: '' // this has to be named like this
+                },
+                errors: []
+            }
+        },
 
-}
+        methods: {
+            postForm() {
+                axios.post('/api/register', this.form).then(() => {
+                    console.log('User registered');
+                }).catch((error) => {
+                    this.errors = error.response.data.errors;
+                })
+            }
+        }
+    }
 
 </script>

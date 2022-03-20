@@ -7,6 +7,7 @@ import Login from './components/Login';
 import Registration from './components/Registration';
 import DataPagination from './components/DataPagination';
 import AddForm from './components/AddForm';
+import Dashboard from './components/Dashboard';
 
 export default
 {
@@ -37,18 +38,23 @@ export default
             component: AddForm
         },
         {
-            path: '/ucet/',
+            path: '/ucet',
             component: Account,
             children: [
                 {
-                    path: '/ucet/prihlasenie',
+                    path: '/prihlasenie',
                     component: Login
                 },
                 {
-                    path: '/ucet/registracia',
+                    path: '/registracia',
                     component: Registration
                 }
             ]
+        },
+        {
+            path: '/ucet',
+            component: Dashboard,
+            name: 'Ucet'
         }
     ]
 

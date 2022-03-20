@@ -32,3 +32,7 @@ Route::get('/users', function() {
 Route::get('/family_members', function() {
     return FamilyMember::index();
 });
+
+Route::post('/register', 'RegistrationController@register');
+
+Route::post('/login', 'LoginController@login');

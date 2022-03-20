@@ -72,15 +72,15 @@
             <div class="col-md-6 col-sm-12">
                 <div class="login-form">
                     <h1 class="text-center">Prihlásiť sa</h1>
-                    <router-link to="/ucet/registracia" class="link-center">
+                    <router-link to="/registracia" class="link-center">
                         Nemáte účet?
                     </router-link>
-                    <form>
+                    <form method="POST" @submit.prevent="postForm">
                         <div class="form-group">
-                            <input type="text" placeholder="Zadajte prihlasovací Email">
+                            <input v-model="form.email" name="email" type="text" placeholder="Zadajte prihlasovací Email">
                         </div>
                         <div class="form-group">
-                            <input type="password" placeholder="Zadajte heslo">
+                            <input v-model="form.password" name="password" type="password" placeholder="Zadajte heslo">
                         </div>
                         <button type="submit" class="btn btn-action mt-4">Prihlásiť sa</button>
                     </form>
@@ -93,8 +93,28 @@
 
 <script>
 
-export default {
+    export default {
+        data() {
+            return {
+                form: {
+                    email: '',
+                    password: ''
+                },
+                errors: []
+            }
+        },
 
-}
+        methods: {
+            postForm() {
+                axios.post('/api/login', this.form).then(() => {
+                    this.$router.push({
+                        name: "Ucet"
+                    });
+                }).catch((error) => {
+                    this.errors = error.response.data.errors;
+                })
+            }
+        }
+    }
 
 </script>
