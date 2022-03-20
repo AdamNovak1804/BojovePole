@@ -7,7 +7,7 @@
         background-color: #FFF;
     }
 
-    input[type="date"]
+    ::v-deep input[type="date"]
     {
         border: 2px solid #540202;
         border-radius: 5px;
@@ -16,7 +16,7 @@
         width: 100%;
     }
 
-    textarea
+    ::v-deep textarea
     {
         outline: none;
         border: 2px solid #540202;
@@ -27,7 +27,7 @@
         width: 100%;
     }
 
-    select
+    ::v-deep select
     {
         border: 2px solid #540202;
         border-radius: 5px;
@@ -36,18 +36,18 @@
         width: 100%;
     }
 
-    label
+    ::v-deep label
     {
         margin-top: 8px;
         padding: 5px 0px 5px 0px;
     }
 
-    .submit-btn
+    ::v-deep .submit-btn
     {
         width: 100%;
     }
 
-    .dropbox
+    ::v-deep .dropbox
     {
         outline: 2px dashed #540202;
         outline-offset: -5px;
@@ -56,7 +56,7 @@
         cursor: pointer;
     }
 
-    input[type="file"]
+    ::v-deep input[type="file"]
     {
         opacity: 0;
         width: 100%;
@@ -65,7 +65,7 @@
         cursor: pointer;
     }
 
-    .dropbox p
+    ::v-deep .dropbox p
     {
         margin: 0;
         text-align: center;
@@ -91,7 +91,7 @@
                         </div>
                     </div>
                     <div class="col-12 col-lg-6 col-md-6">
-                        <form action="" class="mb-5">
+                        <form action="/hello" class="mb-5">
                             <div class="form-group col-lg-8 col-md-8 col-12 offset-md-2 offset-lg-2">
                                 <label for="type">
                                     Pridať nový objekt do mapy
@@ -107,37 +107,10 @@
                                 </select>
                             </div>
                             <div v-if="type === 1" class="form-group col-lg-8 col-md-8 col-12 offset-md-2 offset-lg-2">
-                                <label for="name">
-                                    Meno rodinného príslušníka
-                                </label>
-                                <br>
-                                <input type="text" name="name" id="name" placeholder="Jozef Novák">
-                                <label for="date_of_birth">
-                                    Dátum narodenia rodinného príslušníka
-                                </label>
-                                <br>
-                                <input type="date" name="date_of_birth" id="date_of_birth" value="1840-01-01">
-                                <label for="date_of_birth">
-                                    Dátum úmrtia rodinného príslušníka
-                                </label>
-                                <br>
-                                <input type="date" name="date_of_death" id="date_of_death" value="1914-07-28">
-                                <label for="biography">
-                                    Biografia
-                                </label>
-                                <br>
-                                <textarea name="biography" id="biography" rows="10" placeholder="Sem napíšte biografiu..."></textarea>
-                                <label for="gallery">
-                                    Pridať fotografie
-                                </label>
-                                <div class="dropbox">
-                                    <input type="file" name="gallery" id="gallery" multiple>
-                                    <p>Súbory je možné vložiť do vyznačenej oblasti</p>
-                                </div>
-                                <button class="btn btn-action mt-3" type="submit">Pridať</button>
+                                <family-member-form></family-member-form>
                             </div>
-                            <div v-else-if="type === 2" class="form-group col-md-6 col-12">
-                                <h1>bitky</h1>
+                            <div v-else-if="type === 2" class="form-group col-lg-8 col-md-8 col-12 offset-md-2 offset-lg-2">
+                                <battle-form></battle-form>
                             </div>
                         </form>
                     </div>
