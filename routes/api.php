@@ -21,6 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('auth:sanctum')->get('/authenticated', function() {
+    return true;
+});
+
 Route::get('/battles', function() {
     return Battle::index();
 });
@@ -33,6 +37,8 @@ Route::get('/family_members', function() {
     return FamilyMember::index();
 });
 
-Route::post('/register', 'RegistrationController@register');
+Route::post('/register', 'UserController@register');
 
-Route::post('/login', 'LoginController@login');
+Route::post('/login', 'UserController@login');
+
+Route::post('/logout', 'UserController@logout');

@@ -48,7 +48,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/prihlasenie" class="nav-link nav-link-custom" active-class="active">
+                        <router-link to="/ucet" class="nav-link nav-link-custom" active-class="active">
                             <h3>Účet</h3>
                         </router-link>
                     </li>

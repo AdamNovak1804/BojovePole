@@ -1,5 +1,22 @@
 <style scoped>
 
+    @media screen and (max-width: 450px)
+    {
+        h1
+        {
+            font-size: 48px;
+        }
+    }
+
+    .main
+    {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        background-color: #FFF;
+        height: 100%;
+    }
+
     .sidenav {
         height: 100%;
         background-color: #000;
@@ -108,8 +125,10 @@
             postForm() {
                 axios.post('/api/login', this.form).then(() => {
                     this.$router.push({
-                        name: "Ucet"
-                    });
+                        name: 'Ucet'
+                    }).catch((error) => {
+                        console.log(error.response)
+                    })
                 }).catch((error) => {
                     this.errors = error.response.data.errors;
                 })

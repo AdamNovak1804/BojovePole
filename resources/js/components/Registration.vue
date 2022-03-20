@@ -1,5 +1,22 @@
 <style scoped>
 
+    @media screen and (max-width: 450px)
+    {
+        h1
+        {
+            font-size: 48px;
+        }
+    }
+
+    .main
+    {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        background-color: #FFF;
+        height: 100%;
+    }
+
     .registration-form {
         margin-top: 30%;
     }

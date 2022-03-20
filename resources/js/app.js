@@ -9,16 +9,12 @@ require('./bootstrap');
 window.Vue = require('vue').default;
 
 import Vue from 'vue';
-import VueRouter from 'vue-router';
-import routes from './routes';
+import router from './routes';
 
-import L from 'leaflet';
 import { LMap, LTileLayer, LMarker, LControl } from 'vue2-leaflet';
-import { BButton, VBToggle, BCard, BCollapse } from 'bootstrap-vue';
+import { BButton, BButtonGroup, VBToggle, BCard, BCollapse } from 'bootstrap-vue';
 
 import 'leaflet/dist/leaflet.css';
-
-Vue.use(VueRouter);
 
 /**
  * The following block of code may be used to automatically register your
@@ -46,6 +42,7 @@ Vue.component('l-marker', LMarker);
 Vue.component('l-control', LControl);
 
 Vue.component('b-button', BButton);
+Vue.component('b-button-group', BButtonGroup);
 Vue.component('b-card', BCard);
 Vue.component('b-collapse', BCollapse);
 
@@ -59,5 +56,5 @@ Vue.directive('b-toggle', VBToggle);
 
 const app = new Vue({
     el: '#app',
-    router: new VueRouter(routes),
+    router,
 });
