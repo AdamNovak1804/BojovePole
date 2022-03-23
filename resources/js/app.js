@@ -12,7 +12,7 @@ import Vue from 'vue';
 import router from './routes';
 
 import { LMap, LTileLayer, LMarker, LControl } from 'vue2-leaflet';
-import { BButton, BButtonGroup, VBToggle, BCard, BCollapse } from 'bootstrap-vue';
+import { BButton, BFormRadioGroup, VBToggle, BCard, BCollapse } from 'bootstrap-vue';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -33,7 +33,7 @@ Vue.component('navbar-header', require('./components/NavbarHeader.vue').default)
 Vue.component('navbar-footer', require('./components/NavbarFooter.vue').default);
 Vue.component('view-map', require('./components/ViewMap.vue').default);
 Vue.component('add-map', require('./components/AddMap.vue').default);
-Vue.component('family-member-form', require('./components/FamilyMemberForm.vue').default);
+Vue.component('family-member', require('./components/FamilyMember.vue').default);
 Vue.component('battle-form', require('./components/BattleForm.vue').default);
 
 Vue.component('l-map', LMap);
@@ -42,7 +42,7 @@ Vue.component('l-marker', LMarker);
 Vue.component('l-control', LControl);
 
 Vue.component('b-button', BButton);
-Vue.component('b-button-group', BButtonGroup);
+Vue.component('b-form-radio-group', BFormRadioGroup);
 Vue.component('b-card', BCard);
 Vue.component('b-collapse', BCollapse);
 

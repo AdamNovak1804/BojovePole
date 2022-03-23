@@ -107,7 +107,7 @@
                                 </select>
                             </div>
                             <div v-if="type === 1" class="form-group col-lg-8 col-md-8 col-12 offset-md-2 offset-lg-2">
-                                <family-member-form></family-member-form>
+                                <family-member></family-member>
                             </div>
                             <div v-else-if="type === 2" class="form-group col-lg-8 col-md-8 col-12 offset-md-2 offset-lg-2">
                                 <battle-form></battle-form>
