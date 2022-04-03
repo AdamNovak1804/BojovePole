@@ -25,6 +25,7 @@
         background-color: #EDE0A6;
         resize: none;
         width: 100%;
+        box-shadow: none;
     }
 
     ::v-deep select

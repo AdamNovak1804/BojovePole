@@ -25,7 +25,7 @@
     <nav class="navbar navbar-expand-lg navbar-custom navbar-light fixed-top">
         <div class="container">
             <router-link to="/domov" class="navbar-brand">
-                <img :src="require('../../../public/img/logo1.png').default" alt="Logotyp pre webstranku" width="auto" height="80">
+                <img :src="require('../../../public/img/logo1.png').default" alt="Logotyp pre webstránku" width="auto" height="80">
             </router-link>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -59,9 +59,12 @@
 </template>
 
 <script>
+
     export default {
+
         mounted() {
             console.log('Component mounted.')
         }
     }
+
 </script>

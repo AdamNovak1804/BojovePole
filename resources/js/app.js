@@ -35,6 +35,9 @@ Vue.component('view-map', require('./components/ViewMap.vue').default);
 Vue.component('add-map', require('./components/AddMap.vue').default);
 Vue.component('family-member', require('./components/FamilyMember.vue').default);
 Vue.component('battle-form', require('./components/BattleForm.vue').default);
+Vue.component('messenger-form', require('./components/Messenger.vue').default);
+Vue.component('message', require('./components/Message.vue').default);
+Vue.component('post-message', require('./components/PostMessage.vue').default);
 
 Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);

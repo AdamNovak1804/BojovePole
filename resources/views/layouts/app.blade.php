@@ -16,6 +16,11 @@
             font-family: 'Libre Franklin', sans-serif;
         }
 
+        body
+        {
+            background-color: #FFF;
+        }
+
         h1
         {
             font-size: 64px;
@@ -30,15 +35,6 @@
         h3
         {
             font-weight: 900;
-        }
-
-        .center-cropped
-        {
-            width: 100%;
-            height: 100vh;
-            object-fit: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
         }
 
         ::placeholder
@@ -67,6 +63,23 @@
         .btn-action:hover
         {
             color: #FFF;
+        }
+
+        .profile-pic
+        {
+            border-radius: 50%;
+            border: 2px solid #540202;
+        }
+
+        textarea
+        {
+            padding: 10px;
+            outline: none;
+            border: none;
+            border-radius: 15px;
+            width: 100%;
+            resize: none;
+            box-shadow: 0px 2px 3px #999;
         }
 
     </style>

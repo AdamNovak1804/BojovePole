@@ -3,6 +3,7 @@
 use App\Models\Battle;
 use App\Models\User;
 use App\Models\FamilyMember;
+use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,10 @@ Route::get('/users', function() {
 Route::get('/family_members', function() {
     return FamilyMember::index();
 });
+
+Route::get('/get_messages', 'UserController@getMessages');
+
+Route::post('/send_message', 'UserController@sendMessage');
 
 Route::post('/register', 'UserController@register');
 

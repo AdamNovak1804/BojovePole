@@ -9,18 +9,30 @@ class Message extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'user_id_from',
+        'user_id_to',
+        'text',
+        'subject'
+    ];
+
     public function sender()
     {
-        return $this->hasOne('App\Models\User');
+        return $this->belongsTo('App\Models\User', 'user_id_from', 'id');
     }
 
     public function receiver()
     {
-        return $this->hasOne('App\Models\User');
+        return $this->belongsTo('App\Models\User', 'user_id_to', 'id');
     }
 
     public static function index()
     {
-        return Message::all()->toJson();
+        return Message::with('sender', 'receiver')->get()->toJson();
     }
 }
