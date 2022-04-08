@@ -38,6 +38,8 @@ Route::get('/family_members', function() {
     return FamilyMember::index();
 });
 
+Route::get('/get_cards', 'IntroCardController@getCards');
+
 Route::get('/get_messages', 'UserController@getMessages');
 
 Route::post('/send_message', 'UserController@sendMessage');

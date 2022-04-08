@@ -12,7 +12,7 @@ import Vue from 'vue';
 import router from './routes';
 
 import { LMap, LTileLayer, LMarker, LControl } from 'vue2-leaflet';
-import { BButton, BFormRadioGroup, VBToggle, BCard, BCollapse } from 'bootstrap-vue';
+import { BButton, BFormRadioGroup, VBToggle, BCard, BCollapse, BCarousel, BCarouselSlide } from 'bootstrap-vue';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -38,6 +38,8 @@ Vue.component('battle-form', require('./components/BattleForm.vue').default);
 Vue.component('messenger-form', require('./components/Messenger.vue').default);
 Vue.component('message', require('./components/Message.vue').default);
 Vue.component('post-message', require('./components/PostMessage.vue').default);
+Vue.component('intro-card', require('./components/IntroCard.vue').default);
+Vue.component('scroll-button', require('./components/ScrollButton.vue').default);
 
 Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);
@@ -48,6 +50,8 @@ Vue.component('b-button', BButton);
 Vue.component('b-form-radio-group', BFormRadioGroup);
 Vue.component('b-card', BCard);
 Vue.component('b-collapse', BCollapse);
+Vue.component('b-carousel', BCarousel);
+Vue.component('b-carousel-slide', BCarouselSlide);
 
 Vue.directive('b-toggle', VBToggle);
 

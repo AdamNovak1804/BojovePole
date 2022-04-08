@@ -7,6 +7,8 @@ import Registration from './components/Registration';
 import DataPagination from './components/DataPagination';
 import AddForm from './components/AddForm';
 import Dashboard from './components/Dashboard';
+import IntroCard from './components/IntroCard';
+import ScrollButton from './components/ScrollButton';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
