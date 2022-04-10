@@ -12,7 +12,7 @@ import Vue from 'vue';
 import router from './routes';
 
 import { LMap, LTileLayer, LMarker, LControl } from 'vue2-leaflet';
-import { BButton, BFormRadioGroup, VBToggle, BCard, BCollapse, BCarousel, BCarouselSlide } from 'bootstrap-vue';
+import { BButton, BFormRadioGroup, VBToggle, BCard, BCardText, BCollapse, BCarousel, BCarouselSlide } from 'bootstrap-vue';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -49,6 +49,7 @@ Vue.component('l-control', LControl);
 Vue.component('b-button', BButton);
 Vue.component('b-form-radio-group', BFormRadioGroup);
 Vue.component('b-card', BCard);
+Vue.component('b-card-text', BCardText);
 Vue.component('b-collapse', BCollapse);
 Vue.component('b-carousel', BCarousel);
 Vue.component('b-carousel-slide', BCarouselSlide);
