@@ -11,10 +11,21 @@ window.Vue = require('vue').default;
 import Vue from 'vue';
 import router from './routes';
 
-import { LMap, LTileLayer, LMarker, LControl } from 'vue2-leaflet';
-import { BButton, BFormRadioGroup, VBToggle, BCard, BCardText, BCollapse, BCarousel, BCarouselSlide } from 'bootstrap-vue';
+import { LMap, LTileLayer, LMarker, LControl, LIcon, LLayerGroup } from 'vue2-leaflet';
+import { BButton, BFormRadioGroup, VBToggle, BCard, BCardText, BCollapse, BCarousel, BCarouselSlide, BPagination } from 'bootstrap-vue';
 
 import 'leaflet/dist/leaflet.css';
+
+/**
+ * This fixes double rendering of the marker icon
+ */
+
+delete L.Icon.Default.prototype._getIconUrl
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png').default,
+  iconUrl: require('leaflet/dist/images/marker-icon.png').default,
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png').default,
+})
 
 /**
  * The following block of code may be used to automatically register your
@@ -45,6 +56,8 @@ Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);
 Vue.component('l-marker', LMarker);
 Vue.component('l-control', LControl);
+Vue.component('l-icon', LIcon);
+Vue.component('l-layer-group', LLayerGroup);
 
 Vue.component('b-button', BButton);
 Vue.component('b-form-radio-group', BFormRadioGroup);
@@ -53,6 +66,7 @@ Vue.component('b-card-text', BCardText);
 Vue.component('b-collapse', BCollapse);
 Vue.component('b-carousel', BCarousel);
 Vue.component('b-carousel-slide', BCarouselSlide);
+Vue.component('b-pagination', BPagination);
 
 Vue.directive('b-toggle', VBToggle);
 

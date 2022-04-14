@@ -26,10 +26,6 @@ Route::middleware('auth:sanctum')->get('/authenticated', function() {
     return true;
 });
 
-Route::get('/battles', function() {
-    return Battle::index();
-});
-
 Route::get('/users', function() {
     return User::index();
 });
@@ -41,6 +37,16 @@ Route::get('/family_members', function() {
 Route::get('/get_cards', 'IntroCardController@getCards');
 
 Route::get('/get_messages', 'UserController@getMessages');
+
+Route::get('/get_units', 'DataController@getUnits');
+
+Route::get('/get_battles', 'DataController@getBattles');
+
+Route::get('/get_cemeteries', 'DataController@getCemeteries');
+
+Route::get('/get_landmarks', 'DataController@getLandmarks');
+
+Route::get('/get_territories', 'DataController@getTerritories');
 
 Route::post('/send_message', 'UserController@sendMessage');
 
