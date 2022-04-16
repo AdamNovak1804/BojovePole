@@ -38,6 +38,8 @@ Route::get('/get_cards', 'IntroCardController@getCards');
 
 Route::get('/get_messages', 'UserController@getMessages');
 
+Route::get('/get_family', 'UserController@getFamily');
+
 Route::get('/get_units', 'DataController@getUnits');
 
 Route::get('/get_battles', 'DataController@getBattles');
@@ -47,6 +49,16 @@ Route::get('/get_cemeteries', 'DataController@getCemeteries');
 Route::get('/get_landmarks', 'DataController@getLandmarks');
 
 Route::get('/get_territories', 'DataController@getTerritories');
+
+Route::get('/get_countries', 'DataController@getCountries');
+
+Route::post('/post_unit', 'DataController@postUnit');
+
+Route::post('/post_battle', 'DataController@postBattle');
+
+Route::post('/post_cemetery', 'DataController@postCemetery');
+
+Route::post('/post_landmark', 'DataController@postLandmark');
 
 Route::post('/send_message', 'UserController@sendMessage');
 

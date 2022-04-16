@@ -12,7 +12,7 @@ import Vue from 'vue';
 import router from './routes';
 
 import { LMap, LTileLayer, LMarker, LControl, LIcon, LLayerGroup } from 'vue2-leaflet';
-import { BButton, BFormRadioGroup, VBToggle, BCard, BCardText, BCollapse, BCarousel, BCarouselSlide, BPagination } from 'bootstrap-vue';
+import { BButton, BFormRadioGroup, VBToggle, BCard, BCardText, BCollapse, BCarousel, BCarouselSlide, BPagination, BCardBody, BListGroup, BListGroupItem } from 'bootstrap-vue';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -45,12 +45,24 @@ Vue.component('navbar-footer', require('./components/NavbarFooter.vue').default)
 Vue.component('view-map', require('./components/ViewMap.vue').default);
 Vue.component('add-map', require('./components/AddMap.vue').default);
 Vue.component('family-member', require('./components/FamilyMember.vue').default);
-Vue.component('battle-form', require('./components/BattleForm.vue').default);
+
+Vue.component('unit-form', require('./components/Forms/UnitForm.vue').default);
+Vue.component('battle-form', require('./components/Forms/BattleForm.vue').default);
+Vue.component('cemetery-form', require('./components/Forms/CemeteryForm.vue').default);
+Vue.component('landmark-form', require('./components/Forms/LandmarkForm.vue').default);
+
+Vue.component('family-member-view', require('./components/FamilyMemberView.vue').default);
 Vue.component('messenger-form', require('./components/Messenger.vue').default);
 Vue.component('message', require('./components/Message.vue').default);
 Vue.component('post-message', require('./components/PostMessage.vue').default);
 Vue.component('intro-card', require('./components/IntroCard.vue').default);
 Vue.component('scroll-button', require('./components/ScrollButton.vue').default);
+Vue.component('error-list', require('./components/ErrorList.vue').default);
+
+Vue.component('battle-preview', require('./components/Previews/BattlePreview.vue').default);
+Vue.component('unit-preview', require('./components/Previews/UnitPreview.vue').default);
+Vue.component('cemetery-preview', require('./components/Previews/CemeteryPreview').default);
+Vue.component('landmark-preview', require('./components/Previews/LandmarkPreview.vue').default);
 
 Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);
@@ -67,6 +79,9 @@ Vue.component('b-collapse', BCollapse);
 Vue.component('b-carousel', BCarousel);
 Vue.component('b-carousel-slide', BCarouselSlide);
 Vue.component('b-pagination', BPagination);
+Vue.component('b-card-body', BCardBody);
+Vue.component('b-list-group', BListGroup);
+Vue.component('b-list-group-item', BListGroupItem);
 
 Vue.directive('b-toggle', VBToggle);
 

@@ -13,27 +13,6 @@
         display: flex;
     }
 
-    .error-box ul
-    {
-        margin: 0;
-        padding: 0;
-    }
-
-    .error-box li
-    {
-        border-radius: 15px;
-        list-style: none;
-        padding: 5px 5px 5px 10px;
-        background-color: #540202;
-        color: white;
-        user-select: none;
-    }
-
-    .error-box b
-    {
-        color: white;
-    }
-
 </style>
 
 <template>
@@ -55,13 +34,9 @@
                         <textarea placeholder="Sem napíšte správu..." v-model="form.text" rows="10"></textarea>
                     </div>
                     <div class="col-12 mt-2">
-                        <div class="error-box">
-                            <ul v-for="(errorlist, index) in errors" :key="index">
-                                <li class="error-msg mb-2" v-for="error in errorlist" :key="error.id">
-                                    <b>! </b>{{ error }}
-                                </li>
-                            </ul>
-                        </div>
+                        <error-list
+                            :errors="this.errors"
+                        />
                     </div>
                     <div class="col-4 offset-4 justify-content-end btn-row">
                         <button class="btn btn-action" type="submit">Odoslať správu</button>

@@ -76,13 +76,13 @@
                 </div>
                 <div class="content col-12 col-xl-9">
                     <div v-if="selected_form === 1">
-                        <messenger-form></messenger-form>
+                        <messenger-form />
                     </div>
                     <div v-if="selected_form === 2">
-                        family_members
+                        <family-member-view />
                     </div>
                     <div v-if="selected_form === 3">
-                        settings
+                        <family-member />
                     </div>
                 </div>
             </div>

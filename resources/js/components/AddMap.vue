@@ -10,8 +10,9 @@
 </style>
 
 <template>
-    <l-map class="map" :zoom="zoom" :center="center">
+    <l-map class="map" :zoom="zoom" :center="center" @click="updateMarker">
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+        <l-marker :lat-lng="position" :visible="visibility" />
     </l-map>
 </template>
 
@@ -26,9 +27,19 @@
                 center: L.latLng(48.811280, 19.506797),
                 url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                 attribution: '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-                marker: L.latLng(48.811280, 19.506797),
+
+                visibility: false,
+                position: L.latLng(48.811280, 19.506797),
             }
         },
+
+        methods: {
+            updateMarker: function(event) {
+                this.visibility = true;
+                this.position = event.latlng;
+                this.$emit('changeMarker', this.position);
+            }
+        }
 
     }
 

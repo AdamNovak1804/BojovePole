@@ -59,10 +59,23 @@
         box-shadow: 0px 2px 3px #999;
     }
 
+    .card-preview
+    {
+        width: 400px;
+    }
+
+    ::v-deep .card-text
+    {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+    }
+
 </style>
 
 <template>
-    <l-map class="map" :zoom="zoom" :center="center">
+    <l-map class="map" :zoom="zoom" :center="center" @click="hidePreview">
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
         <l-control position="topright">
             <div class="map-controls">
@@ -90,7 +103,7 @@
                                 </label>
                             </li>
                             <li>
-                                <input type="checkbox" id="sights" name="landmarks" value="True" @change="display_landmarks = !display_landmarks" checked>
+                                <input type="checkbox" id="landmarks" name="landmarks" value="True" @change="display_landmarks = !display_landmarks" checked>
                                 <label for="landmarks">
                                     Pamiatky
                                 </label>
@@ -111,36 +124,60 @@
                 <button class="btn-add"></button>
             </router-link>
         </l-control>
+        <l-control position="bottomleft">
+            <unit-preview
+                :type="this.type"
+                :displayed="this.displayed"
+            />
+            <battle-preview
+                :type="this.type"
+                :displayed="this.displayed"
+            />
+            <cemetery-preview
+                :type="this.type"
+                :displayed="this.displayed"
+            />
+            <landmark-preview
+                :type="this.type"
+                :displayed="this.displayed"
+            />
+        </l-control>
         <l-marker
             v-for="unit in units"
             :key="'unit-' + unit.id"
             :lat-lng="[unit.latitude, unit.longtitude]"
             :visible="display_units"
+            @click="displayPreview(unit.id, 'unit-preview', units)"
         />
         <l-marker
             v-for="battle in battles"
             :key="'battle-' + battle.id"
             :lat-lng="[battle.latitude, battle.longtitude]"
             :visible="display_battles"
+            @click="displayPreview(battle.id, 'battle-preview', battles)"
         />
         <l-marker
             v-for="cemetery in cemeteries"
             :key="'cemtery-' + cemetery.id"
-            :lat-lng="[cemtery.latitude, cemetery.longtitude]"
+            :lat-lng="[cemetery.latitude, cemetery.longtitude]"
             :visible="display_cemeteries"
+            @click="displayPreview(cemetery.id, 'cemetery-preview', cemeteries)"
         />
         <l-marker
             v-for="landmark in landmarks"
             :key="'landmark-' + landmark.id"
             :lat-lng="[landmark.latitude, landmark.longtitude]"
             :visible="display_landmarks"
+            @click="displayPreview(landmark.id, 'landmark-preview', landmarks)"
         />
     </l-map>
 </template>
 
 <script>
+import LandmarkPreview from './Previews/LandmarkPreview.vue';
 
     export default {
+  components: { LandmarkPreview },
 
         name: 'Map',
         data() {
@@ -156,6 +193,9 @@
                 cemeteries: '',
                 landmarks: '',
                 territories: '',
+
+                type: '',
+                displayed: null,
 
                 display_units: true,
                 display_battles: true,
@@ -179,7 +219,6 @@
             getUnits: function() {
                 axios.get('/api/get_units').then(response => {
                     this.units = response.data;
-                    console.log(this.units);
                 }).catch(error => {
                     console.log(error);
                 });
@@ -188,7 +227,6 @@
             getBattles: function() {
                 axios.get('/api/get_battles').then(response => {
                     this.battles = response.data;
-                    console.log(this.battles);
                 }).catch(error => {
                     console.log(error);
                 });
@@ -197,7 +235,6 @@
             getCemeteries: function() {
                 axios.get('/api/get_cemeteries').then(response => {
                     this.cemeteries = response.data;
-                    console.log(this.cemeteries);
                 }).catch(error => {
                     console.log(error);
                 });
@@ -206,7 +243,6 @@
             getLandmarks: function() {
                 axios.get('/api/get_landmarks').then(response => {
                     this.landmarks = response.data;
-                    console.log(this.landmarks);
                 }).catch(error => {
                     console.log(error);
                 });
@@ -215,10 +251,18 @@
             getTerritories: function() {
                 axios.get('/api/get_territories').then(response => {
                     this.territories = response.data;
-                    console.log(this.territories);
                 }).catch(error => {
                     console.log(error);
                 });
+            },
+
+            displayPreview: function(value, string, markers) {
+                this.type = string;
+                this.displayed = markers.find((e) => e.id == value);
+            },
+
+            hidePreview: function() {
+                this.type = '';
             }
         }
 

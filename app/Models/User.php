@@ -45,9 +45,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function roles()
+    public function family_members()
     {
-        return $this->belongsToMany('App\Models\FamilyMember', 'users_family_members', 'user_id', 'family_member_id');
+        return $this->belongsToMany('App\Models\FamilyMember', 'family_members_users', 'user_id', 'family_member_id');
     }
 
     public static function index()

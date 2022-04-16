@@ -9,6 +9,26 @@ class Battle extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'title',
+        'visible',
+        'reliability',
+        'start',
+        'end',
+        'side1',
+        'side2',
+        'outcome',
+        'description',
+        'longtitude',
+        'latitude',
+        'gallery'
+    ];
+
     public function side1()
     {
         return $this->belongsTo('App\Models\Country', 'side1', 'id');

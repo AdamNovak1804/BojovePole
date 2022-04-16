@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 use App\Models\User;
 use App\Models\Message;
+use App\Models\FamilyMember;
 
 class UserController extends Controller
 {
@@ -83,5 +85,12 @@ class UserController extends Controller
             'text' => $request->input('text'),
             'subject' => $request->input('subject')
         ]);
+    }
+
+    public function getFamily()
+    {
+        $user = User::find(Auth::id())->family_members()->get();
+
+        return $user;
     }
 }

@@ -9,6 +9,21 @@ class Cemetery extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'visible',
+        'reliability',
+        'description',
+        'longtitude',
+        'latitude',
+        'gallery'
+    ];
+
     public function family_members()
     {
         return $this->hasMany('App\Models\FamilyMember');
