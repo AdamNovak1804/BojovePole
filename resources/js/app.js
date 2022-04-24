@@ -10,6 +10,9 @@ window.Vue = require('vue').default;
 
 import Vue from 'vue';
 import router from './routes';
+import Vuex from 'vuex';
+
+Vue.use(Vuex);
 
 import { LMap, LTileLayer, LMarker, LControl, LIcon, LLayerGroup } from 'vue2-leaflet';
 import {
@@ -113,7 +116,30 @@ Vue.directive('b-modal', VBModal);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+const store = new Vuex.Store({
+  state: {
+    image: ''
+  },
+
+  mutations: {
+    changeImage(state, image) {
+        state.image = image;
+    },
+
+    initImage(state, image) {
+      if (state.image === '') {
+        state.image = require('/images/' + image).default;
+      }
+    },
+
+    unselectImage(state) {
+      state.image = '';
+    }
+  }
+})
+
 const app = new Vue({
     el: '#app',
+    store,
     router,
 });

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
 
 use App\Models\User;
@@ -32,7 +32,7 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => ['required'],
+            'name' => ['required', 'max:45'],
             'email' => ['required', 'unique:users', 'email'],
             'password' => ['required', 'confirmed']
         ]);
@@ -129,15 +129,40 @@ class UserController extends Controller
 
     public function updateUser(Request $request)
     {
-        $user = User::find(Auth::id());
-        $file = $request->file('image');
-        $name = time().'.'.$file->getClientOriginalExtension();
+        $request->validate([
+            'name' => ['required', 'max:45'],
+            'password' => ['nullable', 'confirmed'],
+            'about' => ['max:65535']
+        ]);
 
-        $request->image->move(public_path('/images'), $name);
+        $user = Auth::user();
 
-        $user->image = $name;
+        if ( $request->image != $request->old )
+        {
+            $file = $request->file('image');
+            $name = time().'.'.$file->getClientOriginalExtension();
+
+            $request->image->move(public_path('/images'), $name);
+            $old = public_path().'/images/'.$request->old;
+
+            if ( File::exists($old) )
+            {
+                File::Delete($old);
+            }
+            $user->image = $name;
+        }
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ( $request->password != '' )
+        {
+            $user->password = Hash::make($request->password);
+        }
+        $user->about = $request->about;
+
         $user->save();
 
-        return $name;
+        return $user;
     }
 }

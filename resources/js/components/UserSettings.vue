@@ -11,6 +11,11 @@
         overflow-y: auto;
     }
 
+    .settings-overflow label
+    {
+        font-weight: 900;
+    }
+
     .settings-menu
     {
         display: grid;
@@ -53,6 +58,7 @@
     {
         margin-top: 10px;
         background-color: #EDE0A6;
+        outline: 2px solid #540202;
     }
 
 </style>
@@ -88,13 +94,25 @@
                         <label for="settings-username">
                             Používateľské meno
                         </label>
-                        <input type="text" name="settings-username" id="settings-username">
+                        <input
+                            v-model="form.name"
+                            type="text"
+                            name="settings-username"
+                            id="settings-username"
+                            placeholder="Zmeniť používateľské meno"
+                        >
                     </b-col>
                     <b-col>
                         <label for="settings-email">
                             Používateľský email
                         </label>
-                        <input type="text" name="settings-email" id="settings-email">
+                        <input
+                            v-model="form.email"
+                            type="text"
+                            name="settings-email"
+                            id="settings-email"
+                            placeholder="Zmeniť email"
+                        >
                     </b-col>
                 </b-row>
                 <b-row>
@@ -102,13 +120,25 @@
                         <label for="settings-password">
                             Heslo
                         </label>
-                        <input type="password" name="settings-password" id="settings-password">
+                        <input 
+                            v-model="form.password"
+                            type="password"
+                            name="settings-password"
+                            id="settings-password"
+                            placeholder="Zmeniť heslo"
+                        >
                     </b-col>
                     <b-col>
                         <label for="settings-confirm">
                             Potvrdenie hesla
                         </label>
-                        <input type="password" name="settings-confirm" id="settings-confirm">
+                        <input 
+                            v-model="form.password_confirmation"
+                            type="password"
+                            name="settings-confirm"
+                            id="settings-confirm"
+                            placeholder="Potvrdiť zmenu hesla"
+                        >
                     </b-col>
                 </b-row>
                 <label for="settings-about">
@@ -127,17 +157,22 @@
 
         data() {
             return {
-                image: require('/images/' + this.user.image).default,
-
-                updatedUser: {
-                    image: ''
-                },
+                image: this.$store.state.image,
+                updated_user: '',
 
                 form: {
                     name: this.user.name,
-                    image: this.user.image
+                    email: this.user.email,
+                    image: this.user.image,
+                    password: '',
+                    password_confirmation: '',
+                    old: this.user.image
                 }
             }
+        },
+
+        mounted() {
+            console.log('Component mounted.');
         },
 
         props: {
@@ -168,21 +203,23 @@
                 var formData = new FormData();
                 
                 formData.append('name', this.form.name);
+                formData.append('email', this.form.email);
+                formData.append('password', this.form.password);
+                formData.append('password_confirmation', this.form.password_confirmation);
                 formData.append('image', this.form.image);
+                formData.append('old', this.form.old);
 
                 axios.post('/api/update_user', formData, { 
                     headers : {
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then(response => {
-                    this.updatedUser.image = response.data;
-                    console.log(this.updatedUser);
-                    this.$emit('updateUser', this.updatedUser);
+                    this.updated_user = response.data;
+                    this.$emit('updateUser', this.updated_user);
+                    this.$store.commit('changeImage', this.image);
                 }).catch((error) => {
                     console.log(error);
-                })
-
-                UploadService
+                });
             }
         }
     }

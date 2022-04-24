@@ -51,7 +51,7 @@
 
 <template>
     <div class="message">
-        <img class="profile-pic" :src="require('../../../public/img/' + this.image).default" width="50px" height="50px" alt="">
+        <img class="profile-pic" :src="require('/images/' + this.image).default" width="50px" height="50px" alt="">
         <div class="message-content">
             <h3>{{ user }}</h3>
             <p class="subject">{{ subject }}</p>

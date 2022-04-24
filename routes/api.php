@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->get('/authenticated', function() {
 });
 
 Route::get('/user', function() {
-    return User::find(Auth::id());
+    return Auth::user();
 });
 
 Route::get('/family_members', function() {
