@@ -71,7 +71,7 @@
                                 <label class="btn-select" for="settings">Ďalšie nastavenia</label>
                             </li>
                         </ul>
-                        <button class="btn btn-action" @click.prevent="logOut">Odhlásiť sa</button>
+                        <button class="btn btn-action d-none d-xl-block" @click.prevent="logOut">Odhlásiť sa</button>
                     </div>
                 </div>
                 <div class="content col-12 col-xl-9">
@@ -82,8 +82,12 @@
                         <family-member-view />
                     </div>
                     <div v-if="selected_form === 3">
-                        <family-member />
+                        <user-settings
+                            v-on:updateUser="updateUser"
+                            :user="user"
+                        />
                     </div>
+                    <button class="btn btn-action d-xl-none mt-3" @click.prevent="logOut">Odhlásiť sa</button>
                 </div>
             </div>
         </div>
@@ -101,14 +105,15 @@
                     { text: 'Správy a žiadosti', value: 'messages' },
                     { text: 'Rodinní príslušníci', value: 'family' },
                     { text: 'Ďalšie nastavenia', value: 'settings' }
-                ]
+                ],
+
             }
         },
 
         mounted() {
             axios.get('api/user').then((response) => {
-                this.user = response.data
-            })
+                this.user = response.data;
+            });
         },
 
         methods: {
@@ -120,6 +125,10 @@
                         console.log(error.response)
                     })
                 })
+            },
+            
+            updateUser: function(value) {
+                this.user = value;
             }
         }
     }

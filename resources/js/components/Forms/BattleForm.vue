@@ -7,11 +7,11 @@
         <label for="start">
             Dátum začatia bitky
         </label>
-        <input v-model="form.start" type="date" name="start" id="start" @change="update_end()">
+        <input v-model="form.start" class="date-input" type="date" name="start" id="start" @change="update_end()">
         <label for="end">
             Dátum konca bitky
         </label>
-        <input v-model="form.end" type="date" name="end" id="end">
+        <input v-model="form.end" class="date-input" type="date" name="end" id="end">
         <label for="side1">
             Útočník
         </label>

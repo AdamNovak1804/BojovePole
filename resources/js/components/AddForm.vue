@@ -7,15 +7,6 @@
         background-color: #FFF;
     }
 
-    ::v-deep input[type="date"]
-    {
-        border: 2px solid #540202;
-        border-radius: 5px;
-        background-color: #EDE0A6;
-        padding: 5px;
-        width: 100%;
-    }
-
     ::v-deep textarea
     {
         outline: none;
@@ -95,9 +86,6 @@
                         <add-map 
                             v-on:changeMarker="updateLatLng"
                         />
-                        <error-list class="mt-2"
-                            :errors="this.errors"
-                        />
                     </div>
                     <div class="col-12 col-lg-6 col-md-6">
                         <form>
@@ -136,6 +124,14 @@
                             </div>
                         </form>
                     </div>
+                    <b-modal
+                        ref="error-modal"
+                        hide-footer
+                    >
+                        <error-list 
+                            :errors="errors"
+                        />
+                    </b-modal>
                 </div>
             </div>
         </div>
@@ -174,6 +170,10 @@
 
             displayErrors: function(value) {
                 this.errors = value;
+                this.showModal();
+            },
+            showModal: function() {
+                this.$refs['error-modal'].show();
             }
         },
 

@@ -9,6 +9,21 @@ class FamilyMember extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'visible',
+        'reliability',
+        'date_of_birth',
+        'date_of_death',
+        'biography',
+        'gallery'
+    ];
+
     public function users()
     {
         return $this->belongsToMany('App\Models\User', 'family_members_users', 'family_member_id', 'user_id');

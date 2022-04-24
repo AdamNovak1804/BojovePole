@@ -26,8 +26,8 @@ Route::middleware('auth:sanctum')->get('/authenticated', function() {
     return true;
 });
 
-Route::get('/users', function() {
-    return User::index();
+Route::get('/user', function() {
+    return User::find(Auth::id());
 });
 
 Route::get('/family_members', function() {
@@ -62,8 +62,12 @@ Route::post('/post_landmark', 'DataController@postLandmark');
 
 Route::post('/send_message', 'UserController@sendMessage');
 
+Route::post('/post_member', 'UserController@postMember');
+
 Route::post('/register', 'UserController@register');
 
 Route::post('/login', 'UserController@login');
 
 Route::post('/logout', 'UserController@logout');
+
+Route::post('/update_user', 'UserController@updateUser');

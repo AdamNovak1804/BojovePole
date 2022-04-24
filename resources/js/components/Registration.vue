@@ -127,7 +127,7 @@
                     console.log('User registered');
                 }).catch((error) => {
                     this.errors = error.response.data.errors;
-                })
+                });
             }
         }
     }
