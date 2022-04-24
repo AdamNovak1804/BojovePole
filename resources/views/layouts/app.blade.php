@@ -82,6 +82,32 @@
             box-shadow: 0px 2px 3px #999;
         }
 
+        .date-input
+        {
+            border: 2px solid #540202;
+            border-radius: 5px;
+            background-color: #EDE0A6;
+            padding: 5px;
+            width: 100%;
+        }
+
+        .close
+        {
+            float: right;
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1;
+            color: #000;
+            text-shadow: 0 1px 0 #fff;
+            opacity: .5;
+        }
+
+        button.close
+        {
+            background-color: transparent;
+            border: 0;
+        }
+
     </style>
 </head>
 <body>

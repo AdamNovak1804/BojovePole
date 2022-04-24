@@ -8,11 +8,29 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
-import Vue from 'vue';
+import * as Vue from 'vue';
 import router from './routes';
+import { createStore } from 'vuex'
 
 import { LMap, LTileLayer, LMarker, LControl, LIcon, LLayerGroup } from 'vue2-leaflet';
-import { BButton, BFormRadioGroup, VBToggle, BCard, BCardText, BCollapse, BCarousel, BCarouselSlide, BPagination, BCardBody, BListGroup, BListGroupItem } from 'bootstrap-vue';
+import {
+  BButton,
+  BFormRadioGroup,
+  VBToggle,
+  BCard,
+  BCardText,
+  BCollapse,
+  BCarousel,
+  BCarouselSlide,
+  BPagination,
+  BCardBody,
+  BListGroup,
+  BListGroupItem,
+  BModal,
+  VBModal,
+  BRow,
+  BCol
+} from 'bootstrap-vue';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -45,6 +63,7 @@ Vue.component('navbar-footer', require('./components/NavbarFooter.vue').default)
 Vue.component('view-map', require('./components/ViewMap.vue').default);
 Vue.component('add-map', require('./components/AddMap.vue').default);
 Vue.component('family-member', require('./components/FamilyMember.vue').default);
+Vue.component('user-settings', require('./components/UserSettings.vue').default);
 
 Vue.component('unit-form', require('./components/Forms/UnitForm.vue').default);
 Vue.component('battle-form', require('./components/Forms/BattleForm.vue').default);
@@ -82,8 +101,25 @@ Vue.component('b-pagination', BPagination);
 Vue.component('b-card-body', BCardBody);
 Vue.component('b-list-group', BListGroup);
 Vue.component('b-list-group-item', BListGroupItem);
+Vue.component('b-modal', BModal);
+Vue.component('b-row', BRow);
+Vue.component('b-col', BCol);
 
 Vue.directive('b-toggle', VBToggle);
+Vue.directive('b-modal', VBModal);
+
+const store = createStore({
+    store() {
+        return {
+            image: ''
+        }
+    },
+    mutations: {
+        setImage (store, image) {
+          store.image = image;
+        }
+    }
+})
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

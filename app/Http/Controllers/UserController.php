@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 use App\Models\User;
@@ -92,5 +93,52 @@ class UserController extends Controller
         $user = User::find(Auth::id())->family_members()->get();
 
         return $user;
+    }
+
+    public function postMember(Request $request)
+    {
+        $request->validate([
+            'firstname' => ['required', 'max:45'],
+            'lastname' => ['required', 'max:45'],
+            'date_of_birth' => ['nullable', 'after_or_equal:"1840-01-01"', 'before_or_equal:"1901-01-01"'],
+            'date_of_death' => ['nullable', 'after_or_equal:"1914-07-28"', 'before_or_equal:"2010-01-01"'],
+            'biography' => ['max:65535']
+        ],
+        [
+            'firstname.required' => 'Nebolo zadané krstné meno rodinného príslušníka!',
+            'firstname.max' => 'Krstné meno nemôže mať viac ako 45 znakov!',
+            'lastname.required' => 'Nebolo zadané priezvisko rodinného príslušníka!',
+            'lastname.max' => 'Priezvisko nemôže mať viac ako 45 znakov!',
+            'date_of_birth.after_or_equal' => 'Dátum narodenia nemôže byť starší ako 1. január 1840!',
+            'date_of_birth.before_or_equal' => 'Dátum narodenia nemôže byť mladší ako 1. január 1901!',
+            'date_of_death.after_or_equal' => 'Dátum úmrtia nemôže byť starší ako 7. júl 1914!',
+            'date_of_death.before_or_equal' => 'Dátum úmrtia nemôže byť mladší ako 1. január 2010!',
+            'biography.max' => 'Presiahnutý limit znakov v tele biografie!'
+        ]);
+
+        $member = FamilyMember::create([
+            'name' => $request->firstname.' '.$request->lastname,
+            'visible' => '0',
+            'reliability' => '0',
+            'date_of_birth' => $request->date_of_birth,
+            'date_of_death' => $request->date_of_death,
+            'biography' => $request->biography
+        ]);
+
+        User::find(Auth::id())->family_members()->attach($member);
+    }
+
+    public function updateUser(Request $request)
+    {
+        $user = User::find(Auth::id());
+        $file = $request->file('image');
+        $name = time().'.'.$file->getClientOriginalExtension();
+
+        $request->image->move(public_path('/images'), $name);
+
+        $user->image = $name;
+        $user->save();
+
+        return $name;
     }
 }
