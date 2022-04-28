@@ -130,6 +130,7 @@
                 :displayed="this.displayed"
             />
             <battle-preview
+                v-on:displayView="displayView"
                 :type="this.type"
                 :displayed="this.displayed"
             />
@@ -142,6 +143,10 @@
                 :displayed="this.displayed"
             />
         </l-control>
+        <battle-view
+            ref="battle-view"
+            :battle="this.displayed"
+        />
         <l-marker
             v-for="unit in units"
             :key="'unit-' + unit.id"
@@ -259,6 +264,10 @@ import LandmarkPreview from './Previews/LandmarkPreview.vue';
             displayPreview: function(value, string, markers) {
                 this.type = string;
                 this.displayed = markers.find((e) => e.id == value);
+            },
+
+            displayView: function(value) {
+                this.$refs[value].showModal();
             },
 
             hidePreview: function() {

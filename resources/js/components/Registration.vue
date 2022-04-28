@@ -102,6 +102,14 @@
                 </div>
             </div>
         </div>
+        <b-modal
+            ref="registration-error-modal"
+            hide-footer
+        >
+            <error-list 
+                :errors="errors"
+            />
+        </b-modal>
         <navbar-footer></navbar-footer>
     </div>
 </template>
@@ -124,9 +132,15 @@
         methods: {
             postForm() {
                 axios.post('/api/register', this.form).then(() => {
-                    console.log('User registered');
+                    alert('Boli ste úspešne zaregistrovaný!');
+                    this.$router.push({
+                        name: 'Login'
+                    }).catch((error) => {
+                        console.log(error.response);
+                    });
                 }).catch((error) => {
                     this.errors = error.response.data.errors;
+                    this.$refs['registration-error-modal'].show();
                 });
             }
         }

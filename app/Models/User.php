@@ -49,9 +49,4 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\FamilyMember', 'family_members_users', 'user_id', 'family_member_id');
     }
-
-    public static function index()
-    {
-        return User::all();
-    }
 }

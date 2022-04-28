@@ -10,13 +10,6 @@
         background-color: #EEEEEE;
     }
 
-    img
-    {
-        float: left;
-        margin: 10px;
-        border-radius: 50%;
-    }
-
     .message-content
     {
         padding: 5px 10px 5px 5px;
@@ -47,21 +40,30 @@
         max-width: 140px;
     }
 
+    .profile-pic
+    {
+        float: left;
+        margin: 10px;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center center;
+    }
+
 </style>
 
 <template>
     <div class="message">
-        <img class="profile-pic" :src="require('/images/' + this.image).default" width="50px" height="50px" alt="">
+        <img class="profile-pic" :src="'/api/image/' + message.sender.image" width="50px" height="50px" alt="Profilový obrázok">
         <div class="message-content">
-            <h3>{{ user }}</h3>
-            <p class="subject">{{ subject }}</p>
+            <h3>{{ message.sender.name }}</h3>
+            <p class="subject">{{ message.subject }}</p>
             <div class="date-container">
-                <small class="date">{{ formatDate(posted) }}</small>
+                <small class="date">{{ formatDate( message.created_at ) }}</small>
             </div>
         </div>
         <div hidden>
-            <p>{{ email }}</p>
-            <p>{{ message }}</p>
+            <p>{{ message.sender.email }}</p>
+            <p>{{ message.message }}</p>
         </div>
     </div>
 </template>
@@ -71,19 +73,14 @@
 
     export default {
 
-        props: [
-            'image',
-            'user',
-            'message',
-            'subject',
-            'email',
-            'posted'
-        ],
+        props: {
+            message: '',
+        },
 
         methods: {
             formatDate: function(date) {
                 return moment(date).format('DD.MM.YYYY');
-            }
+            },
         }
 
     }

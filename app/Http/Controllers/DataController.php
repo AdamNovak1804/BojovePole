@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
+use App\Models\User;
 use App\Models\Unit;
 use App\Models\Battle;
 use App\Models\Cemetery;
@@ -13,6 +15,20 @@ use App\Models\Country;
 
 class DataController extends Controller
 {
+    public function getUsersAndRoles()
+    {
+        $user = Auth::user();
+
+        if ($user->role == 'admin')
+        {
+            return User::where('id', '!=', $user->id)->get()->toJSon();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     public function getUnits() {
         return Unit::with('country')->get()->toJson();
     }
@@ -65,8 +81,8 @@ class DataController extends Controller
             'type' => $request->type,
             'country' => $request->country,
             'location' => $request->location,
-            'longtitude' => $request->input('latlng.lng'),
-            'latitude' => $request->input('latlng.lat'),
+            'longtitude' => $request->input('latlng[0]'),
+            'latitude' => $request->input('latlng[1]'),
             'description' => $request->description
         ]);
     }
@@ -102,6 +118,23 @@ class DataController extends Controller
             'description.max' => 'Presihnutý maximálny počet znakov v opise!'
         ]);
 
+        $files = '';
+
+        if ( $request->gallery != null )
+        {
+            $iter = 0;
+            $files = '{ "images" : [';
+            foreach ( $request->gallery as $image )
+            {
+                $name = time().'_'.$iter.'.'.$image->getClientOriginalExtension();
+                $image->move(public_path('/images/battles/'), $name);
+                $files = $files.' { "path" : "'.$name.'" },';
+                $iter++;
+            }
+            $files[-1] = ' ';
+            $files = $files.'] }';
+        }
+
         Battle::create([
             'title' => $request->title,
             'visible' => '0',
@@ -112,9 +145,10 @@ class DataController extends Controller
             'side2' => $request->side2,
             'outcome' => $request->outcome,
             'description' => $request->description,
-            'longtitude' => $request->input('latlng.lng'),
-            'latitude' => $request->input('latlng.lat'),
+            'longtitude' => $request->input('latlng.1'),
+            'latitude' => $request->input('latlng.0'),
             'description' => $request->description,
+            'gallery' => $files
         ]);
     }
 

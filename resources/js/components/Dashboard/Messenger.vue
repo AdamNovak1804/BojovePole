@@ -132,12 +132,7 @@
                         <message class="message"
                             v-for="message in messages"
                             :key="message.id"
-                            :image="message.sender.image"
-                            :user="message.sender.name"
-                            :email="message.sender.email"
-                            :subject="message.subject"
-                            :message="message.text"
-                            :posted="message.created_at"
+                            :message="message"
                             @click.native="displayMessage($event)"
                         />
                         <button @click="getMessages">Load new</button>

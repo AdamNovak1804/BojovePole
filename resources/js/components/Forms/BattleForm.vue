@@ -1,5 +1,5 @@
 <template>
-    <form method="POST" @submit.prevent="submit">
+    <form method="POST" enctype="multipart/form-data" @submit.prevent="submit">
         <label for="title">
             Názov bitky
         </label>
@@ -33,6 +33,19 @@
             <option value="" disabled>Vybrať výsledok bitky</option>
             <option v-for="outcome in outcomes" :key="outcome.id" :value="outcome.value">{{ outcome.text }}</option>
         </select>
+        <label for="battle-file-upload">
+            Priložiť obrázky ako prílohu
+        </label>
+        <div class="dropbox">
+            <input 
+                type="file"
+                name="battle-file-upload"
+                id="battle-file-upload"
+                multiple
+                @change="uploadFiles($event.target.files)"
+            >
+            <p>Súbory je možné vložiť do vyznačenej oblasti</p>
+        </div>
         <label for="description">
             Opis
         </label>
@@ -59,7 +72,6 @@
                     side2: '',
                     outcome: '',
                     description: '',
-                    latlng: '',
                     gallery: ''
                 },
 
@@ -87,9 +99,30 @@
             },
 
             submit: function() {
-                this.form.latlng = this.position;
+                var formData = new FormData();
 
-                axios.post('/api/post_battle', this.form).then(() => {
+                formData.append('title', this.form.title);
+                formData.append('start', this.form.start);
+                formData.append('end', this.form.end);
+                formData.append('side1', this.form.side1);
+                formData.append('side2', this.form.side2);
+                formData.append('outcome', this.form.outcome);
+                formData.append('description', this.form.description);
+
+                if ( !!this.position ) {
+                    formData.append('latlng[0]', this.position.lat);
+                    formData.append('latlng[1]', this.position.lng);
+                }
+
+                for ( var i = 0; i < this.form.gallery.length; i++ ) {
+                    formData.append('gallery[' + i + ']', this.form.gallery[i]);
+                }
+
+                axios.post('/api/post_battle', formData, { 
+                    headers : {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(() => {
                     this.form.title = '';
                     this.form.start = '1914-07-28';
                     this.form.end = '1914-07-28';
@@ -107,6 +140,10 @@
 
             update_end: function() {
                 this.form.end = this.form.start;
+            },
+
+            uploadFiles: function(files) {
+                this.form.gallery = files;
             }
         }
     }

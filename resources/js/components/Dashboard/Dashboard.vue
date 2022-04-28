@@ -43,8 +43,17 @@
 
     .container
     {
+        min-height: calc(100vh - 190px);
         margin-top: 150px;
         margin-bottom: 40px;
+    }
+
+    .special-label
+    {
+        display: block;
+        font-weight: 900;
+        text-align: center;
+        margin-bottom: 1rem;
     }
 
 </style>
@@ -59,8 +68,8 @@
                         <h1>Môj účet</h1>
                         <ul>
                             <li>
-                                <input @click="selected_form = 1" :v-model="selected_form" type="radio" name="selection" id="messages" checked>
-                                <label class="btn-select" for="messages">Správy a žiadosti</label>
+                                <input @click="selected_form = 1" :v-model="selected_form" type="radio" name="selection" id="dashboard-messages" checked>
+                                <label class="btn-select" for="dashboard-messages">Správy a žiadosti</label>
                             </li>
                             <li>
                                 <input @click="selected_form = 2" :v-model="selected_form" type="radio" name="selection" id="family">
@@ -71,26 +80,48 @@
                                 <label class="btn-select" for="settings">Ďalšie nastavenia</label>
                             </li>
                         </ul>
+                        <ul v-if="this.user.role == 'historian'" name="dashboard-historian" id="dashboard-historian">
+                            <label for="dashboard-historian" class="special-label">
+                                Menu pre historika
+                            </label>
+                            <li>
+                                <input @click="selected_form = 4" :v-model="selected_form" type="radio" name="selection" id="dashboard-d">
+                                <label class="btn-select" for="dashboard-d">Schválenia žiadostí</label>
+                            </li>
+                        </ul>
+                        <ul v-if="this.user.role == 'admin'" name="dashboard-admin" id="dashboard-admin">
+                            <label for="dashboard-admin" class="special-label">
+                                Menu pre administrátora
+                            </label>
+                            <li>
+                                <input @click="selected_form = 5" :v-model="selected_form" type="radio" name="selection" id="dashboard-c">
+                                <label class="btn-select" for="dashboard-c">Používateľské role</label>
+                            </li>
+                        </ul>
                         <button class="btn btn-action d-none d-xl-block" @click.prevent="logOut">Odhlásiť sa</button>
                     </div>
                 </div>
                 <div class="content col-12 col-xl-9">
-                    <div v-if="selected_form === 1">
-                        <messenger-form />
-                    </div>
-                    <div v-if="selected_form === 2">
-                        <family-member-view />
-                    </div>
-                    <div v-if="selected_form === 3">
-                        <user-settings
-                            v-on:updateUser="updateUser"
-                            :user="user"
-                        />
-                    </div>
+                    <messenger-form
+                        v-if="selected_form == 1"
+                    />
+                    <family-member-view
+                        v-if="selected_form == 2"
+                    />
+                    <user-settings
+                        v-if="selected_form == 3"
+                        v-on:updateUser="updateUser"
+                        :user="user"
+                    />
+                    
+                    <admin-view 
+                        v-if="selected_form == 5"
+                    />
                     <button class="btn btn-action d-xl-none mt-3" @click.prevent="logOut">Odhlásiť sa</button>
                 </div>
             </div>
         </div>
+        <navbar-footer />
     </div>
 </template>
 
@@ -100,13 +131,7 @@
         data() {
             return {
                 user: '',
-                selected_form: 1,
-                options: [
-                    { text: 'Správy a žiadosti', value: 'messages' },
-                    { text: 'Rodinní príslušníci', value: 'family' },
-                    { text: 'Ďalšie nastavenia', value: 'settings' }
-                ],
-
+                selected_form: 1
             }
         },
 

@@ -6,7 +6,6 @@
         border-radius: 15px;
         background-color: #EDE0A6;
         width: 100%;
-        box-shadow: 0px 2px 3px #999;
     }
 
     .member-col
@@ -17,12 +16,6 @@
     .card
     {
         min-height: 300px;
-    }
-
-    .modal-title
-    {
-        text-align: center;
-        font-weight: 900;
     }
 
     textarea
@@ -105,7 +98,7 @@
                                 <b-col>
                                     <img 
                                         class="float-end" 
-                                        :src="require('../../../public/img/cancel.png').default" 
+                                        :src="require('/images/cancel.png').default" 
                                         alt="Indikátor statusu overenia" 
                                         width="14px" 
                                         height="14px"
@@ -205,7 +198,7 @@
 
 <script>
     import moment from 'moment';
-    import ErrorList from './ErrorList.vue';
+    import ErrorList from '../ErrorList.vue';
 
     export default {
         components: { ErrorList },

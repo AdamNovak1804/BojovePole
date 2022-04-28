@@ -57,7 +57,6 @@
     .settings-text
     {
         margin-top: 10px;
-        background-color: #EDE0A6;
         outline: 2px solid #540202;
     }
 
@@ -144,7 +143,7 @@
                 <label for="settings-about">
                     O mne
                 </label>
-                <textarea class="settings-text" name="settings-about" id="settings-about" rows="10" />
+                <textarea class="settings-text" name="settings-about" id="settings-about" rows="10" placeholder="Zmeniť popis osobného účtu"/>
             </div>
         </div>
         <button class="btn btn-action mt-3">Uložiť zmeny</button>

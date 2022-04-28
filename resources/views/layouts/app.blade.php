@@ -108,6 +108,68 @@
             border: 0;
         }
 
+        .modal-title
+        {
+            text-align: center;
+            font-weight: 900;
+        }
+
+        .view-carousel
+        {
+            outline: 2px solid #540202;
+        }
+
+        .view-carousel-slides
+        {
+            max-height: 400px;
+        }
+
+        .sr-only
+        {
+            border: 0 !important;
+            clip: rect(1px, 1px, 1px, 1px) !important; /* 1 */
+            -webkit-clip-path: inset(50%) !important;
+            clip-path: inset(50%) !important; /* 2 */
+            height: 1px !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            padding: 0 !important;
+            position: absolute !important;
+            width: 1px !important;
+            white-space: nowrap !important; /* 3 */
+        }
+
+        .modal-info
+        {
+            border-radius: 15px;
+            background-color: #EDE0A6;
+            padding: 10px;
+        }
+
+        .modal-info ul
+        {
+            margin-bottom: 0;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .modal-info li
+        {
+            padding-bottom: 5px;
+        }
+
+        .modal-info li:last-child
+        {
+            padding-bottom: 0px;
+        }
+
+        .modal-text
+        {
+            border-radius: 15px;
+            padding: 10px;
+            background-color: #EDE0A6;
+        }
+
     </style>
 </head>
 <body>

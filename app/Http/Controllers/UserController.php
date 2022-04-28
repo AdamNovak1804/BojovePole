@@ -35,6 +35,15 @@ class UserController extends Controller
             'name' => ['required', 'max:45'],
             'email' => ['required', 'unique:users', 'email'],
             'password' => ['required', 'confirmed']
+        ],
+        [
+            'name.required' => ['Nebolo zadané používateľské meno!'],
+            'name.max' => ['Používateľské meno musí mať menej ako 46 znakov!'],
+            'email.required' => ['Nebola zadaná emailová adresa používateľa!'],
+            'email.unique' => ['Používateľ s daným emailom už existuje!'],
+            'email.email' => ['Email musí mať správny formát!'],
+            'password.required' => ['Nebolo zadané používateľské heslo!'],
+            'password.confirmed' => ['Heslo nebolo potvrdené!']
         ]);
 
         User::create([
@@ -42,7 +51,8 @@ class UserController extends Controller
             'email' => $request->email,
             'role' => 'user',
             'email_verified_at' => now(),
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'image' => '0.png'
         ]);
     }
 
@@ -140,15 +150,16 @@ class UserController extends Controller
         if ( $request->image != $request->old )
         {
             $file = $request->file('image');
-            $name = time().'.'.$file->getClientOriginalExtension();
+            $name = $user->id.'.'.$file->getClientOriginalExtension();
 
-            $request->image->move(public_path('/images'), $name);
             $old = public_path().'/images/'.$request->old;
 
             if ( File::exists($old) )
             {
                 File::Delete($old);
             }
+
+            $request->image->move(public_path('/images'), $name);
             $user->image = $name;
         }
 
@@ -162,6 +173,39 @@ class UserController extends Controller
         $user->about = $request->about;
 
         $user->save();
+
+        return $user;
+    }
+
+    public function getImage($image)
+    {
+        $path = public_path().'/images/'.$image;
+
+        if (file_exists($path))
+        {
+            readfile($path);
+            die();
+        } else {
+            die("Error: File not found.");
+        }
+    }
+
+    public function updateUserRole(Request $request)
+    {
+        $user = User::find($request->id);
+
+        $user->role = $request->role;
+        $user->save();
+
+        return $user;
+    }
+
+    public function deleteUser(Request $request)
+    {
+        $user = User::find($request->id);
+
+        $user->family_members()->delete();
+        $user->delete();
 
         return $user;
     }

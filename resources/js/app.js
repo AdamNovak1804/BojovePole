@@ -64,18 +64,20 @@ Vue.component('navbar-header', require('./components/NavbarHeader.vue').default)
 Vue.component('navbar-footer', require('./components/NavbarFooter.vue').default);
 Vue.component('view-map', require('./components/ViewMap.vue').default);
 Vue.component('add-map', require('./components/AddMap.vue').default);
-Vue.component('family-member', require('./components/FamilyMember.vue').default);
-Vue.component('user-settings', require('./components/UserSettings.vue').default);
 
+Vue.component('user-settings', require('./components/Dashboard/UserSettings.vue').default);
 Vue.component('unit-form', require('./components/Forms/UnitForm.vue').default);
 Vue.component('battle-form', require('./components/Forms/BattleForm.vue').default);
 Vue.component('cemetery-form', require('./components/Forms/CemeteryForm.vue').default);
 Vue.component('landmark-form', require('./components/Forms/LandmarkForm.vue').default);
+Vue.component('admin-view', require('./components/Dashboard/AdminView.vue').default);
+Vue.component('user-card', require('./components/Dashboard/UserCard.vue').default);
 
-Vue.component('family-member-view', require('./components/FamilyMemberView.vue').default);
-Vue.component('messenger-form', require('./components/Messenger.vue').default);
-Vue.component('message', require('./components/Message.vue').default);
-Vue.component('post-message', require('./components/PostMessage.vue').default);
+Vue.component('family-member-view', require('./components/Dashboard/FamilyMemberView.vue').default);
+Vue.component('messenger-form', require('./components/Dashboard/Messenger.vue').default);
+Vue.component('message', require('./components/Dashboard/Message.vue').default);
+Vue.component('post-message', require('./components/Dashboard/PostMessage.vue').default);
+
 Vue.component('intro-card', require('./components/IntroCard.vue').default);
 Vue.component('scroll-button', require('./components/ScrollButton.vue').default);
 Vue.component('error-list', require('./components/ErrorList.vue').default);
@@ -84,6 +86,8 @@ Vue.component('battle-preview', require('./components/Previews/BattlePreview.vue
 Vue.component('unit-preview', require('./components/Previews/UnitPreview.vue').default);
 Vue.component('cemetery-preview', require('./components/Previews/CemeteryPreview').default);
 Vue.component('landmark-preview', require('./components/Previews/LandmarkPreview.vue').default);
+
+Vue.component('battle-view', require('./components/Views/BattleView.vue').default);
 
 Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);
@@ -128,7 +132,11 @@ const store = new Vuex.Store({
 
     initImage(state, image) {
       if (state.image === '') {
-        state.image = require('/images/' + image).default;
+        try {
+          state.image = require('/images/' + image).default;
+        } catch (error) {
+          location.reload();
+        }
       }
     },
 

@@ -40,6 +40,8 @@ Route::get('/get_messages', 'UserController@getMessages');
 
 Route::get('/get_family', 'UserController@getFamily');
 
+Route::get('/get_users_and_roles', 'DataController@getUsersAndRoles');
+
 Route::get('/get_units', 'DataController@getUnits');
 
 Route::get('/get_battles', 'DataController@getBattles');
@@ -71,3 +73,9 @@ Route::post('/login', 'UserController@login');
 Route::post('/logout', 'UserController@logout');
 
 Route::post('/update_user', 'UserController@updateUser');
+
+Route::post('/update_user_role', 'UserController@updateUserRole');
+
+Route::get('/image/{image}', 'UserController@getImage');
+
+Route::delete('/delete_user', 'UserController@deleteUser');
