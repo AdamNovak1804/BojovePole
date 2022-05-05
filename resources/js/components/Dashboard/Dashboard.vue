@@ -105,7 +105,7 @@
                     <messenger-form
                         v-if="selected_form == 1"
                     />
-                    <family-member-view
+                    <family-member-menu
                         v-if="selected_form == 2"
                     />
                     <user-settings
@@ -113,8 +113,10 @@
                         v-on:updateUser="updateUser"
                         :user="user"
                     />
-                    
-                    <admin-view 
+                    <historian-menu
+                        v-if="selected_form == 4"
+                    />                    
+                    <admin-menu 
                         v-if="selected_form == 5"
                     />
                     <button class="btn btn-action d-xl-none mt-3" @click.prevent="logOut">Odhlásiť sa</button>

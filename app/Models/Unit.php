@@ -36,4 +36,9 @@ class Unit extends Model
     {
         return $this->belongsTo('App\Models\Country', 'country', 'id');
     }
+
+    public function family_members()
+    {
+        return $this->hasMany('App\Models\FamilyMember');
+    }
 }

@@ -10,7 +10,7 @@
 </style>
 
 <template>
-    <l-map class="map" :zoom="zoom" :center="center" @click="updateMarker">
+    <l-map id="addMap" ref="addMap" class="map" :zoom="zoom" :center="center" @click="updateMarker">
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
         <l-marker :lat-lng="position" :visible="visibility" />
     </l-map>
@@ -30,6 +30,7 @@
 
                 visibility: false,
                 position: L.latLng(48.811280, 19.506797),
+                
             }
         },
 
@@ -38,6 +39,10 @@
                 this.visibility = true;
                 this.position = event.latlng;
                 this.$emit('changeMarker', this.position);
+            },
+
+            refreshSize: function() {
+                this.$refs.addMap.mapObject.invalidateSize();
             }
         }
 

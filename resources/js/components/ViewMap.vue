@@ -59,27 +59,14 @@
         box-shadow: 0px 2px 3px #999;
     }
 
-    .card-preview
-    {
-        width: 400px;
-    }
-
-    ::v-deep .card-text
-    {
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        overflow: hidden;
-    }
-
 </style>
 
 <template>
     <l-map class="map" :zoom="zoom" :center="center" @click="hidePreview">
-        <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+        <l-tile-layer :url="url" :attribution="attribution" />
         <l-control position="topright">
             <div class="map-controls">
-                <b-button v-b-toggle.collapse-1 variant="primary" class="btn-collapse"></b-button>
+                <b-button v-b-toggle.collapse-1 variant="primary" class="btn-collapse" />
                 <b-collapse id="collapse-1">
                     <b-card class="map-nav">
                         <h3 class="text-center">Legenda</h3>
@@ -115,6 +102,13 @@
                                 </label>
                             </li>
                         </ul>
+                        <div>
+                            <label for="start-date-slider">
+                                
+                            </label>
+                            <input type="range" name="start-date-slider" id="start-date-slider">
+                            <input type="range" name="" id="">
+                        </div>
                     </b-card>
                 </b-collapse>
             </div>
@@ -124,8 +118,12 @@
                 <button class="btn-add"></button>
             </router-link>
         </l-control>
+        
+        <!-- Previews -->
+
         <l-control position="bottomleft">
             <unit-preview
+                v-on:displayView="displayView"
                 :type="this.type"
                 :displayed="this.displayed"
             />
@@ -135,54 +133,72 @@
                 :displayed="this.displayed"
             />
             <cemetery-preview
+                v-on:displayView="displayView"
                 :type="this.type"
                 :displayed="this.displayed"
             />
             <landmark-preview
+                v-on:displayView="displayView"
                 :type="this.type"
                 :displayed="this.displayed"
             />
         </l-control>
+
+        <!-- Views -->
+        
+        <unit-view
+            ref="unit-view"
+            :unit="this.displayed"
+        />
         <battle-view
             ref="battle-view"
             :battle="this.displayed"
         />
+        <cemetery-view
+            ref="cemetery-view"
+            :cemetery="this.displayed"
+        />
+        <landmark-view
+            ref="landmark-view"
+            :landmark="this.displayed"
+        />
+
+        <!-- Map markers -->
+
         <l-marker
-            v-for="unit in units"
+            v-for="unit in sorted.units"
             :key="'unit-' + unit.id"
             :lat-lng="[unit.latitude, unit.longtitude]"
             :visible="display_units"
-            @click="displayPreview(unit.id, 'unit-preview', units)"
+            @click="displayPreview(unit.id, 'unit-preview', sorted.units)"
         />
         <l-marker
-            v-for="battle in battles"
+            v-for="battle in sorted.battles"
             :key="'battle-' + battle.id"
             :lat-lng="[battle.latitude, battle.longtitude]"
             :visible="display_battles"
-            @click="displayPreview(battle.id, 'battle-preview', battles)"
+            @click="displayPreview(battle.id, 'battle-preview', sorted.battles)"
         />
         <l-marker
-            v-for="cemetery in cemeteries"
+            v-for="cemetery in sorted.cemeteries"
             :key="'cemtery-' + cemetery.id"
             :lat-lng="[cemetery.latitude, cemetery.longtitude]"
             :visible="display_cemeteries"
-            @click="displayPreview(cemetery.id, 'cemetery-preview', cemeteries)"
+            @click="displayPreview(cemetery.id, 'cemetery-preview', sorted.cemeteries)"
         />
         <l-marker
-            v-for="landmark in landmarks"
+            v-for="landmark in sorted.landmarks"
             :key="'landmark-' + landmark.id"
             :lat-lng="[landmark.latitude, landmark.longtitude]"
             :visible="display_landmarks"
-            @click="displayPreview(landmark.id, 'landmark-preview', landmarks)"
+            @click="displayPreview(landmark.id, 'landmark-preview', sorted.landmarks)"
         />
     </l-map>
 </template>
 
 <script>
-import LandmarkPreview from './Previews/LandmarkPreview.vue';
 
     export default {
-  components: { LandmarkPreview },
 
         name: 'Map',
         data() {
@@ -193,11 +209,21 @@ import LandmarkPreview from './Previews/LandmarkPreview.vue';
                 attribution: '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
                 marker: L.latLng(48.811280, 19.506797),
 
-                units: '',
-                battles: '',
-                cemeteries: '',
-                landmarks: '',
-                territories: '',
+                markers: {
+                    units: '',
+                    battles: '',
+                    cemeteries: '',
+                    landmarks: '',
+                    territories: ''
+                },
+
+                sorted: {
+                    units: '',
+                    battles: '',
+                    cemeteries: '',
+                    landmarks: '',
+                    territories: ''
+                },
 
                 type: '',
                 displayed: null,
@@ -223,7 +249,8 @@ import LandmarkPreview from './Previews/LandmarkPreview.vue';
         methods: {
             getUnits: function() {
                 axios.get('/api/get_units').then(response => {
-                    this.units = response.data;
+                    this.markers.units = response.data;
+                    this.sorted.units = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -231,7 +258,8 @@ import LandmarkPreview from './Previews/LandmarkPreview.vue';
 
             getBattles: function() {
                 axios.get('/api/get_battles').then(response => {
-                    this.battles = response.data;
+                    this.markers.battles = response.data;
+                    this.sorted.battles = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -239,7 +267,8 @@ import LandmarkPreview from './Previews/LandmarkPreview.vue';
 
             getCemeteries: function() {
                 axios.get('/api/get_cemeteries').then(response => {
-                    this.cemeteries = response.data;
+                    this.markers.cemeteries = response.data;
+                    this.sorted.cemeteries = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -247,7 +276,8 @@ import LandmarkPreview from './Previews/LandmarkPreview.vue';
 
             getLandmarks: function() {
                 axios.get('/api/get_landmarks').then(response => {
-                    this.landmarks = response.data;
+                    this.markers.landmarks = response.data;
+                    this.sorted.landmarks = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -255,7 +285,8 @@ import LandmarkPreview from './Previews/LandmarkPreview.vue';
 
             getTerritories: function() {
                 axios.get('/api/get_territories').then(response => {
-                    this.territories = response.data;
+                    this.markers.territories = response.data;
+                    this.sorted.territories = response.data;
                 }).catch(error => {
                     console.log(error);
                 });

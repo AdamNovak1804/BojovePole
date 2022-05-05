@@ -54,13 +54,17 @@ Route::get('/get_territories', 'DataController@getTerritories');
 
 Route::get('/get_countries', 'DataController@getCountries');
 
+Route::get('/get_unit_requests', 'DataController@getUnitRequests');
+
+Route::get('/get_battle_requests', 'DataController@getBattleRequests');
+
 Route::post('/post_unit', 'DataController@postUnit');
-
 Route::post('/post_battle', 'DataController@postBattle');
-
 Route::post('/post_cemetery', 'DataController@postCemetery');
-
 Route::post('/post_landmark', 'DataController@postLandmark');
+
+Route::post('/update_unit', 'DataController@updateUnit');
+Route::post('/update_battle', 'DataController@updateBattle');
 
 Route::post('/send_message', 'UserController@sendMessage');
 
@@ -77,5 +81,7 @@ Route::post('/update_user', 'UserController@updateUser');
 Route::post('/update_user_role', 'UserController@updateUserRole');
 
 Route::get('/image/{image}', 'UserController@getImage');
+
+Route::get('/userContent/{image}', 'DataController@getUserContentImage');
 
 Route::delete('/delete_user', 'UserController@deleteUser');

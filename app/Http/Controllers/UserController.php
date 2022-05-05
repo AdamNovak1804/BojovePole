@@ -99,7 +99,7 @@ class UserController extends Controller
 
     public function getFamily()
     {
-        $user = User::find(Auth::id())->family_members()->get();
+        $user = Auth::user()->family_members()->with('cemetery', 'unit')->get();
 
         return $user;
     }
@@ -125,13 +125,32 @@ class UserController extends Controller
             'biography.max' => 'Presiahnutý limit znakov v tele biografie!'
         ]);
 
+        $gallery = [];
+
+        /* Add new images */
+        if ( !empty($request->gallery) )
+        {
+            $iter = 0;
+            foreach ( $request->gallery as $image )
+            {
+                $name = time().'_'.$iter.'.'.$image->getClientOriginalExtension();
+                $file = json_encode(array("path" => $name));
+                $image->move(public_path('/images/userContent/'), $name);
+                array_push($gallery, json_decode($file));
+                $iter++;
+            }
+        }
+
         $member = FamilyMember::create([
             'name' => $request->firstname.' '.$request->lastname,
             'visible' => '0',
             'reliability' => '0',
             'date_of_birth' => $request->date_of_birth,
             'date_of_death' => $request->date_of_death,
-            'biography' => $request->biography
+            'biography' => $request->biography,
+            'cemetery' => $request->cemetery,
+            'unit' => $request->unit,
+            'gallery' => '{"images": '.json_encode($gallery).'}'
         ]);
 
         User::find(Auth::id())->family_members()->attach($member);

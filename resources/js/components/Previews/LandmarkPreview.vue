@@ -12,7 +12,7 @@
             <b-card-text class="card-text">
                 {{ this.displayed.description }}
             </b-card-text>
-            <b-button class="btn-action mt-2">Zobraziť viac</b-button>
+            <b-button @click="displayView()" class="btn-action mt-2">Zobraziť viac</b-button>
         </b-card-body>
     </b-card> 
 </template>
@@ -23,6 +23,12 @@
         props: {
             type: '',
             displayed: ''
+        },
+
+        methods: {
+            displayView: function() {
+                this.$emit('displayView', 'landmark-view');
+            }
         }
     }
 

@@ -4,44 +4,103 @@
         hide-footer
         ref="battle-modal"
     >
-        <h1 class="modal-title">{{ this.title }}</h1>
+        <b-card-body>
+            <h3 class="modal-title">
+                {{ this.title }}
+            </h3>
+        </b-card-body>
+
         <b-carousel
-            class="view-carousel"
-            id="battle-carousel"
+            v-if="this.gallery"
+            background="#ababab"
             :interval="4000"
             controls
             fade
         >
             <b-carousel-slide
-                class="view-carousel-slides"
-                v-for="slide in this.gallery.slides"
+                v-for="slide in this.gallery.images"
                 :key="slide.id"
-                :img-src="slide.image"
-            />
-        </b-carousel>
-        <b-row
-            no-gutters
-            class="mt-3"
-        >
-            <b-col
-                col lg="3"
             >
-                <div class="modal-info">
-                    <ul>
-                        <li><b>Začiatok</b> : {{ formatDate(this.start) }}</li>
-                        <li><b>Koniec</b> : {{ formatDate(this.end) }}</li>
-                        <li><b>Útočník</b> : {{ this.side1 }}</li>
-                        <li><b>Obranca</b> : {{ this.side2 }}</li>
-                        <li><b>Výsledok</b> : {{ this.outcome }}</li>
-                    </ul>
-                </div>
-            </b-col>
-            <b-col>
-                <div class="modal-text">
-                    {{ this.description }}
-                </div>
-            </b-col>
-        </b-row>
+                <template #img>
+                    <img
+                        class="d-block img-fluid slide-img"
+                        :src="'/api/userContent/' + slide.path"
+                        alt="image slot"
+                    >
+                </template>
+            </b-carousel-slide>
+        </b-carousel>
+
+        <b-card-body>
+            <b-row>
+                <b-col cols="12" lg="4">
+                    <label class="label-center fw-bold mb-3" for="info-box">
+                        Základné informácie
+                    </label>
+                    <b-list-group id="info-box" flush>
+                        <b-list-group-item>
+                            <b-row>
+                                <b-col>
+                                    <p><b>Začiatok</b> :</p>
+                                </b-col>
+                                <b-col cols="auto">
+                                    <p>{{ formatDate(this.start) }}</p>
+                                </b-col>
+                            </b-row>
+                        </b-list-group-item>
+                        <b-list-group-item>
+                            <b-row>
+                                <b-col>
+                                    <p><b>Koniec</b> :</p>
+                                </b-col>
+                                <b-col cols="auto">
+                                    <p>{{ formatDate(this.end) }}</p>
+                                </b-col>
+                            </b-row>
+                        </b-list-group-item>
+                        <b-list-group-item>
+                            <b-row>
+                                <b-col>
+                                    <p><b>Útočník</b> :</p>
+                                </b-col>
+                                <b-col cols="auto">
+                                    <p>{{ this.side1 }}</p>
+                                </b-col>
+                            </b-row>
+                        </b-list-group-item>
+                        <b-list-group-item>
+                            <b-row>
+                                <b-col>
+                                    <p><b>Obranca</b> :</p>
+                                </b-col>
+                                <b-col cols="auto">
+                                    <p>{{ this.side2 }}</p>
+                                </b-col>
+                            </b-row>
+                        </b-list-group-item>
+                        <b-list-group-item>
+                            <b-row>
+                                <b-col>
+                                    <p><b>Výsledok</b> :</p>
+                                </b-col>
+                                <b-col cols="auto">
+                                    <p>{{ this.outcome }}</p>
+                                </b-col>
+                            </b-row>
+                        </b-list-group-item>
+                    </b-list-group>
+                </b-col>
+                <b-col>
+                    <label class="label-center fw-bold mb-3" for="description-box">
+                        Priebeh a opis bitky
+                    </label>
+                    <div id="description-box">
+                        <p>{{ this.description }}</p>
+                    </div>
+                </b-col>
+            </b-row>
+        </b-card-body>
+
     </b-modal>
 </template>
 
@@ -82,7 +141,6 @@
             },
             
             showModal: function() {
-                console.log(this.battle);
                 this.title = this.battle.title;
                 this.start = this.battle.start;
                 this.end = this.battle.end;
@@ -95,7 +153,7 @@
 
                 this.gallery = JSON.parse(this.battle.gallery);
 
-                this.$refs['battle-modal'].show()
+                this.$refs['battle-modal'].show();
             }
         }
     }

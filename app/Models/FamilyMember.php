@@ -21,7 +21,9 @@ class FamilyMember extends Model
         'date_of_birth',
         'date_of_death',
         'biography',
-        'gallery'
+        'gallery',
+        'cemetery',
+        'unit'
     ];
 
     public function users()
@@ -31,6 +33,11 @@ class FamilyMember extends Model
 
     public function cemetery()
     {
-        return $this->belongsTo('App\Models\Cemetery');
+        return $this->belongsTo('App\Models\Cemetery', 'cemetery', 'id');
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo('App\Models\Unit', 'unit', 'id');
     }
 }

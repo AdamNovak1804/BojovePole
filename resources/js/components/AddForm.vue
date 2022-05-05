@@ -172,6 +172,7 @@
                 this.errors = value;
                 this.showModal();
             },
+            
             showModal: function() {
                 this.$refs['error-modal'].show();
             }

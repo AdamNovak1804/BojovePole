@@ -31,7 +31,9 @@ import {
   BModal,
   VBModal,
   BRow,
-  BCol
+  BCol,
+  BCardGroup,
+  BImg
 } from 'bootstrap-vue';
 
 import 'leaflet/dist/leaflet.css';
@@ -70,10 +72,21 @@ Vue.component('unit-form', require('./components/Forms/UnitForm.vue').default);
 Vue.component('battle-form', require('./components/Forms/BattleForm.vue').default);
 Vue.component('cemetery-form', require('./components/Forms/CemeteryForm.vue').default);
 Vue.component('landmark-form', require('./components/Forms/LandmarkForm.vue').default);
-Vue.component('admin-view', require('./components/Dashboard/AdminView.vue').default);
 Vue.component('user-card', require('./components/Dashboard/UserCard.vue').default);
 
-Vue.component('family-member-view', require('./components/Dashboard/FamilyMemberView.vue').default);
+/**
+ * Dashboard menus
+ */
+Vue.component('admin-menu', require('./components/Dashboard/Menu/AdminMenu.vue').default);
+Vue.component('historian-menu', require('./components/Dashboard/Menu/HistorianMenu.vue').default);
+Vue.component('family-member-menu', require('./components/Dashboard/Menu/FamilyMemberMenu.vue').default);
+
+Vue.component('battle-edit-card', require('./components/Dashboard/HistorianCards/BattleEditCard.vue').default);
+Vue.component('unit-edit-card', require('./components/Dashboard/HistorianCards/UnitEditCard.vue').default);
+
+Vue.component('battle-edit', require('./components/Dashboard/BattleEdit.vue').default);
+Vue.component('unit-edit', require('./components/Dashboard/UnitEdit.vue').default);
+
 Vue.component('messenger-form', require('./components/Dashboard/Messenger.vue').default);
 Vue.component('message', require('./components/Dashboard/Message.vue').default);
 Vue.component('post-message', require('./components/Dashboard/PostMessage.vue').default);
@@ -88,6 +101,9 @@ Vue.component('cemetery-preview', require('./components/Previews/CemeteryPreview
 Vue.component('landmark-preview', require('./components/Previews/LandmarkPreview.vue').default);
 
 Vue.component('battle-view', require('./components/Views/BattleView.vue').default);
+Vue.component('unit-view', require('./components/Views/UnitView.vue').default);
+Vue.component('cemetery-view', require('./components/Views/CemeteryView.vue').default);
+Vue.component('landmark-view', require('./components/Views/LandmarkView.vue').default);
 
 Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);
@@ -99,6 +115,7 @@ Vue.component('l-layer-group', LLayerGroup);
 Vue.component('b-button', BButton);
 Vue.component('b-form-radio-group', BFormRadioGroup);
 Vue.component('b-card', BCard);
+Vue.component('b-card-group', BCardGroup);
 Vue.component('b-card-text', BCardText);
 Vue.component('b-collapse', BCollapse);
 Vue.component('b-carousel', BCarousel);
@@ -110,6 +127,7 @@ Vue.component('b-list-group-item', BListGroupItem);
 Vue.component('b-modal', BModal);
 Vue.component('b-row', BRow);
 Vue.component('b-col', BCol);
+Vue.component('b-img', BImg);
 
 Vue.directive('b-toggle', VBToggle);
 Vue.directive('b-modal', VBModal);

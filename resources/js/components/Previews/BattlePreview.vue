@@ -15,25 +15,25 @@
             <b-list-group-item>
                 <div class="row">
                     <div class="col">
-                        <b>Začiatok</b> : {{ formatDate(this.displayed.start) }}
+                        <p><b>Začiatok</b> : {{ formatDate(this.displayed.start) }}</p>
                     </div>
                     <div class="col">
-                        <b>Koniec</b> : {{ formatDate(this.displayed.end) }}
+                        <p><b>Koniec</b> : {{ formatDate(this.displayed.end) }}</p>
                     </div>
                 </div>
             </b-list-group-item>
             <b-list-group-item>
                 <div class="row">
                     <div class="col">
-                        <b>Útočník</b> : {{ this.displayed.side1.name }}
+                        <p><b>Útočník</b> : {{ this.displayed.side1.name }}</p>
                     </div>
                     <div class="col">
-                        <b>Obranca</b> : {{ this.displayed.side2.name }}
+                        <p><b>Obranca</b> : {{ this.displayed.side2.name }}</p>
                     </div>
                 </div>
             </b-list-group-item>
             <b-list-group-item>
-                <b>Výsledok</b> : {{ formatOutcome(this.displayed.outcome) }}
+                <p><b>Výsledok</b> : {{ formatOutcome(this.displayed.outcome) }}</p>
             </b-list-group-item>
         </b-list-group>
 

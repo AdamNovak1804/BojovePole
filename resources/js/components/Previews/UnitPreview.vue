@@ -27,7 +27,7 @@
             <b-card-text class="card-text">
                 {{ this.displayed.description }}
             </b-card-text>
-            <b-button class="btn-action mt-2">Zobraziť viac</b-button>
+            <b-button @click="displayView()" class="btn-action mt-2">Zobraziť viac</b-button>
         </b-card-body>
     </b-card>
 </template>
@@ -56,6 +56,10 @@
             getType: function(value) {
                 var tmp = this.types.find((e) => e.enum == value);
                 return tmp.text;
+            },
+
+            displayView: function() {
+                this.$emit('displayView', 'unit-view');
             }
         }
     }
