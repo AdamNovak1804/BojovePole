@@ -57,7 +57,7 @@ class DataController extends Controller
 
     public function getCemeteryRequests()
     {
-        return Cemeter::where('visible', '=', 0)->get()->toJson();
+        return Cemetery::where('visible', '=', 0)->get()->toJson();
     }
 
     public function getLandmarks()
@@ -105,6 +105,23 @@ class DataController extends Controller
             'description.max' => 'Presihnutý maximálny počet znakov v opise!'
         ]);
 
+        $files = '';
+
+        if ( $request->gallery != null )
+        {
+            $iter = 0;
+            $files = '{ "images" : [';
+            foreach ( $request->gallery as $image )
+            {
+                $name = time().'_'.$iter.'.'.$image->getClientOriginalExtension();
+                $image->move(public_path('/images/userContent/'), $name);
+                $files = $files.' { "path" : "'.$name.'" },';
+                $iter++;
+            }
+            $files[-1] = ' ';
+            $files = $files.'] }';
+        }
+
         Unit::create([
             'name' => $request->name,
             'visible' => '0',
@@ -112,9 +129,10 @@ class DataController extends Controller
             'type' => $request->type,
             'country' => $request->country,
             'location' => $request->location,
-            'longtitude' => $request->input('latlng[0]'),
-            'latitude' => $request->input('latlng[1]'),
-            'description' => $request->description
+            'longtitude' => $request->input('latlng.1'),
+            'latitude' => $request->input('latlng.0'),
+            'description' => $request->description,
+            'gallery' => $files
         ]);
     }
 
@@ -179,6 +197,90 @@ class DataController extends Controller
             'longtitude' => $request->input('latlng.1'),
             'latitude' => $request->input('latlng.0'),
             'description' => $request->description,
+            'gallery' => $files
+        ]);
+    }
+
+    public function postCemetery(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'max:45'],
+            'description' => ['max:65535'],
+            'latlng' => ['required'],
+        ],
+        [
+            'name.required' => 'Nebol zadaný názov cintorína!',
+            'name.max' => 'Názov cintorína musí mať menej ako 46 znakov!',
+            'description' => 'Presihnutý maximálny počet znakov v opise!',
+            'latlng.required' => 'Nebola zadaná geografická poloha cintorína na mape!',
+        ]);
+
+        $files = '';
+
+        if ( $request->gallery != null )
+        {
+            $iter = 0;
+            $files = '{ "images" : [';
+            foreach ( $request->gallery as $image )
+            {
+                $name = time().'_'.$iter.'.'.$image->getClientOriginalExtension();
+                $image->move(public_path('/images/userContent/'), $name);
+                $files = $files.' { "path" : "'.$name.'" },';
+                $iter++;
+            }
+            $files[-1] = ' ';
+            $files = $files.'] }';
+        }
+
+        Cemetery::create([
+            'name' => $request->name,
+            'visible' => '0',
+            'reliability' => '0',
+            'description' => $request->description,
+            'longtitude' => $request->input('latlng.1'),
+            'latitude' => $request->input('latlng.0'),
+            'gallery' => $files
+        ]);
+    }
+
+    public function postLandmark(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'max:45'],
+            'description' => ['max:65535'],
+            'latlng' => ['required']
+        ],
+        [
+            'name.required' => 'Nebol zadaný názov pamätníka!',
+            'name.max' => 'Názov pamätníka musí mať menej ako 46 znakov!',
+            'description.max' => 'Presihnutý maximálny počet znakov v opise!',
+            'latlng.required' => 'Nebola zadaná geografická poloha pamätníka na mape!'
+        ]);
+
+        $files = '';
+
+        if ( $request->gallery != null )
+        {
+            $iter = 0;
+            $files = '{ "images" : [';
+            foreach ( $request->gallery as $image )
+            {
+                $name = time().'_'.$iter.'.'.$image->getClientOriginalExtension();
+                $image->move(public_path('/images/userContent/'), $name);
+                $files = $files.' { "path" : "'.$name.'" },';
+                $iter++;
+            }
+            $files[-1] = ' ';
+            $files = $files.'] }';
+        }
+
+        Landmark::create([
+            'name' => $request->name,
+            'visible' => '0',
+            'reliability' => '0',
+            'description' => $request->description,
+            'longtitude' => $request->input('latlng.1'),
+            'latitude' => $request->input('latlng.0'),
             'gallery' => $files
         ]);
     }
@@ -260,6 +362,13 @@ class DataController extends Controller
         $unit->longtitude = $request->input('latlng.0');
         $unit->latitude = $request->input('latlng.1');
         $unit->description = $request->description;
+
+        if ( !empty($request->reliability) ) {
+            $unit->reliability = $request->reliability;
+        }
+        else {
+            $unit->reliability = '0';
+        }
 
         if ( !empty($gallery) ) {
             $unit->gallery = '{"images": '.json_encode($gallery->images).'}';
@@ -359,6 +468,13 @@ class DataController extends Controller
         $battle->latitude = $request->input('latlng.1');
         $battle->description = $request->description;
 
+        if ( !empty($request->reliability) ) {
+            $battle->reliability = $request->reliability;
+        }
+        else {
+            $battle->reliability = '0';
+        }
+
         if ( !empty($gallery) ) {
             $battle->gallery = '{"images": '.json_encode($gallery->images).'}';
         }
@@ -366,52 +482,156 @@ class DataController extends Controller
         $battle->save();
     }
 
-    public function postCemetery(Request $request)
+    public function updateCemetery(Request $request)
     {
         $request->validate([
             'name' => ['required', 'max:45'],
-            'description' => ['max:65535'],
             'latlng' => ['required'],
+            'description' => ['max:65535']
         ],
         [
-            'name.required' => 'Nebol zadaný názov cintorína!',
-            'name.max' => 'Názov cintorína musí mať menej ako 46 znakov!',
-            'description' => 'Presihnutý maximálny počet znakov v opise!',
-            'latlng.required' => 'Nebola zadaná geografická poloha cintorína na mape!',
+            'name.required' => 'Nebol zadaný názov bitky!',
+            'name.max' => 'Názov bitky musí mať menej ako 46 znakov!',
+            'latlng.required' => 'Nebola zadaná geografická poloha bitky na mape!',
+            'description.max' => 'Presihnutý maximálny počet znakov v opise!'
         ]);
 
-        Cemetery::create([
-            'name' => $request->name,
-            'visible' => '0',
-            'reliability' => '0',
-            'description' => $request->description,
-            'longtitude' => $request->input('latlng.lng'),
-            'latitude' => $request->input('latlng.lat')
-        ]);
+        $cemetery = Cemetery::find($request->id);
+
+        $gallery = json_decode($cemetery->gallery);
+        $deleted = $request->to_delete;
+        $uploaded = $request->to_upload;
+
+        /* Remove deleted images */
+        if ( !empty($deleted) )
+        {
+            foreach ( $gallery->images as $key => $image )
+            {
+                foreach ( $deleted as $delete )
+                {
+                    if ( $image->path == $delete )
+                    {
+                        $path = public_path().'/images/userContent/'.$delete;
+                        
+                        if ( File::exists($path) )
+                        {
+                            File::Delete($path);
+                        }
+
+                        $path = public_path().'/images/'.$delete;
+                        if ( File::exists($path) )
+                        {
+                            File::Delete($path);
+                        }
+
+                        unset($gallery->images[$key]);
+                    }
+                }
+            }
+        }
+        
+        /* Add new images */
+        if ( !empty($uploaded) )
+        {
+            $iter = 0;
+            foreach ( $uploaded as $upload )
+            {
+                $name = time().'_'.$iter.'.'.$upload->getClientOriginalExtension();
+                $file = json_encode(array("path" => $name));
+                $upload->move(public_path('/images/userContent/'), $name);
+                array_push($gallery->images, json_decode($file));
+                $iter++;
+            }
+        }
+
+        /* Save new data */
+        $cemetery->visible = (int) $request->visible;
+        $cemetery->name = $request->name;
+        $cemetery->longtitude = $request->input('latlng.0');
+        $cemetery->latitude = $request->input('latlng.1');
+        $cemetery->description = $request->description;
+
+        if ( !empty($gallery) ) {
+            $cemetery->gallery = '{"images": '.json_encode($gallery->images).'}';
+        }
+
+        $cemetery->save();
     }
 
-    public function postLandmark(Request $request)
+    public function updateLandmark(Request $request)
     {
         $request->validate([
             'name' => ['required', 'max:45'],
-            'description' => ['max:65535'],
-            'latlng' => ['required']
+            'latlng' => ['required'],
+            'description' => ['max:65535']
         ],
         [
-            'name.required' => 'Nebol zadaný názov pamätníka!',
-            'name.max' => 'Názov pamätníka musí mať menej ako 46 znakov!',
-            'description.max' => 'Presihnutý maximálny počet znakov v opise!',
-            'latlng.required' => 'Nebola zadaná geografická poloha pamätníka na mape!'
+            'name.required' => 'Nebol zadaný názov bitky!',
+            'name.max' => 'Názov bitky musí mať menej ako 46 znakov!',
+            'latlng.required' => 'Nebola zadaná geografická poloha bitky na mape!',
+            'description.max' => 'Presihnutý maximálny počet znakov v opise!'
         ]);
 
-        Landmark::create([
-            'name' => $request->name,
-            'visible' => '0',
-            'reliability' => '0',
-            'description' => $request->description,
-            'longtitude' => $request->input('latlng.lng'),
-            'latitude' => $request->input('latlng.lat')
-        ]);
+        $landmark = Landmark::find($request->id);
+
+        $gallery = json_decode($landmark->gallery);
+        $deleted = $request->to_delete;
+        $uploaded = $request->to_upload;
+
+        /* Remove deleted images */
+        if ( !empty($deleted) )
+        {
+            foreach ( $gallery->images as $key => $image )
+            {
+                foreach ( $deleted as $delete )
+                {
+                    if ( $image->path == $delete )
+                    {
+                        $path = public_path().'/images/userContent/'.$delete;
+                        
+                        if ( File::exists($path) )
+                        {
+                            File::Delete($path);
+                        }
+
+                        $path = public_path().'/images/'.$delete;
+                        if ( File::exists($path) )
+                        {
+                            File::Delete($path);
+                        }
+
+                        unset($gallery->images[$key]);
+                    }
+                }
+            }
+        }
+        
+        /* Add new images */
+        if ( !empty($uploaded) )
+        {
+            $iter = 0;
+            foreach ( $uploaded as $upload )
+            {
+                $name = time().'_'.$iter.'.'.$upload->getClientOriginalExtension();
+                $file = json_encode(array("path" => $name));
+                $upload->move(public_path('/images/userContent/'), $name);
+                array_push($gallery->images, json_decode($file));
+                $iter++;
+            }
+        }
+
+        /* Save new data */
+        $landmark->visible = (int) $request->visible;
+        $landmark->name = $request->name;
+        $landmark->longtitude = $request->input('latlng.0');
+        $landmark->latitude = $request->input('latlng.1');
+        $landmark->description = $request->description;
+
+        if ( !empty($gallery) ) {
+            $landmark->gallery = '{"images": '.json_encode($gallery->images).'}';
+        }
+
+        $landmark->save();
     }
 
     public function getUserContentImage($image)
@@ -423,5 +643,20 @@ class DataController extends Controller
         );
 
         return response()->file($path, $headers);
+    }
+
+    public function deleteBattle(Request $request)
+    {
+        Battle::find($request->id)->delete();
+    }
+
+    public function deleteUnit(Request $request)
+    {
+        Unit::find($request->id)->delete();
+    }
+
+    public function deleteCemetery(Request $request)
+    {
+        Cemetery::find($request->id)->delete();
     }
 }

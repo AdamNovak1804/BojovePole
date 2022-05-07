@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@100;400;700;900&display=swap" rel="stylesheet">
+    <link rel = "icon" href ="{{ asset('/public/images/logo1.ico') }}" type = "image/x-icon">
     <style>
         *
         {
@@ -207,7 +208,7 @@
 
         .card-preview
         {
-            width: 400px;
+            max-width: 400px;
         }
 
         .card-text
@@ -308,6 +309,18 @@
         {
             display: block;
             text-align: center;
+        }
+
+        .page-item.active .page-link
+        {
+            color: #EDE0A6;
+            background-color: #540202;
+            border-color: #540202;
+        }
+
+        .page-link
+        {
+            color: #540202;
         }
 
     </style>

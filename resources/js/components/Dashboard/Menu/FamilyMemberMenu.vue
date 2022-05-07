@@ -86,7 +86,7 @@
                         <b-card-body>
                             <b-row>
                                 <b-col>
-                                    <input class="member-select" type="checkbox" name="card-checkbox" id="card-checkbox">
+                                    <input v-model="selected" class="member-select" :value="member.id" type="checkbox" name="card-checkbox" id="card-checkbox">
                                 </b-col>
                                 <b-col>
                                     <img
@@ -129,14 +129,14 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-2">
-            <div class="col">
-                <button class="btn btn-action">Zmazať vybrané položky</button>
-            </div>
-            <div class="col">
+        <b-row class="mt-3" align-h="end">
+            <b-col cols="auto">
+                <button @click="deleteMembers()" class="btn btn-action">Zmazať vybrané položky</button>
+            </b-col>
+            <b-col cols="auto">
                 <button v-b-modal.add-member class="btn btn-action">Nový rodinný príslušník</button>
-            </div>
-        </div>
+            </b-col>
+        </b-row>
         <b-modal
             id="add-member"
             hide-footer
@@ -337,6 +337,7 @@
                 errors: '',
                 gallery: '',
                 status: '',
+                selected: []
             }
         },
 
@@ -381,6 +382,14 @@
                 }).catch((error) => {
                     this.errors = error.response.data.errors;
                     this.showModal();
+                });
+            },
+
+            deleteMembers: function() {
+                axios.delete('/api/delete_members', { data: this.selected }).then((response) => {
+                    alert('Úspešne vymazaných ' + response.data + ' rodinných príslušníkov!');
+                }).catch((error) => {
+                    console.log(error.response);
                 });
             },
 

@@ -10,6 +10,11 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+import UnitList from './components/DataLists/UnitList';
+import BattleList from './components/DataLists/BattleList';
+import CemeteryList from './components/DataLists/CemeteryList';
+import LandmarkList from './components/DataLists/LandmarkList';
+
 Vue.use(VueRouter)
 
 export default new VueRouter({
@@ -17,14 +22,17 @@ export default new VueRouter({
     routes: [
         {
             path: '/domov',
+            name: 'Domovská stránka',
             component: Home
         },
         {
             path: '/uvod',
+            name: 'Úvodná stránka',
             component: Intro
         },
         {
             path: '/mapa',
+            name: 'Mapa',
             component: Map
         },
         {
@@ -32,8 +40,14 @@ export default new VueRouter({
             component: Data
         },
         {
-            path: '/data/boje',
-            component: DataPagination
+            path: '/data/zoznam/',
+            component: DataPagination,
+            children: [
+                { path: 'utvary', component: UnitList },
+                { path: 'bitky', component: BattleList },
+                { path: 'cintoriny', component: CemeteryList },
+                { path: 'pamiatky', component: LandmarkList }
+            ]
         },
         {
             path: '/pridat',
@@ -41,8 +55,8 @@ export default new VueRouter({
         },
         {
             path: '/prihlasenie',
-            component: Login,
-            name: 'Login'
+            name: 'Login',
+            component: Login
         },
         {
             path: '/registracia',

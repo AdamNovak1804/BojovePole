@@ -12,6 +12,11 @@ import Vue from 'vue';
 import router from './routes';
 import Vuex from 'vuex';
 
+router.beforeEach((to, from, next) => {
+  document.title = to.name;
+  next();
+})
+
 Vue.use(Vuex);
 
 import { LMap, LTileLayer, LMarker, LControl, LIcon, LLayerGroup } from 'vue2-leaflet';
@@ -83,9 +88,15 @@ Vue.component('family-member-menu', require('./components/Dashboard/Menu/FamilyM
 
 Vue.component('battle-edit-card', require('./components/Dashboard/HistorianCards/BattleEditCard.vue').default);
 Vue.component('unit-edit-card', require('./components/Dashboard/HistorianCards/UnitEditCard.vue').default);
+Vue.component('cemetery-edit-card', require('./components/Dashboard/HistorianCards/CemeteryEditCard.vue').default);
+Vue.component('landmark-edit-card', require('./components/Dashboard/HistorianCards/LandmarkEditCard.vue').default);
 
-Vue.component('battle-edit', require('./components/Dashboard/BattleEdit.vue').default);
-Vue.component('unit-edit', require('./components/Dashboard/UnitEdit.vue').default);
+Vue.component('battle-edit', require('./components/Dashboard/HistorianEdits/BattleEdit.vue').default);
+Vue.component('unit-edit', require('./components/Dashboard/HistorianEdits/UnitEdit.vue').default);
+Vue.component('cemetery-edit', require('./components/Dashboard/HistorianEdits/CemeteryEdit.vue').default);
+Vue.component('landmark-edit', require('./components/Dashboard/HistorianEdits/LandmarkEdit.vue').default);
+
+Vue.component('edit-footer', require('./components/Dashboard/HistorianEdits/EditFooter.vue').default);
 
 Vue.component('messenger-form', require('./components/Dashboard/Messenger.vue').default);
 Vue.component('message', require('./components/Dashboard/Message.vue').default);

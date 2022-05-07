@@ -22,6 +22,19 @@
             Základňa vojenskej jednotky
         </label>
         <input v-model="form.location" type="text" name="unit-location" id="unit-location" placeholder="Nitra">
+        <label for="unit-file-upload">
+            Priložiť obrázky ako prílohu
+        </label>
+        <div class="dropbox">
+            <input 
+                type="file"
+                name="unit-file-upload"
+                id="unit-file-upload"
+                multiple
+                @change="uploadFiles($event.target.files)"
+            >
+            <p>Súbory je možné vložiť do vyznačenej oblasti</p>
+        </div>
         <label for="unit-description">
             Opis a história vojenskej jednotky
         </label>
@@ -45,7 +58,6 @@
                     location: '',
                     country: '',
                     description: '',
-                    latlng: '',
                     gallery: ''
                 },
 
@@ -75,9 +87,28 @@
             },
 
             submit: function() {
-                this.form.latlng = this.position;
+                var formData = new FormData();
 
-                axios.post('/api/post_unit', this.form).then(() => {
+                formData.append('name', this.form.name);
+                formData.append('type', this.form.type);
+                formData.append('country', this.form.country);
+                formData.append('location', this.form.location);
+                formData.append('description', this.form.description);
+
+                if ( !!this.position ) {
+                    formData.append('latlng[0]', this.position.lat);
+                    formData.append('latlng[1]', this.position.lng);
+                }
+
+                for ( var i = 0; i < this.form.gallery.length; i++ ) {
+                    formData.append('gallery[' + i + ']', this.form.gallery[i]);
+                }
+
+                axios.post('/api/post_unit', formData, {
+                    headers : {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(() => {
                     this.form.name = '';
                     this.form.type = '';
                     this.form.country = '';
@@ -89,6 +120,10 @@
                 }).catch((error) => {
                     this.$emit('unitErrors', error.response.data.errors);
                 })
+            },
+
+            uploadFiles: function(files) {
+                this.form.gallery = files;
             }
         }
     }

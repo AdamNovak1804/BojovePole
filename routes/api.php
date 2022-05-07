@@ -36,8 +36,9 @@ Route::get('/family_members', function() {
 
 Route::get('/get_cards', 'IntroCardController@getCards');
 
-Route::get('/get_messages', 'UserController@getMessages');
-
+Route::get('/get_received_messages', 'UserController@getReceivedMessages');
+Route::get('/get_sent_messages', 'UserController@getSentMessages');
+Route::get('/get_contacts', 'UserController@getContacts');
 Route::get('/get_family', 'UserController@getFamily');
 
 Route::get('/get_users_and_roles', 'DataController@getUsersAndRoles');
@@ -55,8 +56,9 @@ Route::get('/get_territories', 'DataController@getTerritories');
 Route::get('/get_countries', 'DataController@getCountries');
 
 Route::get('/get_unit_requests', 'DataController@getUnitRequests');
-
 Route::get('/get_battle_requests', 'DataController@getBattleRequests');
+Route::get('/get_cemetery_requests', 'DataController@getCemeteryRequests');
+Route::get('/get_landmark_requests', 'DataController@getLandmarkRequests');
 
 Route::post('/post_unit', 'DataController@postUnit');
 Route::post('/post_battle', 'DataController@postBattle');
@@ -65,6 +67,8 @@ Route::post('/post_landmark', 'DataController@postLandmark');
 
 Route::post('/update_unit', 'DataController@updateUnit');
 Route::post('/update_battle', 'DataController@updateBattle');
+Route::post('/update_cemetery', 'DataController@updateCemetery');
+Route::post('/update_landmark', 'DataController@updateLandmark');
 
 Route::post('/send_message', 'UserController@sendMessage');
 
@@ -81,7 +85,10 @@ Route::post('/update_user', 'UserController@updateUser');
 Route::post('/update_user_role', 'UserController@updateUserRole');
 
 Route::get('/image/{image}', 'UserController@getImage');
-
 Route::get('/userContent/{image}', 'DataController@getUserContentImage');
 
 Route::delete('/delete_user', 'UserController@deleteUser');
+Route::delete('/delete_members', 'UserController@deleteMembers');
+Route::delete('/delete_battle', 'DataController@deleteBattle');
+Route::delete('/delete_unit', 'DataController@deleteUnit');
+Route::delete('/delete_cemetery', 'DataController@deleteCemetery');

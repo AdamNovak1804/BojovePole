@@ -4,6 +4,19 @@
             Názov cintorínu
         </label>
         <input v-model="form.name" type="text" name="cemetery-name" id="cemetery-name" placeholder="Vojenský cintorín Veľkrop">
+        <label for="cemetery-file-upload">
+            Priložiť obrázky ako prílohu
+        </label>
+        <div class="dropbox">
+            <input 
+                type="file"
+                name="cemetery-file-upload"
+                id="cemetery-file-upload"
+                multiple
+                @change="uploadFiles($event.target.files)"
+            >
+            <p>Súbory je možné vložiť do vyznačenej oblasti</p>
+        </div>
         <label for="cemetery-description">
             Opis cintorínu
         </label>
@@ -32,9 +45,25 @@
 
         methods: {
             submit: function() {
-                this.form.latlng = this.position;
+                var formData = new FormData();
 
-                axios.post('/api/post_cemetery', this.form).then(() => {
+                formData.append('name', this.form.name);
+                formData.append('description', this.form.description);
+
+                if ( !!this.position ) {
+                    formData.append('latlng[0]', this.position.lat);
+                    formData.append('latlng[1]', this.position.lng);
+                }
+
+                for ( var i = 0; i < this.form.gallery.length; i++ ) {
+                    formData.append('gallery[' + i + ']', this.form.gallery[i]);
+                }
+
+                axios.post('/api/post_cemetery', formData, {
+                    headers : {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(() => {
                     this.form.name = '';
                     this.form.description = '';
                     
@@ -42,6 +71,10 @@
                 }).catch((error) => {
                     this.$emit('cemeteryErrors', error.response.data.errors);
                 })
+            },
+
+            uploadFiles: function(files) {
+                this.form.gallery = files;
             }
         }
     }

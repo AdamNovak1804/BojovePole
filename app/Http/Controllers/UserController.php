@@ -61,11 +61,32 @@ class UserController extends Controller
         Auth::logout();
     }
 
-    public function getMessages()
+    public function getReceivedMessages()
     {
         $id = Auth::id();
 
         return Message::with('sender', 'receiver')->where('user_id_to', $id)->get()->toJson();
+    }
+
+    public function getContacts()
+    {
+        $user = Auth::user();
+
+        if ( !strcmp($user->role, "user") )
+        {
+            return User::where('role', '=', 'historian')->orWhere('role', '=', 'admin')->orderBy('role', 'desc')->get()->toJson();
+        }
+        else
+        {
+            return User::all()->except(Auth::id());
+        }
+    }
+
+    public function getSentMessages()
+    {
+        $id = Auth::id();
+
+        return Message::with('sender', 'receiver')->where('user_id_from', $id)->get()->toJson();
     }
 
     public function sendMessage(Request $request)
@@ -227,5 +248,15 @@ class UserController extends Controller
         $user->delete();
 
         return $user;
+    }
+
+    public function deleteMembers(Request $request)
+    {
+        $members = FamilyMember::findMany($request->all());
+        $count = $members->count();
+
+        $members->each->delete();
+
+        return $count;
     }
 }

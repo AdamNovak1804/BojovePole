@@ -1,21 +1,34 @@
+<style scoped>
+
+    .container
+    {
+        margin-top: 150px;
+    }
+
+    ::v-deep .card-title
+    {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+    }
+
+</style>
+
 <template>
     <div>
-        <navbar-header></navbar-header>
+        <navbar-header />
+        <div class="container">
+            <router-view />
+        </div>
+        <navbar-footer />
     </div>
 </template>
 
 <script>
 
-export default {
+    export default {
 
-    mounted()
-    {
-        axios.get('/api/family_members').then(response => {
-            console.log(response.data);
-        }).catch(error => {
-            console.log(error);
-        });
     }
-}
 
 </script>

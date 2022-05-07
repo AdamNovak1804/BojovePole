@@ -18,7 +18,7 @@ class CreateUnitsTable extends Migration
             $table->boolean('visible');
             $table->enum('reliablity', ['0', '1', '2', '3', '4', '5']);
             $table->string('name', 45);
-            $table->enum('type', ['a', 'b', 'c']);
+            $table->enum('type', ['a', 'b', 'c', 'd', 'e']);
             $table->string('location', 45)->nullable();
             $table->text('description')->nullable();
             $table->decimal('longtitude', 11, 8);

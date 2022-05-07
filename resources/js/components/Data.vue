@@ -42,7 +42,7 @@
                         <b-card-text>
                             Kompletný zoznam jednotiek, ktoré participovali v bojoch na severovýchode Slovenska počas prvej svetovej vojny.
                         </b-card-text>
-                        <b-button @click="goTo('/data/utvary')" class="btn-action mt-2">Zobraziť</b-button>
+                        <b-button @click="goTo('/data/zoznam/utvary')" class="btn-action mt-2">Zobraziť</b-button>
                     </b-card>
                 </div>
                 <div class="col-12 col-lg-4 col-md-6">
@@ -56,7 +56,7 @@
                         <b-card-text class="card-text">
                             Kompletný zoznam bitiek, ktoré sa udiali počas vojenskej kampane v rokoch 1914 až 1915.
                         </b-card-text>
-                        <b-button @click="goTo('/data/boje')" class="btn-action mt-2">Zobraziť</b-button>
+                        <b-button @click="goTo('/data/zoznam/bitky')" class="btn-action mt-2">Zobraziť</b-button>
                     </b-card>
                 </div>
                 <div class="col-12 col-lg-4 col-md-6">
@@ -70,7 +70,7 @@
                         <b-card-text class="card-text">
                             Zoznam cintorínov padlých vojakov v prvej svetovej vojne na území Slovenska.
                         </b-card-text>
-                        <b-button @click="goTo('/data/cintoriny')" class="btn-action mt-2">Zobraziť</b-button>
+                        <b-button @click="goTo('/data/zoznam/cintoriny')" class="btn-action mt-2">Zobraziť</b-button>
                     </b-card>
                 </div>
                 <div class="col-12 col-lg-4 col-md-6">
@@ -84,7 +84,7 @@
                         <b-card-text class="card-text">
                             Zoznam pamiatok a pomníkov padlých vojakov v prvej svetovej vojne na území Slovenska.
                         </b-card-text>
-                        <b-button @click="goTo('/data/pamiatky')" class="btn-action mt-2">Zobraziť</b-button>
+                        <b-button @click="goTo('/data/zoznam/pamiatky')" class="btn-action mt-2">Zobraziť</b-button>
                     </b-card>
                 </div>
                 <div class="col-12 col-lg-4 col-md-6">
@@ -98,7 +98,7 @@
                         <b-card-text class="card-text">
                             Zoznam krajín, ktoré sa účastnili na vojenských operáciách počas prvej svetovej vojny na Slovensku.
                         </b-card-text>
-                        <b-button @click="goTo('/data/krajiny')" class="btn-action mt-2">Zobraziť</b-button>
+                        <b-button @click="goTo('/data/zoznam/krajiny')" class="btn-action mt-2">Zobraziť</b-button>
                     </b-card>
                 </div>
             </div>

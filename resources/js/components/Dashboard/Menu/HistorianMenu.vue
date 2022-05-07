@@ -66,6 +66,32 @@
                 :battle="this.displayed"
             />
         </div>
+        <div class="row g-0 card-container" v-if="this.selected == 'cemeteries'">
+            <cemetery-edit-card
+                v-on:displayView="showModal"
+                v-for="cemetery in this.cemetery_requests"
+                :key="'cemetery' + cemetery.id"
+                :cemetery="cemetery"
+            />
+            <cemetery-edit
+                ref="cemetery-edit"
+                v-if="this.displayed"
+                :cemetery="this.displayed"
+            />
+        </div>
+        <div class="row g-0 card-container" v-if="this.selected == 'landmarks'">
+            <landmark-edit-card
+                v-on:displayView="showModal"
+                v-for="landmark in this.landmark_requests"
+                :key="'landmark' + landmark.id"
+                :landmark="landmark"
+            />
+            <landmark-edit
+                ref="landmark-edit"
+                v-if="this.displayed"
+                :landmark="this.displayed"
+            />
+        </div>
     </div>    
 </template>
 

@@ -49,6 +49,7 @@
 
     .contacts
     {
+        min-height: 580px;
         border-radius: 15px;
         background-color: #FFF;
         box-shadow: 0px 2px 3px #999;
@@ -113,44 +114,59 @@
     <div>
         <div>
             <input @click="selected = 1" type="radio" name="inbox" id="read_message" checked>
-            <label class="btn-select" for="read_message">Prijaté správy</label>
+            <label class="btn-select" for="read_message">História správ</label>
             <input @click="selected = 2" type="radio" name="inbox" id="post_message">
             <label class="btn-select" for="post_message">Nová správa</label>
         </div>
         <div v-if="selected === 1" class="messenger-content row g-0">
             <div class="col-6 col-md-4 p-2">
                 <div class="contacts">
-                    <div class="row g-0">
-                        <div class="col-6 mb-2">
-                            <input type="radio" name="type" id="message" checked>
-                            <label class="btn-mode" for="message">Správy</label>
-                        </div>
-                        <div class="col-6 mb-2">
-                            <input type="radio" name="type" id="request">
-                            <label class="btn-mode" for="request">Žiadosti</label>
-                        </div>
-                        <message class="message"
-                            v-for="message in messages"
-                            :key="message.id"
-                            :message="message"
-                            @click.native="displayMessage($event)"
-                        />
-                        <button @click="getMessages">Load new</button>
-                    </div>
+                    <b-row no-gutters>
+                        <b-col class="mb-3" cols="6">
+                            <input @click="updateMessages(true)" type="radio" name="type" id="message" checked>
+                            <label class="btn-mode" for="message">Prijaté</label>
+                        </b-col>
+                        <b-col class="mb-3" cols="6">
+                            <input @click="updateMessages(false)" type="radio" name="type" id="request">
+                            <label class="btn-mode" for="request">Odoslané</label>
+                        </b-col>
+                    </b-row>
+                    <message 
+                        class="message"
+                        id="messages"
+                        v-for="message in getDisplayedMessages()"
+                        :key="message.id"
+                        :message="message"
+                        @click.native="displayMessage(message)"
+                    />
+                    <b-pagination
+                        class="mt-3 pb-3"
+                        v-model="current"
+                        :total-rows="this.rows"
+                        :per-page="this.max"
+                        aria-controls="messages"
+                        align="center"
+                    />
                 </div>
             </div>
             <div class="col-6 col-md-8 p-2 cont">
                 <div v-if="this.selected_message === true" class="msg-panel mb-2">
                     <div class="img-container">
-                        <img class="profile-pic img-center" :src="this.image" width="50px" height="50px" alt="Profilová fotka">
+                        <img
+                            class="profile-pic img-center"
+                            :src="'/api/image/' + this.displayed.sender.image" 
+                            width="50px" 
+                            height="50px" 
+                            alt="Profilová fotka"
+                        >
                     </div>
                     <div class="msg-info">
-                        <h3>{{ this.sender }}</h3>
-                        <small>{{ this.email }}</small>
-                        <p><b>{{ this.subject }}</b></p>
+                        <h3>{{ this.displayed.sender.name }}</h3>
+                        <small>{{ this.displayed.sender.email }}</small>
+                        <p><b>{{ this.displayed.subject }}</b></p>
                     </div>
                 </div>
-                <textarea v-model="message" rows="10" readonly />
+                <textarea v-model="this.displayed.text" rows="10" readonly />
             </div>
         </div>
         <div v-if="selected === 2" class="messenger-content">
@@ -163,42 +179,73 @@
 
     export default {
 
-        mounted() {
-            console.log('Component mounted.');
-
-            this.getMessages();
-        },
-
         data() {
             return {
                 selected_message: false,
                 selected: 1,
-                messages: '',
-                image: '/images/add.png',
+                image: '',
                 sender: 'Od:',
                 email: '',
                 subject: 'Predmet:',
-                message: ''
+                message: '',
+                displayed: '',
+
+                received: true, 
+
+                displayed_messages: '',
+
+                current: 1,
+                max: 5,
+                rows: ''
             }
         },
 
+        mounted() {
+            console.log('Component mounted.');
+
+            this.getReceivedMessages();
+        },
+
         methods: {
-            getMessages: function() {
-                axios.get('/api/get_messages').then(response => {
-                    this.messages = response.data;
-                }).catch(error => {
+            getReceivedMessages: function() {
+                axios.get('/api/get_received_messages').then((response) => {
+                    this.displayed_messages = response.data;
+                    this.rows = this.displayed_messages.length;
+                }).catch((error) => {
                     console.log(error);
                 });
             },
 
-            displayMessage: function(event) {
+            getSentMessages: function() {
+                axios.get('/api/get_sent_messages').then((response) => {
+                    this.displayed_messages = response.data;
+                    this.rows = this.displayed_messages.length;
+                }).catch((error) => {
+                    console.log(error);
+                });
+            },
+
+            displayMessage: function(message) {
                 this.selected_message = true;
-                var temp = event.currentTarget;
-                this.image = temp.children[0].src;
-                this.email = temp.children[2].children[0].textContent;
-                this.subject = temp.children[1].children[1].textContent;
-                this.sender = temp.children[1].children[0].textContent;
-                this.message = temp.children[2].children[1].textContent;
+                this.displayed = message;
+            },
+
+            updateMessages: function(received) {
+                if ( received == true) {
+                    this.received = true;
+                    this.getReceivedMessages();
+                }
+                else {
+                    this.received = false;
+                    this.getSentMessages();
+                }
+            },
+
+            getDisplayedMessages: function() {
+                return this.displayed_messages.slice(
+                    (this.current - 1) * this.max,
+                    this.current * this.max,
+                );
             }
         }
     }
