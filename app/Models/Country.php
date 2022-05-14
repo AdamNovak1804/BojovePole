@@ -9,11 +9,6 @@ class Country extends Model
 {
     use HasFactory;
 
-    public function weapons()
-    {
-        return $this->hasMany('App\Models\Weapon');
-    }
-
     public function territories()
     {
         return $this->hasMany('App\Models\Territory');

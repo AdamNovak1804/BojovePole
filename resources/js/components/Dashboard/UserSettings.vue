@@ -63,91 +63,99 @@
 </style>
 
 <template>
-    <form action="POST" @submit.prevent="updateSettings" enctype="multipart/form-data">
-        <div class="settings-menu">
-            <div class="row justify-content-center">
-                <div class="col-6">
-                    <b-row
-                        align-v="center"
-                    >
+    <div>
+        <form action="POST" @submit.prevent="updateSettings" enctype="multipart/form-data">
+            <div class="settings-menu">
+                <div class="row justify-content-center">
+                    <div class="col-6">
+                        <b-row align-v="center">
+                            <b-col>
+                                <div
+                                    class="image-preview"
+                                    :style="{ 'background-image' : `url(${this.image})` }"
+                                    @click="selectImage"
+                                />
+                                <input class="btn-file" type="file" ref="addImage" name="addImage" id="addImage" @input="inputFile">
+                            </b-col>
+                            <b-col>
+                                <div>
+                                    <h4>{{ user.name }}</h4>
+                                    <p>{{ user.email }}</p>
+                                </div>
+                            </b-col>
+                        </b-row>
+                    </div>
+                </div>
+                <div class="settings-overflow">
+                    <b-row>
                         <b-col>
-                            <div
-                                class="image-preview"
-                                :style="{ 'background-image' : `url(${this.image})` }"
-                                @click="selectImage"
-                            />
-                            <input class="btn-file" type="file" ref="addImage" name="addImage" id="addImage" @input="inputFile">
+                            <label for="settings-username">
+                                Používateľské meno
+                            </label>
+                            <input
+                                v-model="form.name"
+                                type="text"
+                                name="settings-username"
+                                id="settings-username"
+                                placeholder="Zmeniť používateľské meno"
+                            >
                         </b-col>
                         <b-col>
-                            <div>
-                                <h4>{{ user.name }}</h4>
-                                <p>{{ user.email }}</p>
-                            </div>
+                            <label for="settings-email">
+                                Používateľský email
+                            </label>
+                            <input
+                                v-model="form.email"
+                                type="text"
+                                name="settings-email"
+                                id="settings-email"
+                                placeholder="Zmeniť email"
+                            >
                         </b-col>
                     </b-row>
+                    <b-row>
+                        <b-col>
+                            <label for="settings-password">
+                                Heslo
+                            </label>
+                            <input 
+                                v-model="form.password"
+                                type="password"
+                                name="settings-password"
+                                id="settings-password"
+                                placeholder="Zmeniť heslo"
+                            >
+                        </b-col>
+                        <b-col>
+                            <label for="settings-confirm">
+                                Potvrdenie hesla
+                            </label>
+                            <input 
+                                v-model="form.password_confirmation"
+                                type="password"
+                                name="settings-confirm"
+                                id="settings-confirm"
+                                placeholder="Potvrdiť zmenu hesla"
+                            >
+                        </b-col>
+                    </b-row>
+                    <label for="settings-about">
+                        O mne
+                    </label>
+                    <textarea class="settings-text" name="settings-about" id="settings-about" rows="10" placeholder="Zmeniť popis osobného účtu"/>
                 </div>
             </div>
-            <div class="settings-overflow">
-                <b-row>
-                    <b-col>
-                        <label for="settings-username">
-                            Používateľské meno
-                        </label>
-                        <input
-                            v-model="form.name"
-                            type="text"
-                            name="settings-username"
-                            id="settings-username"
-                            placeholder="Zmeniť používateľské meno"
-                        >
-                    </b-col>
-                    <b-col>
-                        <label for="settings-email">
-                            Používateľský email
-                        </label>
-                        <input
-                            v-model="form.email"
-                            type="text"
-                            name="settings-email"
-                            id="settings-email"
-                            placeholder="Zmeniť email"
-                        >
-                    </b-col>
-                </b-row>
-                <b-row>
-                    <b-col>
-                        <label for="settings-password">
-                            Heslo
-                        </label>
-                        <input 
-                            v-model="form.password"
-                            type="password"
-                            name="settings-password"
-                            id="settings-password"
-                            placeholder="Zmeniť heslo"
-                        >
-                    </b-col>
-                    <b-col>
-                        <label for="settings-confirm">
-                            Potvrdenie hesla
-                        </label>
-                        <input 
-                            v-model="form.password_confirmation"
-                            type="password"
-                            name="settings-confirm"
-                            id="settings-confirm"
-                            placeholder="Potvrdiť zmenu hesla"
-                        >
-                    </b-col>
-                </b-row>
-                <label for="settings-about">
-                    O mne
-                </label>
-                <textarea class="settings-text" name="settings-about" id="settings-about" rows="10" placeholder="Zmeniť popis osobného účtu"/>
-            </div>
-        </div>
-        <button class="btn btn-action mt-3">Uložiť zmeny</button>
-    </form>
+            <button class="btn btn-action mt-3">Uložiť zmeny</button>
+        </form>
+        <b-modal
+            ref="error-modal"
+            hide-footer
+        >
+            <error-list 
+                :errors="errors"
+            />
+        </b-modal>
+    </div>
 </template>
 
 <script>
@@ -158,11 +166,12 @@
             return {
                 image: this.$store.state.image,
                 updated_user: '',
+                errors: '',
 
                 form: {
                     name: this.user.name,
                     email: this.user.email,
-                    image: this.user.image,
+                    image: '',
                     password: '',
                     password_confirmation: '',
                     old: this.user.image
@@ -206,7 +215,6 @@
                 formData.append('password', this.form.password);
                 formData.append('password_confirmation', this.form.password_confirmation);
                 formData.append('image', this.form.image);
-                formData.append('old', this.form.old);
 
                 axios.post('/api/update_user', formData, { 
                     headers : {
@@ -216,9 +224,15 @@
                     this.updated_user = response.data;
                     this.$emit('updateUser', this.updated_user);
                     this.$store.commit('changeImage', this.image);
+                    alert('Osobné nastavenia používateľa boli zmenené!');
                 }).catch((error) => {
-                    console.log(error);
+                    this.errors = error.response.data.errors;
+                    this.showModal();
                 });
+            },
+
+            showModal: function() {
+                this.$refs['error-modal'].show();
             }
         }
     }

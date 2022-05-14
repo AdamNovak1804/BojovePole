@@ -62,7 +62,7 @@
         margin-left: 5px;
         height: 34px;
         width: 34px;
-        background: url('/images/remove.png') no-repeat center center;
+        background: url('/images/btn-delete.png') no-repeat center center;
         background-size: 34px 34px;
         outline: none;
         border: none;
@@ -72,10 +72,10 @@
 </style>
 
 <template>
-    <form action="#" @submit.prevent="">
+    <form v-if="this.user" action="#" @submit.prevent="">
         <div class="user-card-body mb-3">
             <div class="user-card-info">
-                <img class="user-card-image" :src="getProfileImage()" width="80px" height="80px" alt="Profilový obrázok">
+                <img class="user-card-image" :src="'/api/image/' + this.user.image" width="80px" height="80px" alt="Profilový obrázok">
                 <div class="user-card-text">
                     <h4>{{ this.user.name }}</h4>
                     <small>{{ this.user.email }}</small>
@@ -97,12 +97,26 @@
                             {{ option.name }}
                         </option>
                     </select>
-                    <button @click="deleteUser()" class="remove-user-button" />
+                    <button @click="showDeleteModal()" class="remove-user-button" />
                 </div>
                 <button @click="updateUserRole()" class="btn-action btn">Aktualizovať</button>
             </div>
         </div>
-    </form>  
+        <b-modal
+            hide-footer
+            ref="delete-modal"
+        >
+            <b-row>
+                <p class="text-center">Naozaj chcete odstrániť používateľa {{ user.name }}?</p>
+                <b-col>
+                    <b-button @click="closeModal()" class="float-end" variant="outline-primary">Nie</b-button>
+                </b-col>
+                <b-col>
+                    <b-button @click="deleteUser()" variant="danger">Áno</b-button>
+                </b-col>
+            </b-row>
+        </b-modal>
+    </form>
 </template>
 
 <script>
@@ -128,14 +142,6 @@
         },
 
         methods: {
-            getProfileImage: function() {
-                try {
-                    return require('/images/' + this.user.image).default;
-                } catch (error) {
-                    location.reload();
-                }
-            },
-
             updateUserRole: function() {
                 axios.post('/api/update_user_role', this.form).then((response) => {
                     alert('Úspešne sa podarilo aktualizovať rolu používateľa!');
@@ -144,10 +150,20 @@
                 });
             },
 
+            showDeleteModal: function() {
+                this.$refs['delete-modal'].show();
+            },
+
+            closeModal: function() {
+                this.$refs['delete-modal'].hide();
+            },
+
             deleteUser: function() {
                 axios.delete('/api/delete_user', { data: this.form }).then((response) => {
-                    var msg = 'Používateľ ' + response.data.name + ' úspešne zmazaný!'
+                    var msg = 'Používateľ ' + response.data.name + ' úspešne zmazaný!';
                     alert(msg);
+                    this.$refs['delete-modal'].hide();
+                    this.$emit('deleteUser', this.user.id);
                 }).catch((error) => {
                     console.log(error.response);
                 });

@@ -14,6 +14,7 @@ import UnitList from './components/DataLists/UnitList';
 import BattleList from './components/DataLists/BattleList';
 import CemeteryList from './components/DataLists/CemeteryList';
 import LandmarkList from './components/DataLists/LandmarkList';
+import CountryList from './components/DataLists/CountryList';
 
 Vue.use(VueRouter)
 
@@ -22,12 +23,12 @@ export default new VueRouter({
     routes: [
         {
             path: '/domov',
-            name: 'Domovská stránka',
+            name: 'Domov',
             component: Home
         },
         {
             path: '/uvod',
-            name: 'Úvodná stránka',
+            name: 'Úvod',
             component: Intro
         },
         {
@@ -37,41 +38,44 @@ export default new VueRouter({
         },
         {
             path: '/data',
+            name: 'Dáta',
             component: Data
         },
         {
             path: '/data/zoznam/',
             component: DataPagination,
             children: [
-                { path: 'utvary', component: UnitList },
-                { path: 'bitky', component: BattleList },
-                { path: 'cintoriny', component: CemeteryList },
-                { path: 'pamiatky', component: LandmarkList }
+                { path: 'utvary', name: 'Zoznam útvarov', component: UnitList },
+                { path: 'bitky', name: 'Zoznam bitiek', component: BattleList },
+                { path: 'cintoriny', name: 'Zoznam cintorínov', component: CemeteryList },
+                { path: 'pamiatky', name: 'Zoznam pamiatok', component: LandmarkList },
+                { path: 'krajiny', name: 'Zoznam krajín', component: CountryList }
             ]
         },
         {
             path: '/pridat',
+            name: 'Pridanie nového objektu',
             component: AddForm
         },
         {
             path: '/prihlasenie',
-            name: 'Login',
+            name: 'Prihlásenie',
             component: Login
         },
         {
             path: '/registracia',
-            component: Registration,
-            name: 'Registration'
+            name: 'Registrácia',
+            component: Registration
         },
         {
             path: '/ucet',
+            name: 'Účet',
             component: Dashboard,
-            name: 'Ucet',
             beforeEnter: (to, from, next) => {
                 axios.get('api/authenticated').then(() => {
                     next()
                 }).catch(() => {
-                    return next({ name: 'Login' })
+                    return next({ name: 'Prihlásenie' })
                 })
             }
         }

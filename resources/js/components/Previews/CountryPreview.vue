@@ -1,8 +1,8 @@
 <template>
    <b-card
         class="card-preview"
-        v-if="type === 'cemetery-preview'"
-        img-src="https://cdn.better-pets.net/4123017/la_historia_de_hachiko-_el_perro_fiel.jpg.webp"
+        v-if="type === 'country-preview'"
+        :img-src="getImage()"
         img-top
         no-body
         tag="article"
@@ -27,7 +27,16 @@
 
         methods: {
             displayView: function() {
-                this.$emit('displayView', 'cemetery-view');
+                this.$emit('displayView', { view: 'country-view', prop: this.displayed });
+            },
+
+            getImage: function() {
+                if (this.displayed.gallery) {
+                    return ('/api/userContent/' + JSON.parse(this.displayed.gallery).images[0].path); 
+                }
+                else {
+                    return '/api/image/generic-profile.png';
+                }
             }
         }
     }

@@ -7,6 +7,7 @@
                 :key="'landmark' + landmark.id"
             >
                 <landmark-preview
+                    v-on:displayView="displayView"
                     :displayed="landmark"
                     :type="'landmark-preview'"
                 />
@@ -20,6 +21,10 @@
             aria-controls="messages"
             align="center"
         />
+        <landmark-view
+            ref="landmark-view"
+            :landmark="this.selected"
+        />
     </div>
 </template>
 
@@ -31,6 +36,7 @@
                 current: 1,
                 max: 9,
                 rows: '',
+                selected: '',
 
                 landmarks: [],
                 displayed: []
@@ -58,7 +64,12 @@
                     (this.current - 1) * this.max,
                     this.current * this.max,
                 );
-            }
+            },
+
+            async displayView({ view, prop }) {
+                await (this.selected = prop);
+                this.$refs[view].showModal();
+            },
         }
     }
 

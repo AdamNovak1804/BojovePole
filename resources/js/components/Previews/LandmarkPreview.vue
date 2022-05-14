@@ -2,7 +2,7 @@
    <b-card
         class="card-preview"
         v-if="type === 'landmark-preview'"
-        img-src="https://i.kym-cdn.com/entries/icons/mobile/000/013/564/doge.jpg"
+        :img-src="getImage()"
         img-top
         no-body
         tag="article"
@@ -27,7 +27,16 @@
 
         methods: {
             displayView: function() {
-                this.$emit('displayView', 'landmark-view');
+                this.$emit('displayView', { view: 'landmark-view', prop: this.displayed });
+            },
+
+            getImage: function() {
+                if (this.displayed.gallery) {
+                    return ('/api/userContent/' + JSON.parse(this.displayed.gallery).images[0].path); 
+                }
+                else {
+                    return '/api/image/generic-landmark.jpg'; //https://commons.wikimedia.org/wiki/File:Bratislava_ulica_francuzskych_partizanov.jpg
+                }
             }
         }
     }

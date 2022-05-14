@@ -2,7 +2,7 @@
     <b-card
         class="card-preview"
         v-if="type === 'battle-preview'"
-        img-src="https://filmdaily.co/wp-content/uploads/2021/02/walter-dog-lede-1300x731.jpg"
+        :img-src="getImage()"
         img-top
         no-body
         tag="article"
@@ -77,7 +77,16 @@
             },
 
             displayView: function() {
-                this.$emit('displayView', 'battle-view');
+                this.$emit('displayView', { view: 'battle-view', prop: this.displayed });
+            },
+
+            getImage: function() {
+                if (this.displayed.gallery) {
+                    return ('/api/userContent/' + JSON.parse(this.displayed.gallery).images[0].path); 
+                }
+                else {
+                    return '/api/image/generic-battle.png';
+                }
             }
         }
     }

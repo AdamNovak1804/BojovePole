@@ -2,6 +2,7 @@
 
     .family-list
     {
+        min-height: 400px;
         padding: 7.5px;
         border-radius: 15px;
         background-color: #EDE0A6;
@@ -91,7 +92,7 @@
                                 <b-col>
                                     <img
                                         class="float-end status-mark" 
-                                        :src="'/api/image/' + (member.visible ? 'status-verified' : 'status-waiting') + '.png'" 
+                                        :src="'/api/image/' + (member.visible ? 'icon-status-verified' : 'icon-status-waiting') + '.png'" 
                                         alt="Indikátor statusu overenia" 
                                         width="14px" 
                                         height="14px"
@@ -140,7 +141,6 @@
         <b-modal
             id="add-member"
             hide-footer
-            hide-header
         >
             <h4 class="modal-title">
                 Rodinný príslušník
@@ -378,7 +378,7 @@
                 var form = this.createForm();
 
                 axios.post('/api/post_member', form).then((response) => {
-                    alert('Rodinný príslušník bol pridaný na posúdenie!');
+                    alert('Rodinný príslušník bol pridaný na posúdenie!\nProsím oznámte historikovi pridanie nového rodinného príslušníka.');
                 }).catch((error) => {
                     this.errors = error.response.data.errors;
                     this.showModal();

@@ -1,18 +1,18 @@
 <template>
     <b-row class="mt-3">
-        <b-col cols="2">
+        <b-col xl="2" lg="6">
             <label class="label-form" for="edit-save-button">
                 Zmeny sa uložia
             </label>
             <button @click="saveRequest()" name="edit-save-button" id="edit-save-button" class="btn btn-action">Uložiť zmeny</button>
         </b-col>
-        <b-col cols="2">
+        <b-col xl="2" lg="6">
             <label class="label-form" for="edit-delete-button">
                 Záznam bude vymazaný
             </label>
             <button @click="deleteRequest()" name="edit-delete-button" id="edit-delete-button" class="btn btn-action">Zamietnuť</button>
         </b-col>
-        <b-col cols="4" class="ml-auto">
+        <b-col xl="4" lg="6" class="ml-auto">
             <label class="label-form" for="edit-reliability-select">
                 Vybrať stupeň dôveryhodnosti informácií
             </label>
@@ -27,7 +27,7 @@
                 </option>
             </select>
         </b-col>
-        <b-col cols="4" class="ml-auto">
+        <b-col xl="4" lg="6" class="ml-auto">
             <label class="label-form" for="edit-submit-button">
                 Žiadosť bude zverejnená na mape
             </label>

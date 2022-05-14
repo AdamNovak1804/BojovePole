@@ -38,7 +38,7 @@
                     return '/api/userContent/' + gallery.images[0].path;
                 }
                 else {
-                    return '/api/image/0.png';
+                    return '/api/image/generic-profile.png';
                 }
             },
 

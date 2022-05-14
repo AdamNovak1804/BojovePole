@@ -3,13 +3,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>O nás</title>
+    <title>Domov</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@100;400;700;900&display=swap" rel="stylesheet">
-    <link rel = "icon" href ="{{ asset('/public/images/logo1.ico') }}" type = "image/x-icon">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/images/icon.png') }}">
     <style>
         *
         {
@@ -149,7 +149,7 @@
 
         .carousel-control-next-icon
         {
-            background-image: url('/images/next-slide.png');
+            background-image: url('/images/btn-next-slide.png');
             background-size: cover;
             width: 32px;
             height: 32px;
@@ -157,7 +157,7 @@
 
         .carousel-control-prev-icon
         {
-            background-image: url('/images/prev-slide.png');
+            background-image: url('/images/btn-prev-slide.png');
             background-size: cover;
             width: 32px;
             height: 32px;
@@ -208,7 +208,7 @@
 
         .card-preview
         {
-            max-width: 400px;
+            width: 400px;
         }
 
         .card-text
@@ -299,7 +299,7 @@
             border-radius: 50%;
             outline: none;
             border: none;
-            background-image: url('/images/remove.png');
+            background-image: url('/images/btn-delete.png');
             background-size: cover;
             height: 20px;
             width: 20px;
@@ -309,6 +309,11 @@
         {
             display: block;
             text-align: center;
+        }
+
+        .list-group-item
+        {
+            color: #540202;
         }
 
         .page-item.active .page-link
@@ -321,6 +326,28 @@
         .page-link
         {
             color: #540202;
+        }
+
+        .member-ul
+        {
+            margin-bottom: 0;
+            padding-left: 0;
+        }
+
+        .member-li
+        {
+            border-radius: 15px;
+            color: #540202;
+            background-color: #EDE0A6;
+            margin: 5px 0 5px 0;
+            list-style: none;
+            padding: 5px 10px 5px 10px;
+        }
+
+        .member-text
+        {
+            margin-bottom: 0px;
+            font-weight: 900;
         }
 
     </style>

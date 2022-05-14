@@ -70,13 +70,13 @@
                     <h3 class="mb-4 mt-4">Sociálne siete</h3>
                     <div class="d-flex justify-content-center">
                         <a href="#" class="m-2">
-                            <img :src="require('../../../public/img/facebook.png').default" width="50px" height="50px" alt="Facebook Logo">
+                            <img :src="require('/images/media-facebook.png').default" width="50px" height="50px" alt="Facebook Logo">
                         </a>
                         <a href="#" class="m-2">
-                            <img :src="require('../../../public/img/twitter.png').default" width="50px" height="50px" alt="Twitter Logo">
+                            <img :src="require('/images/media-twitter.png').default" width="50px" height="50px" alt="Twitter Logo">
                         </a>
                         <a href="#" class="m-2">
-                            <img :src="require('../../../public/img/reddit.png').default" width="50px" height="50px" alt="Reddit Logo">
+                            <img :src="require('/images/media-reddit.png').default" width="50px" height="50px" alt="Reddit Logo">
                         </a>
                     </div>
                 </div>

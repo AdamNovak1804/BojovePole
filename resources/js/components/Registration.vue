@@ -1,106 +1,95 @@
 <style scoped>
 
-    @media screen and (max-width: 450px)
+    .registration-row
     {
-        h1
-        {
-            font-size: 48px;
-        }
-    }
-
-    .main
-    {
-        display: flex;
-        justify-content: center;
-        align-content: center;
-        background-color: #FFF;
-        height: 100%;
-    }
-
-    .registration-form {
-        margin-top: 30%;
+        margin-top: 110px;
+        height: calc(100vh - 110px);
     }
 
 </style>
 
 <template>
     <div>
-        <navbar-header></navbar-header>
-        <div class="main">
-            <div class="justify-center">
-                <div class="registration-form p-4">
-                    <h1 class="text-center">Registrovať sa</h1>
-                    <p class="text-center">Položky označené * sú povinné</p>
-                    <form method="POST" @submit.prevent="postForm">
-                        <div class="container">
-                            <div class="row align-items-center">
-                                <div class="col-2 text-end">
-                                    <label for="name" class="control-label">*</label>
-                                </div>
-                                <div class="col-8">
-                                    <input v-model="form.name" name="name" type="text" id="name" placeholder="Používateľské meno">
-                                </div>
-                            </div>
-                            <div class="row align-items-center">
-                                <div class="col-2 text-end">
-                                    <label for="email" class="control-label">*</label>
-                                </div>
-                                <div class="col-8">
-                                    <input v-model="form.email" name="email" type="text" id="email" placeholder="Prihlasovací Email">
-                                </div>
-                            </div>
-                            <div class="row align-items-center">
-                                <div class="col-2 text-end">
-                                    <label for="password" class="control-label">*</label>
-                                </div>
-                                <div class="col-8">
-                                    <input v-model="form.password" name="password" type="password" id="password" placeholder="Heslo">
-                                </div>
-                            </div>
-                            <div class="row align-items-center">
-                                <div class="col-2 text-end">
-                                    <label for="password_confirmation" class="control-label">*</label>
-                                </div>
-                                <div class="col-8">
-                                    <input v-model="form.password_confirmation" name="password_confirmation" type="password" id="password_confirmation" placeholder="Potvrdenie hesla">
-                                </div>
-                            </div>
-                            <div class="row align-items-center">
-                                <div class="col-2 text-end">
-                                    <label for="terms" class="control-label">*</label>
-                                </div>
-                                <div class="col-8">
-                                    <div class="row align-items-center pt-2 pb-2">
-                                        <div class="col-2">
-                                            <input type="checkbox" id="terms" name="terms" value="accept">
-                                        </div>
-                                        <div class="col-8">
-                                            <label for="terms">Súhlasím s obchodnými podmienkami</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-8 offset-2">
-                                    <div class="row align-items-center pt-2 pb-2">
-                                        <div class="col-2">
-                                            <input type="checkbox" id="subscribe" name="subscribe" value="newsletter">
-                                        </div>
-                                        <div class="col-8">
-                                            <label for="subscribe">Chcem odoberať newsletter</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row pt-2 pb-2">
-                                <div class="col-8 offset-2">
-                                    <button type="submit" class="btn btn-action">Registrovať sa</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        <navbar-header />
+        <div class="container">
+            <b-row class="g-0 registration-row" align-v="center">
+                <b-col>
+                    <div>
+                        <h1 class="text-center">Registrovať sa</h1>
+                        <p class="text-center">Položky označené * sú povinné</p>
+                    </div>
+                    <b-row class="g-0">
+                        <b-col offset="2" cols="8" offset-md="3" md="6" offset-lg="4" lg="4">
+                            <form method="POST" @submit.prevent="postForm">
+                                <b-row align-v="center">
+                                    <b-col class="text-end" cols="2">
+                                        <label for="registration-name" class="control-label">*</label>
+                                    </b-col>
+                                    <b-col cols="8">
+                                        <input v-model="form.name" type="text" name="registration-name" id="registration-name" placeholder="Používateľské meno">
+                                    </b-col>
+                                </b-row>
+                                <b-row align-v="center">
+                                    <b-col class="text-end" cols="2">
+                                        <label for="registration-email" class="control-label">*</label>
+                                    </b-col>
+                                    <b-col cols="8">
+                                        <input v-model="form.email" type="text" name="registration-email" id="registration-email" placeholder="Prihlasovací Email">
+                                    </b-col>
+                                </b-row>
+                                <b-row align-v="center">
+                                    <b-col class="text-end" cols="2">
+                                        <label for="registration-password" class="control-label">*</label>
+                                    </b-col>
+                                    <b-col cols="8">
+                                        <input v-model="form.password" type="password" name="registration-password" id="registration-password" placeholder="Heslo">
+                                    </b-col>
+                                </b-row>
+                                <b-row align-v="center">
+                                    <b-col class="text-end" cols="2">
+                                        <label for="registration-password-confirmation" class="control-label">*</label>
+                                    </b-col>
+                                    <b-col cols="8">
+                                        <input v-model="form.password_confirmation" type="password" name="registration-password-confirmation" id="registration-password-confirmation" placeholder="Potvrdenie hesla">
+                                    </b-col>
+                                </b-row>
+                                <b-row class="pt-2 pb-2" align-v="center">
+                                    <b-col class="text-end" cols="2">
+                                        <label for="registration-terms" class="control-label">*</label>
+                                    </b-col>
+                                    <b-col cols="8">
+                                        <b-row align-v="center">
+                                            <b-col cols="2">
+                                                <input type="checkbox" id="registration-terms" name="registration-terms" value="accept">
+                                            </b-col>
+                                            <b-col cols="8">
+                                                <label for="registration-terms">Súhlasím s obchodnými podmienkami</label>
+                                            </b-col>
+                                        </b-row>
+                                    </b-col>
+                                </b-row>
+                                <b-row class="pt-2 pb-2" align-v="center">
+                                    <b-col offset="2" cols="8">
+                                        <b-row align-v="center">
+                                            <b-col cols="2">
+                                                <input type="checkbox" id="registration-subscribe" name="registration-subscribe" value="newsletter">
+                                            </b-col>
+                                            <b-col cols="8">
+                                                <label for="registration-subscribe">Chcem odoberať newsletter</label>
+                                            </b-col>
+                                        </b-row>
+                                    </b-col>
+                                </b-row>
+                                <b-row class="pt-2">
+                                    <b-col offset="2" cols="8">
+                                        <button type="submit" class="btn btn-action">Registrovať sa</button>
+                                    </b-col>
+                                </b-row>
+                            </form>
+                        </b-col>
+                    </b-row>
+                </b-col>
+            </b-row>
         </div>
         <b-modal
             ref="registration-error-modal"
@@ -110,7 +99,7 @@
                 :errors="errors"
             />
         </b-modal>
-        <navbar-footer></navbar-footer>
+        <navbar-footer />
     </div>
 </template>
 
@@ -134,7 +123,7 @@
                 axios.post('/api/register', this.form).then(() => {
                     alert('Boli ste úspešne zaregistrovaný!');
                     this.$router.push({
-                        name: 'Login'
+                        name: 'Prihlásenie'
                     }).catch((error) => {
                         console.log(error.response);
                     });

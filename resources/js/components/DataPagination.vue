@@ -3,6 +3,7 @@
     .container
     {
         margin-top: 150px;
+        min-height: calc(100vh - 150px);
     }
 
     ::v-deep .card-title

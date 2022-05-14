@@ -7,7 +7,7 @@
         position: fixed;
         z-index: 100;
         bottom: 0;
-        background-image: url('../../../public/img/scrollshadow.png');
+        background-image: url('/images/scrollshadow.png');
         background-size: cover;
     }
 
@@ -20,7 +20,7 @@
         transform: translate(-50%,-50%);
         width: 70px;
         height: 70px;
-        background-image: url('../../../public/img/scrollbutton.png');
+        background-image: url('/images/btn-scroll.png');
         background-size: cover;
         border-radius: 50%;
         box-shadow: 0px 2px 3px #999;

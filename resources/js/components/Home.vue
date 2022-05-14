@@ -2,7 +2,8 @@
 
     ::v-deep .navbar-custom
     {
-        background-color: transparent !important;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), transparent) !important;
+        backdrop-filter: blur(2px);
         box-shadow: none !important;
     }
 
@@ -17,7 +18,7 @@
         object-fit: cover;
         background-position: center center;
         background-repeat: no-repeat;
-        filter: blur(8px);
+        filter: brightness(150%) blur(2px);
     }
 
     .center-container
@@ -39,6 +40,7 @@
 <template>
     <div>
         <navbar-header />
+        <div class="hello"/>
 
         <div class="center-container">
             <div class="center-div">
@@ -63,7 +65,7 @@
         </div>
 
         <!-- Copyright -->
-        <img class="center-cropped" src="https://www.theglobeandmail.com/resizer/ZjUfLpKdhGVMU3NkLqO15JddRMk=/1500x1000/filters:quality(80):format(jpeg)/arc-anglerfish-tgam-prod-tgam.s3.amazonaws.com/public/L26UBZESNJF6VFBRH4YRMIE74Y.JPG">
+        <img class="center-cropped" :src="'/images/background.jpg'">
 
         <navbar-footer />
     </div>

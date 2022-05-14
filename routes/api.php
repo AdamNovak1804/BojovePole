@@ -30,10 +30,6 @@ Route::get('/user', function() {
     return Auth::user();
 });
 
-Route::get('/family_members', function() {
-    return FamilyMember::index();
-});
-
 Route::get('/get_cards', 'IntroCardController@getCards');
 
 Route::get('/get_received_messages', 'UserController@getReceivedMessages');
@@ -43,45 +39,43 @@ Route::get('/get_family', 'UserController@getFamily');
 
 Route::get('/get_users_and_roles', 'DataController@getUsersAndRoles');
 
-Route::get('/get_units', 'DataController@getUnits');
+Route::get('/get_units', 'UnitController@getUnits');
+Route::get('/get_battles', 'BattleController@getBattles');
+Route::get('/get_cemeteries', 'CemeteryController@getCemeteries');
+Route::get('/get_landmarks', 'LandmarkController@getLandmarks');
+Route::get('/get_territories', 'TerritoryController@getTerritories');
+Route::get('/get_countries', 'CountryController@getCountries');
 
-Route::get('/get_battles', 'DataController@getBattles');
+Route::get('/get_cemetery_members', 'CemeteryController@getCemeteryMembers');
+Route::get('/get_unit_members', 'UnitController@getUnitMembers');
 
-Route::get('/get_cemeteries', 'DataController@getCemeteries');
+Route::get('/get_family_member_requests', 'FamilyMemberController@getFamilyMemberRequests');
+Route::get('/get_unit_requests', 'UnitController@getUnitRequests');
+Route::get('/get_battle_requests', 'BattleController@getBattleRequests');
+Route::get('/get_cemetery_requests', 'CemeteryController@getCemeteryRequests');
+Route::get('/get_landmark_requests', 'LandmarkController@getLandmarkRequests');
+Route::get('/get_territory_requests', 'TerritoryController@getTerritoryRequests');
 
-Route::get('/get_landmarks', 'DataController@getLandmarks');
+Route::post('/post_unit', 'UnitController@postUnit');
+Route::post('/post_battle', 'BattleController@postBattle');
+Route::post('/post_cemetery', 'CemeteryController@postCemetery');
+Route::post('/post_landmark', 'LandmarkController@postLandmark');
+Route::post('/post_territory', 'TerritoryController@postTerritory');
 
-Route::get('/get_territories', 'DataController@getTerritories');
-
-Route::get('/get_countries', 'DataController@getCountries');
-
-Route::get('/get_unit_requests', 'DataController@getUnitRequests');
-Route::get('/get_battle_requests', 'DataController@getBattleRequests');
-Route::get('/get_cemetery_requests', 'DataController@getCemeteryRequests');
-Route::get('/get_landmark_requests', 'DataController@getLandmarkRequests');
-
-Route::post('/post_unit', 'DataController@postUnit');
-Route::post('/post_battle', 'DataController@postBattle');
-Route::post('/post_cemetery', 'DataController@postCemetery');
-Route::post('/post_landmark', 'DataController@postLandmark');
-
-Route::post('/update_unit', 'DataController@updateUnit');
-Route::post('/update_battle', 'DataController@updateBattle');
-Route::post('/update_cemetery', 'DataController@updateCemetery');
-Route::post('/update_landmark', 'DataController@updateLandmark');
+Route::post('/update_family_member', 'FamilyMemberController@updateFamilyMember');
+Route::post('/update_unit', 'UnitController@updateUnit');
+Route::post('/update_battle', 'BattleController@updateBattle');
+Route::post('/update_cemetery', 'CemeteryController@updateCemetery');
+Route::post('/update_landmark', 'LandmarkController@updateLandmark');
+Route::post('/update_territory', 'TerritoryController@updateTerritory');
 
 Route::post('/send_message', 'UserController@sendMessage');
-
 Route::post('/post_member', 'UserController@postMember');
-
 Route::post('/register', 'UserController@register');
-
 Route::post('/login', 'UserController@login');
-
 Route::post('/logout', 'UserController@logout');
 
 Route::post('/update_user', 'UserController@updateUser');
-
 Route::post('/update_user_role', 'UserController@updateUserRole');
 
 Route::get('/image/{image}', 'UserController@getImage');
@@ -89,6 +83,10 @@ Route::get('/userContent/{image}', 'DataController@getUserContentImage');
 
 Route::delete('/delete_user', 'UserController@deleteUser');
 Route::delete('/delete_members', 'UserController@deleteMembers');
-Route::delete('/delete_battle', 'DataController@deleteBattle');
-Route::delete('/delete_unit', 'DataController@deleteUnit');
-Route::delete('/delete_cemetery', 'DataController@deleteCemetery');
+
+Route::delete('/delete_family_member', 'FamilyMemberController@deleteFamilyMember');
+Route::delete('/delete_unit', 'UnitController@deleteUnit');
+Route::delete('/delete_battle', 'BattleController@deleteBattle');
+Route::delete('/delete_cemetery', 'CemeteryController@deleteCemetery');
+Route::delete('/delete_landmark', 'LandmarkController@deleteLandmark');
+Route::delete('/delete_territory', 'TerritoryController@deleteTerritory');

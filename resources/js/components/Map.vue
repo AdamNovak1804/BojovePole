@@ -9,8 +9,8 @@
 
 <template>
     <div>
-        <navbar-header></navbar-header>
-        <view-map></view-map>
+        <navbar-header />
+        <view-map />
     </div>
 </template>
 

@@ -1,14 +1,13 @@
 <style scoped>
 
-    .row-center
+    .intro
     {
-        display: table-row;
+        height: 100vh;
     }
 
-    .carousel 
+    .carousel
     {
-        border-radius: 15px;
-        text-shadow: 1px 1px 2px #333;
+        height: 400px;
     }
 
     .col-center
@@ -20,28 +19,39 @@
 </style>
 
 <template>
-    <div class="row row-center">
-        <div class="col-6 col-center">
+    <b-row class="intro" align-v="center">
+        <b-col class="d-none d-lg-block">
             <b-carousel
+                class="d-none d-lg-block"
                 id="carousel"
-                :interval="4000"
+                background="#ababab"
+                img-height="400px"
+                controls
                 fade
-                class="carousel-inner"
             >
                 <b-carousel-slide
                     v-for="slide in slides.slides"
                     :key="slide.id"
-                    :caption="slide.heading"
-                    :text="slide.description"
-                    img-src="https://picsum.photos/1024/480/?image=52"
-                />
+                >
+                    <template #img>
+                        <img
+                            class="d-block img-fluid slide-img"
+                            :src="'/api/image/' + slide.path"
+                            alt="image slot"
+                        >
+                    </template>
+                </b-carousel-slide>
             </b-carousel>
-        </div>
-        <div class="col-6 col-center text-center">
+        </b-col>
+        <b-col class="text-center">
             <h1>{{ heading }}</h1>
-            <p>{{ description }}</p>
-        </div>
-    </div>
+            <b-row>
+                <b-col offset="2" cols="8">
+                    <p>{{ description }}</p>
+                </b-col>
+            </b-row>
+        </b-col>
+    </b-row>
 </template>
 
 <script>

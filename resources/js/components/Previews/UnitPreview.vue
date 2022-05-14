@@ -2,7 +2,7 @@
     <b-card
         class="card-preview"
         v-if="type === 'unit-preview'"
-        img-src="https://img-9gag-fun.9cache.com/photo/agYA1zq_460s.jpg"
+        :img-src="getImage()"
         img-top
         no-body
         tag="article"
@@ -59,7 +59,16 @@
             },
 
             displayView: function() {
-                this.$emit('displayView', 'unit-view');
+                this.$emit('displayView', { view: 'unit-view', prop: this.displayed });
+            },
+
+            getImage: function() {
+                if (this.displayed.gallery) {
+                    return ('/api/userContent/' + JSON.parse(this.displayed.gallery).images[0].path); 
+                }
+                else {
+                    return '/api/image/generic-unit.png';
+                }
             }
         }
     }

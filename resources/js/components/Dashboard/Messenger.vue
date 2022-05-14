@@ -41,18 +41,33 @@
 
     .messenger-content
     {
+        padding: 15px 0 15px 15px;
         border-top-right-radius: 15px;
         border-bottom-right-radius: 15px;
         border-bottom-left-radius: 15px;
         background-color: #EDE0A6;
     }
 
+    .message-contents
+    {
+        width: calc(100% - 15px);
+        margin-right: 15px;
+    }
+
     .contacts
     {
+        margin-right: 15px;
         min-height: 580px;
         border-radius: 15px;
         background-color: #FFF;
         box-shadow: 0px 2px 3px #999;
+    }
+
+    @media only screen and (max-width: 992px) {
+        .contacts
+        {
+            margin-bottom: 15px;
+        }
     }
 
     textarea
@@ -71,8 +86,9 @@
         cursor: pointer;
     }
 
-    .msg-panel
+    .message-panel
     {
+        margin-bottom: 15px;
         border-radius: 15px;
         background-color: #FFF;
         width: 100%;
@@ -112,65 +128,67 @@
 
 <template>
     <div>
-        <div>
-            <input @click="selected = 1" type="radio" name="inbox" id="read_message" checked>
-            <label class="btn-select" for="read_message">História správ</label>
-            <input @click="selected = 2" type="radio" name="inbox" id="post_message">
-            <label class="btn-select" for="post_message">Nová správa</label>
-        </div>
-        <div v-if="selected === 1" class="messenger-content row g-0">
-            <div class="col-6 col-md-4 p-2">
-                <div class="contacts">
-                    <b-row no-gutters>
-                        <b-col class="mb-3" cols="6">
-                            <input @click="updateMessages(true)" type="radio" name="type" id="message" checked>
-                            <label class="btn-mode" for="message">Prijaté</label>
-                        </b-col>
-                        <b-col class="mb-3" cols="6">
-                            <input @click="updateMessages(false)" type="radio" name="type" id="request">
-                            <label class="btn-mode" for="request">Odoslané</label>
-                        </b-col>
-                    </b-row>
-                    <message 
-                        class="message"
-                        id="messages"
-                        v-for="message in getDisplayedMessages()"
-                        :key="message.id"
-                        :message="message"
-                        @click.native="displayMessage(message)"
-                    />
-                    <b-pagination
-                        class="mt-3 pb-3"
-                        v-model="current"
-                        :total-rows="this.rows"
-                        :per-page="this.max"
-                        aria-controls="messages"
-                        align="center"
-                    />
-                </div>
-            </div>
-            <div class="col-6 col-md-8 p-2 cont">
-                <div v-if="this.selected_message === true" class="msg-panel mb-2">
-                    <div class="img-container">
-                        <img
-                            class="profile-pic img-center"
-                            :src="'/api/image/' + this.displayed.sender.image" 
-                            width="50px" 
-                            height="50px" 
-                            alt="Profilová fotka"
-                        >
+        <input @click="selected = 1" type="radio" name="inbox" id="read_message" checked>
+        <label class="btn-select" for="read_message">História správ</label>
+        <input @click="selected = 2" type="radio" name="inbox" id="post_message">
+        <label class="btn-select" for="post_message">Nová správa</label>
+        <div class="messenger-content">
+            <b-row class="g-0" v-if="selected === 1">
+                <b-col cols="12" lg="4">
+                    <div class="contacts">
+                        <b-row no-gutters>
+                            <b-col class="mb-3" cols="6">
+                                <input @click="updateMessages(true)" type="radio" name="type" id="message" checked>
+                                <label class="btn-mode" for="message">Prijaté</label>
+                            </b-col>
+                            <b-col class="mb-3" cols="6">
+                                <input @click="updateMessages(false)" type="radio" name="type" id="request">
+                                <label class="btn-mode" for="request">Odoslané</label>
+                            </b-col>
+                        </b-row>
+                        <message 
+                            class="message"
+                            id="messages"
+                            v-for="message in getDisplayedMessages()"
+                            :key="message.id"
+                            :message="message"
+                            @click.native="displayMessage(message)"
+                        />
+                        <b-pagination
+                            class="mt-3 pb-3"
+                            v-model="current"
+                            :total-rows="this.rows"
+                            :per-page="this.max"
+                            aria-controls="messages"
+                            align="center"
+                        />
                     </div>
-                    <div class="msg-info">
-                        <h3>{{ this.displayed.sender.name }}</h3>
-                        <small>{{ this.displayed.sender.email }}</small>
-                        <p><b>{{ this.displayed.subject }}</b></p>
+                </b-col>
+                <b-col cols="12" lg="8">
+                    <div class="message-contents">
+                        <div v-if="this.selected_message === true" class="message-panel">
+                            <div class="img-container">
+                                <img
+                                    class="profile-pic img-center"
+                                    :src="'/api/image/' + this.displayed.sender.image" 
+                                    width="50px" 
+                                    height="50px" 
+                                    alt="Profilová fotka"
+                                >
+                            </div>
+                            <div class="msg-info">
+                                <h3>{{ this.displayed.sender.name }}</h3>
+                                <small>{{ this.displayed.sender.email }}</small>
+                                <p><b>{{ this.displayed.subject }}</b></p>
+                            </div>
+                        </div>
+                        <textarea v-model="this.displayed.text" rows="10" readonly />
                     </div>
-                </div>
-                <textarea v-model="this.displayed.text" rows="10" readonly />
+                </b-col>
+            </b-row>
+            <div v-if="selected === 2">
+                <post-message />
             </div>
-        </div>
-        <div v-if="selected === 2" class="messenger-content">
-            <post-message />
         </div>
     </div>
 </template>

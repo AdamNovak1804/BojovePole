@@ -19,13 +19,18 @@ class UserController extends Controller
         $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required']
+        ],
+        [
+            'email.required' => 'Email nebol zadaný!',
+            'email.email' => 'Email musí mať správny formát!',
+            'password.required' => 'Heslo nebolo zadané!'
         ]);
 
         if (Auth::attempt($request->only('email', 'password'))) {
             return response()->json(Auth::user(), 200);
         }
         throw ValidationException::withMessages([
-            'email' => ['Prihlasovacie údaje sú nesprávne']
+            'email' => 'Prihlasovacie údaje sú nesprávne!',
         ]);
     }
 
@@ -37,13 +42,13 @@ class UserController extends Controller
             'password' => ['required', 'confirmed']
         ],
         [
-            'name.required' => ['Nebolo zadané používateľské meno!'],
-            'name.max' => ['Používateľské meno musí mať menej ako 46 znakov!'],
-            'email.required' => ['Nebola zadaná emailová adresa používateľa!'],
-            'email.unique' => ['Používateľ s daným emailom už existuje!'],
-            'email.email' => ['Email musí mať správny formát!'],
-            'password.required' => ['Nebolo zadané používateľské heslo!'],
-            'password.confirmed' => ['Heslo nebolo potvrdené!']
+            'name.required' => 'Nebolo zadané používateľské meno!',
+            'name.max' => 'Používateľské meno musí mať menej ako 46 znakov!',
+            'email.required' => 'Nebola zadaná emailová adresa používateľa!',
+            'email.unique' => 'Používateľ s daným emailom už existuje!',
+            'email.email' => 'Email musí mať správny formát!',
+            'password.required' => 'Nebolo zadané používateľské heslo!',
+            'password.confirmed' => 'Heslo nebolo potvrdené!'
         ]);
 
         User::create([
@@ -52,7 +57,7 @@ class UserController extends Controller
             'role' => 'user',
             'email_verified_at' => now(),
             'password' => Hash::make($request->password),
-            'image' => '0.png'
+            'image' => 'generic-profile.png'
         ]);
     }
 
@@ -86,7 +91,7 @@ class UserController extends Controller
     {
         $id = Auth::id();
 
-        return Message::with('sender', 'receiver')->where('user_id_from', $id)->get()->toJson();
+        return Message::with('sender', 'receiver')->where('user_id_from', $id)->orderBy('created_at')->get()->toJson();
     }
 
     public function sendMessage(Request $request)
@@ -147,6 +152,7 @@ class UserController extends Controller
         ]);
 
         $gallery = [];
+        $gallery_json = null;
 
         /* Add new images */
         if ( !empty($request->gallery) )
@@ -160,6 +166,7 @@ class UserController extends Controller
                 array_push($gallery, json_decode($file));
                 $iter++;
             }
+            $gallery_json = '{"images": '.json_encode($gallery).'}';
         }
 
         $member = FamilyMember::create([
@@ -171,7 +178,7 @@ class UserController extends Controller
             'biography' => $request->biography,
             'cemetery' => $request->cemetery,
             'unit' => $request->unit,
-            'gallery' => '{"images": '.json_encode($gallery).'}'
+            'gallery' => $gallery_json
         ]);
 
         User::find(Auth::id())->family_members()->attach($member);
@@ -182,19 +189,27 @@ class UserController extends Controller
         $request->validate([
             'name' => ['required', 'max:45'],
             'password' => ['nullable', 'confirmed'],
-            'about' => ['max:65535']
+            'about' => ['max:65535'],
+            'image' => ['nullable', 'mimes:jpg,png', 'max:20971520']
+        ],
+        [
+            'name.required' => 'Meno používateľa je povinné!',
+            'name.max' => 'Meno používateľa nesmie mať viac ako 45 znakov!',
+            'password.confirmed' => 'Heslo nebolo potvrdené!',
+            'about.max' => 'Sekcia o mne nemôže mať viac ako 65535 znakov!',
+            'image.max' => 'Obrázok nemôže mať veľkosť viac ako 20 MB!'
         ]);
 
         $user = Auth::user();
 
-        if ( $request->image != $request->old )
+        if ( !empty($request->image) )
         {
             $file = $request->file('image');
             $name = $user->id.'.'.$file->getClientOriginalExtension();
 
-            $old = public_path().'/images/'.$request->old;
+            $old = public_path().'/images/'.$user->image;
 
-            if ( File::exists($old) )
+            if ( File::exists($old) && !!strcmp($user->image, 'generic-profile.png') )
             {
                 File::Delete($old);
             }
@@ -221,11 +236,12 @@ class UserController extends Controller
     {
         $path = public_path().'/images/'.$image;
 
-        if (file_exists($path))
+        if ( file_exists($path) )
         {
             readfile($path);
             die();
-        } else {
+        }
+        else {
             die("Error: File not found.");
         }
     }

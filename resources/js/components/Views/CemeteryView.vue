@@ -32,10 +32,24 @@
         </b-carousel>
         <b-card-body>
             <label class="label-center fw-bold mb-3" for="description-box">
-                História a opis cintorínu
+                História a opis cintorína
             </label>
             <div id="description-box">
                 <p>{{ this.description }}</p>
+            </div>
+            <label class="label-center fw-bold" for="cemetery-members">
+                Pochovaní v cintoríne:
+            </label>
+            <div class="mt-3" id="cemetery-members" name="cemetery-members">
+                <ul class="member-ul">
+                    <li
+                        class="member-li"
+                        v-for="member in members"
+                        :key="'family-member' + member.id"
+                    >
+                        {{ member.name }}
+                    </li>
+                </ul>
             </div>
         </b-card-body>
 
@@ -57,7 +71,9 @@
                 country: '',
                 description: '',
                 reliability: '',
-                gallery: ''
+                gallery: '',
+
+                members: ''
             }
         },
 
@@ -65,8 +81,18 @@
             cemetery: ''
         },
 
-        methods: {            
+        methods: {
+            getCemeteryMembers: function() {
+                axios.get('/api/get_cemetery_members', { params: { id: this.cemetery.id } }).then((response) => {
+                    this.members = response.data;
+                }).catch((error) => {
+                    console.log(error.response);
+                });
+            },
+            
             showModal: function() {
+                this.getCemeteryMembers();
+
                 this.name = this.cemetery.name;
                 this.location = this.cemetery.location;
                 this.description = this.cemetery.description;

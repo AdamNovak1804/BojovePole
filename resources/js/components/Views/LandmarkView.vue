@@ -32,7 +32,7 @@
         </b-carousel>
         <b-card-body>
             <label class="label-center fw-bold mb-3" for="description-box">
-                História a opis cintorínu
+                História a opis pamätníka
             </label>
             <div id="description-box">
                 <p>{{ this.description }}</p>

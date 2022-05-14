@@ -69,11 +69,16 @@
         color: #998067;
     }
 
+    .comment
+    {
+        display: inline-block;
+    }
+
 </style>
 
 <template>
     <div>
-        <navbar-header></navbar-header>
+        <navbar-header />
         <div class="main">
             <div class="container">
                 <div class="row">
@@ -83,9 +88,20 @@
                 </div>
                 <div class="row mb-5">
                     <div class="col-12 col-lg-6 col-md-6">
-                        <add-map 
-                            v-on:changeMarker="updateLatLng"
-                        />
+                        <div v-if="type !== 5">
+                            <add-map
+                                v-on:changeMarker="updateLatLng"
+                            />
+                        </div>
+                        <div v-if="type === 5">
+                            <territory-map
+                                v-on:updatePolygon="updatePolygon"
+                            />
+                            <small class="comment mt-3">
+                                Vytvorte mnohouholník, ktorý približne zobrazí kontrolu územia v istom časovom pásme, istej krajiny na území Slovenska.<br>
+                                Kliknutím ľubovoľného miesta na mape sa pridá nový bod mnohouholníka.
+                            </small>
+                        </div>
                     </div>
                     <div class="col-12 col-lg-6 col-md-6">
                         <form>
@@ -122,6 +138,12 @@
                                     :position="position"
                                 />
                             </div>
+                            <div v-else-if="type === 5" class="form-group col-lg-8 col-md-8 col-12 offset-md-2 offset-lg-2">
+                                <territory-form
+                                    v-on:territoryErrors="displayErrors"
+                                    :polygon="polygon"
+                                />
+                            </div>
                         </form>
                     </div>
                     <b-modal
@@ -135,7 +157,7 @@
                 </div>
             </div>
         </div>
-        <navbar-footer></navbar-footer>
+        <navbar-footer />
     </div>
 </template>
 
@@ -146,6 +168,7 @@
             return {
                 type: 0,
                 position: '',
+                polygon: [],
                 errors: [],
 
                 choices: [
@@ -175,6 +198,10 @@
             
             showModal: function() {
                 this.$refs['error-modal'].show();
+            },
+
+            updatePolygon: function(value) {
+                this.polygon = value;
             }
         },
 

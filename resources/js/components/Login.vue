@@ -1,110 +1,68 @@
 <style scoped>
 
-    @media screen and (max-width: 450px)
+    .link-center
     {
-        h1
-        {
-            font-size: 48px;
-        }
-    }
-
-    .main
-    {
-        display: flex;
-        justify-content: center;
-        align-content: center;
-        background-color: #FFF;
-        height: 100%;
-    }
-
-    .sidenav {
-        height: 100%;
-        background-color: #000;
-        overflow-x: hidden;
-        padding-top: 20px;
-    }
-
-    @media screen and (max-height: 450px) {
-        ::v-deep .sidenav {
-            padding-top: 15px;
-        }
-    }
-
-    @media screen and (min-width: 768px) {
-
-        .main {
-            margin-left: 50%;
-        }
-
-        .login-form {
-            margin-top: 80%;
-        }
-
-        .sidenav {
-            width: 50%;
-            position: fixed;
-            z-index: -1;
-            top: 0;
-            left: 0;
-        }
-    }
-
-    @media screen and (max-width: 450px) {
-
-        .login-form{
-            margin-top: 40%;
-        }
-    }
-
-    .login-main-text {
-        margin-top: 20%;
-        padding: 60px;
-    }
-
-    .link-center {
-        margin-bottom: 20px;
         align-self: center;
         text-align: center;
         display: block;
         color: #540202;
     }
 
-    form {
-        width: 60%;
-        margin: 0 auto;
+    .login-row
+    {
+        height: calc(100vh - 110px);
+        margin-top: 110px;
+    }
+
+    .login-col
+    {
+        height: calc(100vh - 110px);
     }
 
 </style>
 
 <template>
     <div>
-        <navbar-header></navbar-header>
-        <div class="sidenav">
-            <div class="login-main-text">
-                <h2>Prečo je dobré<br> mať vytvorený účet?</h2>
-                <p>Po vytvorení účtu novo registrovaný používateľ získa možnosť pridať vlastný obsah, ako aj komunikovať s ostatnými používateľmi.</p>
-            </div>
-        </div>
-        <div class="main">
-            <div class="col-md-6 col-sm-12">
-                <div class="login-form">
+        <navbar-header />
+        <b-row class="g-0 login-row" align-v="center">
+            <b-col>
+                <b-row class="g-0">
+                    <b-col offset="2" cols="8">
+                        <h2>Prečo je dobré mať vytvorený účet?</h2>
+                        <p>Po vytvorení účtu novo registrovaný používateľ získava možnosť pridať vlastný obsah, ako aj komunikovať s historikom.</p>
+                        <p></p>
+                    </b-col>
+                </b-row>
+            </b-col>
+            <b-col lg="6" md="12">
+                <b-row class="g-0">
                     <h1 class="text-center">Prihlásiť sa</h1>
-                    <router-link to="/registracia" class="link-center">
-                        Nemáte účet?
-                    </router-link>
-                    <form method="POST" @submit.prevent="postForm">
-                        <div class="form-group">
-                            <input v-model="form.email" name="email" type="text" placeholder="Zadajte prihlasovací Email">
-                        </div>
-                        <div class="form-group">
-                            <input v-model="form.password" name="password" type="password" placeholder="Zadajte heslo">
-                        </div>
-                        <button type="submit" class="btn btn-action mt-4">Prihlásiť sa</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <navbar-footer></navbar-footer>
+                    <b-col offset-xl="4" xl="4" offset-lg="3" lg="6" offset-md="3" md="6" offset="2" cols="8">
+                        <router-link to="/registracia" class="link-center bt-3">
+                            Nemáte účet?
+                        </router-link>
+                        <form method="POST" @submit.prevent="postForm()">
+                            <div class="form-group">
+                                <input v-model="form.email" name="email" type="text" placeholder="Zadajte prihlasovací Email">
+                            </div>
+                            <div class="form-group">
+                                <input v-model="form.password" name="password" type="password" placeholder="Zadajte heslo">
+                            </div>
+                            <button type="submit" class="btn btn-action mt-3">Prihlásiť sa</button>
+                        </form>
+                    </b-col>
+                </b-row>
+            </b-col>
+        </b-row>
+        <b-modal
+            ref="error-modal"
+            hide-footer
+        >
+            <error-list 
+                :errors="errors"
+            />
+        </b-modal>
+        <navbar-footer />
     </div>
 </template>
 
@@ -123,17 +81,22 @@
         },
 
         methods: {
-            postForm() {
+            postForm: function() {
                 axios.post('/api/login', this.form).then(() => {
                     this.$router.push({
-                        name: 'Ucet'
+                        name: 'Účet'
                     }).catch((error) => {
                         console.log(error.response)
-                    })
+                    });
                 }).catch((error) => {
                     this.errors = error.response.data.errors;
+                    this.showModal();
                 })
-            }
+            },
+
+            showModal: function() {
+                this.$refs['error-modal'].show();
+            },
         }
     }
 

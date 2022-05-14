@@ -69,7 +69,7 @@
                         <ul>
                             <li>
                                 <input @click="selected_form = 1" :v-model="selected_form" type="radio" name="selection" id="dashboard-messages" checked>
-                                <label class="btn-select" for="dashboard-messages">Správy a žiadosti</label>
+                                <label class="btn-select" for="dashboard-messages">Prijaté a odoslané správy</label>
                             </li>
                             <li>
                                 <input @click="selected_form = 2" :v-model="selected_form" type="radio" name="selection" id="family">
@@ -153,7 +153,7 @@
 
                 axios.post('api/logout').then(() => {
                     this.$router.push({
-                        name: 'Login'
+                        name: 'Prihlásenie'
                     }).catch((error) => {
                         console.log(error.response)
                     })

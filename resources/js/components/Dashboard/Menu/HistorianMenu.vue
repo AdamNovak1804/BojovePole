@@ -5,6 +5,11 @@
         margin: 10px;
     }
 
+    .historian-select-navigation
+    {
+        margin-left: 10px;
+    }
+
     .request-card
     {
         width: calc(50% - 10px);
@@ -22,24 +27,44 @@
 
 <template>
     <div>
-        <label for="historian-view-type">
-            Typ žiadosti
-        </label>
-        <select
-            @change="loadRequests()"
-            v-model="selected"
-            name="historian-view-type"
-            id="historian-view-type"
-        >
-            <option value="" disabled>Vybrať typ žiadosti na posúdenie</option>
-            <option
-                v-for="option in options"
-                v-bind:value="option.value"
-                :key="option.id"
-            >
-                {{ option.text }}
-            </option>
-        </select>
+        <b-row>
+            <b-col cols="4">
+                <div class="historian-select-navigation">
+                    <label class="label-form" for="historian-view-type">
+                        Typ žiadosti
+                    </label>
+                    <select
+                        class="options"
+                        @change="loadRequests()"
+                        v-model="selected"
+                        name="historian-view-type"
+                        id="historian-view-type"
+                    >
+                        <option value="" disabled>Vybrať typ žiadosti na posúdenie</option>
+                        <option
+                            v-for="option in options"
+                            v-bind:value="option.value"
+                            :key="option.id"
+                        >
+                            {{ option.text }}
+                        </option>
+                    </select>
+                </div>
+            </b-col>
+        </b-row>
+        <div class="row g-0 card-container" v-if="this.selected == 'family_members'">
+            <family-member-edit-card
+                v-on:displayView="showModal"
+                v-for="member in this.family_member_requests"
+                :key="'family-member' + member.id"
+                :member="member"
+            />
+            <family-member-edit
+                ref="family-member-edit"
+                v-if="this.displayed"
+                :member="this.displayed"
+            />
+        </div>
         <div class="row g-0 card-container" v-if="this.selected == 'units'">
             <unit-edit-card
                 v-on:displayView="showModal"
@@ -92,6 +117,19 @@
                 :landmark="this.displayed"
             />
         </div>
+        <div class="row g-0 card-container" v-if="this.selected == 'territories'">
+            <territory-edit-card
+                v-on:displayView="showModal"
+                v-for="territory in this.territory_requests"
+                :key="'territory' + territory.id"
+                :territory="territory"
+            />
+            <territory-edit
+                ref="territory-edit"
+                v-if="this.displayed"
+                :territory="this.displayed"
+            />
+        </div>
     </div>    
 </template>
 
@@ -103,6 +141,7 @@
                 selected: '',
                 displayed: '',
 
+                family_member_requests: '',
                 unit_requests: '',
                 battle_requests: '',
                 cemetery_requests: '',
@@ -110,6 +149,7 @@
                 territory_requests: '',
 
                 options: [
+                    { text : 'Žiadosti rodinných príslušníkov', value : 'family_members' },
                     { text : 'Žiadosti útvarov', value : 'units' },
                     { text : 'Žiadosti bitiek', value : 'battles' },
                     { text : 'Žiadosti cintorínov', value : 'cemeteries' },
@@ -122,6 +162,9 @@
         methods: {
             loadRequests: function() {
                 switch (this.selected) {
+                    case 'family_members':
+                        this.getFamilyMemberRequests();
+                        break;
                     case 'units':
                         this.getUnitRequests();
                         break;
@@ -141,6 +184,14 @@
                         console.log('Unknown selected value.');
                         break;
                 }
+            },
+
+            getFamilyMemberRequests: function() {
+                axios.get('/api/get_family_member_requests').then((response) => {
+                    this.family_member_requests = response.data;
+                }).catch((error) => {
+                    console.log(error.response);
+                })
             },
 
             getUnitRequests: function() {

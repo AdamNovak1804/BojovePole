@@ -19,7 +19,7 @@ router.beforeEach((to, from, next) => {
 
 Vue.use(Vuex);
 
-import { LMap, LTileLayer, LMarker, LControl, LIcon, LLayerGroup } from 'vue2-leaflet';
+import { LMap, LTileLayer, LMarker, LControl, LIcon, LLayerGroup, LPolygon } from 'vue2-leaflet';
 import {
   BButton,
   BFormRadioGroup,
@@ -71,12 +71,14 @@ Vue.component('navbar-header', require('./components/NavbarHeader.vue').default)
 Vue.component('navbar-footer', require('./components/NavbarFooter.vue').default);
 Vue.component('view-map', require('./components/ViewMap.vue').default);
 Vue.component('add-map', require('./components/AddMap.vue').default);
+Vue.component('territory-map', require('./components/TerritoryMap.vue').default);
 
 Vue.component('user-settings', require('./components/Dashboard/UserSettings.vue').default);
 Vue.component('unit-form', require('./components/Forms/UnitForm.vue').default);
 Vue.component('battle-form', require('./components/Forms/BattleForm.vue').default);
 Vue.component('cemetery-form', require('./components/Forms/CemeteryForm.vue').default);
 Vue.component('landmark-form', require('./components/Forms/LandmarkForm.vue').default);
+Vue.component('territory-form', require('./components/Forms/TerritoryForm.vue').default);
 Vue.component('user-card', require('./components/Dashboard/UserCard.vue').default);
 
 /**
@@ -86,15 +88,19 @@ Vue.component('admin-menu', require('./components/Dashboard/Menu/AdminMenu.vue')
 Vue.component('historian-menu', require('./components/Dashboard/Menu/HistorianMenu.vue').default);
 Vue.component('family-member-menu', require('./components/Dashboard/Menu/FamilyMemberMenu.vue').default);
 
+Vue.component('family-member-edit-card', require('./components/Dashboard/HistorianCards/FamilyMemberEditCard.vue').default);
 Vue.component('battle-edit-card', require('./components/Dashboard/HistorianCards/BattleEditCard.vue').default);
 Vue.component('unit-edit-card', require('./components/Dashboard/HistorianCards/UnitEditCard.vue').default);
 Vue.component('cemetery-edit-card', require('./components/Dashboard/HistorianCards/CemeteryEditCard.vue').default);
 Vue.component('landmark-edit-card', require('./components/Dashboard/HistorianCards/LandmarkEditCard.vue').default);
+Vue.component('territory-edit-card', require('./components/Dashboard/HistorianCards/TerritoryEditCard.vue').default);
 
+Vue.component('family-member-edit', require('./components/Dashboard/HistorianEdits/FamilyMemberEdit.vue').default);
 Vue.component('battle-edit', require('./components/Dashboard/HistorianEdits/BattleEdit.vue').default);
 Vue.component('unit-edit', require('./components/Dashboard/HistorianEdits/UnitEdit.vue').default);
 Vue.component('cemetery-edit', require('./components/Dashboard/HistorianEdits/CemeteryEdit.vue').default);
 Vue.component('landmark-edit', require('./components/Dashboard/HistorianEdits/LandmarkEdit.vue').default);
+Vue.component('territory-edit', require('./components/Dashboard/HistorianEdits/TerritoryEdit.vue').default);
 
 Vue.component('edit-footer', require('./components/Dashboard/HistorianEdits/EditFooter.vue').default);
 
@@ -110,11 +116,14 @@ Vue.component('battle-preview', require('./components/Previews/BattlePreview.vue
 Vue.component('unit-preview', require('./components/Previews/UnitPreview.vue').default);
 Vue.component('cemetery-preview', require('./components/Previews/CemeteryPreview').default);
 Vue.component('landmark-preview', require('./components/Previews/LandmarkPreview.vue').default);
+Vue.component('country-preview', require('./components/Previews/CountryPreview.vue').default);
 
 Vue.component('battle-view', require('./components/Views/BattleView.vue').default);
 Vue.component('unit-view', require('./components/Views/UnitView.vue').default);
 Vue.component('cemetery-view', require('./components/Views/CemeteryView.vue').default);
 Vue.component('landmark-view', require('./components/Views/LandmarkView.vue').default);
+Vue.component('country-view', require('./components/Views/CountryView.vue').default);
+Vue.component('family-member-view', require('./components/Views/FamilyMemberView.vue').default);
 
 Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);
@@ -122,6 +131,7 @@ Vue.component('l-marker', LMarker);
 Vue.component('l-control', LControl);
 Vue.component('l-icon', LIcon);
 Vue.component('l-layer-group', LLayerGroup);
+Vue.component('l-polygon', LPolygon);
 
 Vue.component('b-button', BButton);
 Vue.component('b-form-radio-group', BFormRadioGroup);
@@ -164,7 +174,7 @@ const store = new Vuex.Store({
         try {
           state.image = require('/images/' + image).default;
         } catch (error) {
-          location.reload();
+          console.log('oof');
         }
       }
     },

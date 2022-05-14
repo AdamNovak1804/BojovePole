@@ -34,7 +34,7 @@
                 <div class="col-12 col-lg-4 col-md-6">
                     <b-card
                         title="Vojenské útvary"
-                        img-src="img/vojenske_utvary.png"
+                        img-src="images/data-unit.png"
                         img-alt="Vojenská jednotka Rakúsko-Uhorskej armády"
                         img-top
                         tag="article"
@@ -48,7 +48,7 @@
                 <div class="col-12 col-lg-4 col-md-6">
                     <b-card
                         title="Bitky"
-                        img-src="img/medzilaborce.png"
+                        img-src="images/data-battle.png"
                         img-alt="Poškodená železničná stanica obce Medzilaborce, 1915 | Zdroj: KVH Beskydy"
                         img-top
                         tag="article"
@@ -62,7 +62,7 @@
                 <div class="col-12 col-lg-4 col-md-6">
                     <b-card
                         title="Cintoríny"
-                        img-src="img/cintorin.png"
+                        img-src="images/data-cemetery.png"
                         img-alt="Vojnový cintorín z okolia Medzilaboriec tesne po jeho založení | Zdroj: KVH Beskydy"
                         img-top
                         tag="article"
@@ -76,7 +76,7 @@
                 <div class="col-12 col-lg-4 col-md-6">
                     <b-card
                         title="Pamiatky"
-                        img-src="img/landmarks_background.jpg"
+                        img-src="images/data-landmark.jpg"
                         img-alt="Pamiatka vojnových obetí prvej svetovej vojny v obci Malacky | Zdroj: Mesto Malacky"
                         img-top
                         tag="article"
@@ -90,7 +90,7 @@
                 <div class="col-12 col-lg-4 col-md-6">
                     <b-card
                         title="Krajiny"
-                        img-src="img/countries_background.png"
+                        img-src="images/data-country.png"
                         img-alt="Príslušníčky 'Ženského bataliónu smrti' ruskej armády, 1917 | Zdroj: Orrin Wightman 1917, kolorizácia Klimbim colorization"
                         img-top
                         tag="article"
