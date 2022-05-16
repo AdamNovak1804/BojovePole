@@ -53,7 +53,7 @@
                             </label>
                             <ul class="list" name="edit-images" id="edit-images">
                                 <li
-                                    v-for="image in gallery.images"
+                                    v-for="image in form.gallery.images"
                                     :key="image.id" 
                                 >
                                     <div class="d-flex justify-content-between img-link">
@@ -95,11 +95,11 @@
                     description: '',
                     reliability: '',
                     position: '',
+                    gallery: '',
                     to_delete: [],
                     to_upload: []
                 },
 
-                gallery: '',
                 errors: '',
             }
         },
@@ -123,10 +123,10 @@
                 ];
 
                 if ( !!this.cemetery.gallery ) {
-                    this.gallery = JSON.parse(this.cemetery.gallery);
+                    this.form.gallery = JSON.parse(this.cemetery.gallery);
                 }
                 else {
-                    this.gallery = { images: '' };
+                    this.form.gallery = { images: '' };
                 }
 
                 this.$refs['cemetery-edit-view'].show();
@@ -199,8 +199,8 @@
             removeImage: function(image) {
                 this.form.to_delete.push(image.path);
 
-                var index = this.gallery.images.findIndex(x => x.path === image.path);
-                this.gallery.images.splice(index, 1);
+                var index = this.form.gallery.images.findIndex(x => x.path === image.path);
+                this.form.gallery.images.splice(index, 1);
             },
 
             updateLatLng: function(value) {

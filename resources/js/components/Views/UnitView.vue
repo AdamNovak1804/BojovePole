@@ -6,9 +6,14 @@
             ref="unit-modal"
         >
             <b-card-body>
-                <h3 class="modal-title">
-                    {{ this.name }}
-                </h3>
+                <b-row class="d-flex align-items-end">
+                    <b-col>
+                        <h3 class="modal-title">{{ this.name }}</h3>
+                    </b-col>
+                    <b-col class="text-end">
+                        <p style="margin-bottom: 0;">Dôveryhodnosť informácie: {{ this.reliability }} / <b>5</b></p>
+                    </b-col>
+                </b-row>
             </b-card-body>
 
             <b-carousel
@@ -118,6 +123,7 @@
 
         data() {
             return {
+                reliability: '',
                 name: '',
                 type: '',
                 location: '',
@@ -160,6 +166,7 @@
             showModal: function() {
                 this.getUnitMembers();
 
+                this.reliability = this.unit.reliability;
                 this.name = this.unit.name;
                 this.location = this.unit.location;
                 this.country = this.unit.country.name;

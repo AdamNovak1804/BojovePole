@@ -190,14 +190,16 @@ class UserController extends Controller
             'name' => ['required', 'max:45'],
             'password' => ['nullable', 'confirmed'],
             'about' => ['max:65535'],
-            'image' => ['nullable', 'mimes:jpg,png', 'max:20971520']
+            'image' => ['nullable', 'mimes:jpg,png', 'max:20971520'],
+            'about' => ['max:65535']
         ],
         [
             'name.required' => 'Meno používateľa je povinné!',
             'name.max' => 'Meno používateľa nesmie mať viac ako 45 znakov!',
             'password.confirmed' => 'Heslo nebolo potvrdené!',
             'about.max' => 'Sekcia o mne nemôže mať viac ako 65535 znakov!',
-            'image.max' => 'Obrázok nemôže mať veľkosť viac ako 20 MB!'
+            'image.max' => 'Obrázok nemôže mať veľkosť viac ako 20 MB!',
+            'about.max' => 'Sekcia "o mne" nemôže mať viac ako 65535 znakov!'
         ]);
 
         $user = Auth::user();
@@ -259,6 +261,12 @@ class UserController extends Controller
     public function deleteUser(Request $request)
     {
         $user = User::find($request->id);
+
+        $image = public_path().'/images/'.$user->image;
+        if ( File::exists($image) && !!strcmp($user->image, 'generic-profile.png') )
+        {
+            File::delete($image);
+        }
 
         $user->family_members()->delete();
         $user->delete();

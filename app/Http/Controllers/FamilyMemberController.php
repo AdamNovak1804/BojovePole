@@ -129,6 +129,38 @@ class FamilyMemberController extends Controller
 
     public function deleteFamilyMember(Request $request)
     {
+        $images = array_column(array_values($request->input('gallery'))[0], "path");
+        foreach( $images as $image )
+        {
+            $path = public_path().'/images/userContent/'.$image;
+            if ( File::exists($path) )
+            {
+                File::delete($path);
+            }
+
+            $path = public_path().'/images/'.$image;
+            if ( File::exists($path) )
+            {
+                File::delete($path);
+            }
+        }
+
+        $images = $request->input('to_delete');
+        foreach( $images as $image )
+        {
+            $path = public_path().'/images/userContent/'.$image;
+            if ( File::exists($path) )
+            {
+                File::delete($path);
+            }
+
+            $path = public_path().'/images/'.$image;
+            if ( File::exists($path) )
+            {
+                File::delete($path);
+            }
+        }
+
         FamilyMember::find($request->id)->delete();
     }
 }

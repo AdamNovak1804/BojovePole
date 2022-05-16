@@ -128,11 +128,11 @@
                     cemetery: '',
                     biography: '',
                     reliability: '',
+                    gallery: '',
                     to_delete: [],
                     to_upload: []
                 },
 
-                gallery: '',
                 units: '',
                 cemeteries: '',
                 errors: ''
@@ -188,10 +188,10 @@
                 this.form.biography = this.member.biography;
 
                 if ( !!this.member.gallery ) {
-                    this.gallery = JSON.parse(this.member.gallery);
+                    this.form.gallery = JSON.parse(this.member.gallery);
                 }
                 else {
-                    this.gallery = { images: '' };
+                    this.form.gallery = { images: '' };
                 }
 
                 this.$refs['family-member-edit-view'].show();
@@ -264,8 +264,8 @@
             removeImage: function(image) {
                 this.form.to_delete.push(image.path);
 
-                var index = this.gallery.images.findIndex(x => x.path === image.path);
-                this.gallery.images.splice(index, 1);
+                var index = this.form.gallery.images.findIndex(x => x.path === image.path);
+                this.form.gallery.images.splice(index, 1);
             },
 
             reliabilityChange: function(value) {

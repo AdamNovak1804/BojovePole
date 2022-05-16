@@ -159,34 +159,7 @@ Vue.directive('b-modal', VBModal);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const store = new Vuex.Store({
-  state: {
-    image: ''
-  },
-
-  mutations: {
-    changeImage(state, image) {
-        state.image = image;
-    },
-
-    initImage(state, image) {
-      if (state.image === '') {
-        try {
-          state.image = require('/images/' + image).default;
-        } catch (error) {
-          console.log('oof');
-        }
-      }
-    },
-
-    unselectImage(state) {
-      state.image = '';
-    }
-  }
-})
-
 const app = new Vue({
     el: '#app',
-    store,
     router,
 });

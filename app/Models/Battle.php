@@ -38,9 +38,4 @@ class Battle extends Model
     {
         return $this->belongsTo('App\Models\Country', 'side2', 'id');
     }
-
-    public function units()
-    {
-        return $this->belongsToMany('App\Models\Unit', 'units_battles', 'unit_id', 'battle_id');
-    }
 }

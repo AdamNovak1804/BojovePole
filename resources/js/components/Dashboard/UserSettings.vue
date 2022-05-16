@@ -142,7 +142,7 @@
                     <label for="settings-about">
                         O mne
                     </label>
-                    <textarea class="settings-text" name="settings-about" id="settings-about" rows="10" placeholder="Zmeniť popis osobného účtu"/>
+                    <textarea v-model="form.about" class="settings-text" name="settings-about" id="settings-about" rows="10" placeholder="Zmeniť popis osobného účtu"/>
                 </div>
             </div>
             <button class="btn btn-action mt-3">Uložiť zmeny</button>
@@ -164,7 +164,7 @@
 
         data() {
             return {
-                image: this.$store.state.image,
+                image: '/api/image/' + this.user.image,
                 updated_user: '',
                 errors: '',
 
@@ -174,6 +174,7 @@
                     image: '',
                     password: '',
                     password_confirmation: '',
+                    about: this.user.about,
                     old: this.user.image
                 }
             }
@@ -215,6 +216,7 @@
                 formData.append('password', this.form.password);
                 formData.append('password_confirmation', this.form.password_confirmation);
                 formData.append('image', this.form.image);
+                formData.append('about', this.form.about);
 
                 axios.post('/api/update_user', formData, { 
                     headers : {
@@ -223,7 +225,6 @@
                 }).then(response => {
                     this.updated_user = response.data;
                     this.$emit('updateUser', this.updated_user);
-                    this.$store.commit('changeImage', this.image);
                     alert('Osobné nastavenia používateľa boli zmenené!');
                 }).catch((error) => {
                     this.errors = error.response.data.errors;

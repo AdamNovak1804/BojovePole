@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 use App\Models\Territory;
 
@@ -20,6 +22,13 @@ class TerritoryController extends Controller
 
     public function postTerritory(Request $request)
     {
+        if ( !Auth::check() )
+        {
+            throw ValidationException::withMessages([
+                'login' => 'Používateľ nie je príhlasený!',
+            ]);
+        }
+
         $request->validate([
             'start_date' => ['required', 'date', 'after_or_equal:"1914-07-28"', 'before_or_equal:"1918-11-11"'],
             'end_date' => ['required', 'date', 'after_or_equal:start', 'before_or_equal:"1918-11-11"'],

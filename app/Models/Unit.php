@@ -27,11 +27,6 @@ class Unit extends Model
         'gallery'
     ];
 
-    public function battles()
-    {
-        return $this->belongsToMany('App\Models\Battle', 'units_battles', 'unit_id', 'battle_id');
-    }
-
     public function country()
     {
         return $this->belongsTo('App\Models\Country', 'country', 'id');

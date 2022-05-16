@@ -24,7 +24,7 @@
             <b-carousel
                 class="d-none d-lg-block"
                 id="carousel"
-                background="#ababab"
+                background="#fff"
                 img-height="400px"
                 controls
                 fade

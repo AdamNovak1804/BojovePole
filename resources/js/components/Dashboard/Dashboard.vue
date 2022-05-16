@@ -143,14 +143,10 @@
             await axios.get('api/user').then((response) => {
                 this.user = response.data;
             });
-
-            this.$store.commit('initImage', this.user.image);
         },
 
         methods: {
             logOut() {
-                this.$store.commit('unselectImage');
-
                 axios.post('api/logout').then(() => {
                     this.$router.push({
                         name: 'Prihlásenie'

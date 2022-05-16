@@ -26,9 +26,14 @@
                 </b-carousel-slide>
             </b-carousel>
 
-            <b-card-body>
-                <h1>{{ this.member.name }}</h1>
-            </b-card-body>
+            <b-row class="d-flex align-items-end">
+                <b-col>
+                    <h3 class="modal-title">{{ this.name }}</h3>
+                </b-col>
+                <b-col class="text-end">
+                    <p style="margin-bottom: 0;">Dôveryhodnosť informácie: {{ this.member.reliability }} / <b>5</b></p>
+                </b-col>
+            </b-row>
 
             <b-row>
                 <b-col cols="4">

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 use App\Models\Cemetery;
 use App\Models\FamilyMember;
@@ -27,6 +29,13 @@ class CemeteryController extends Controller
 
     public function postCemetery(Request $request)
     {
+        if ( !Auth::check() )
+        {
+            throw ValidationException::withMessages([
+                'login' => 'Používateľ nie je príhlasený!',
+            ]);
+        }
+
         $request->validate([
             'name' => ['required', 'max:45'],
             'description' => ['max:65535'],
@@ -165,6 +174,38 @@ class CemeteryController extends Controller
 
     public function deleteCemetery(Request $request)
     {
+        $images = array_column(array_values($request->input('gallery'))[0], "path");
+        foreach( $images as $image )
+        {
+            $path = public_path().'/images/userContent/'.$image;
+            if ( File::exists($path) )
+            {
+                File::delete($path);
+            }
+
+            $path = public_path().'/images/'.$image;
+            if ( File::exists($path) )
+            {
+                File::delete($path);
+            }
+        }
+
+        $images = $request->input('to_delete');
+        foreach( $images as $image )
+        {
+            $path = public_path().'/images/userContent/'.$image;
+            if ( File::exists($path) )
+            {
+                File::delete($path);
+            }
+
+            $path = public_path().'/images/'.$image;
+            if ( File::exists($path) )
+            {
+                File::delete($path);
+            }
+        }
+        
         Cemetery::find($request->id)->delete();
     }
 }

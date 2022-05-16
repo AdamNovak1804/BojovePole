@@ -5,9 +5,14 @@
         ref="battle-modal"
     >
         <b-card-body>
-            <h3 class="modal-title">
-                {{ this.title }}
-            </h3>
+            <b-row class="d-flex align-items-end">
+                <b-col>
+                    <h3 class="modal-title">{{ this.title }}</h3>
+                </b-col>
+                <b-col class="text-end">
+                    <p style="margin-bottom: 0;">Dôveryhodnosť informácie: {{ this.reliability }} / <b>5</b></p>
+                </b-col>
+            </b-row>
         </b-card-body>
 
         <b-carousel
@@ -114,6 +119,7 @@
 
         data() {
             return {
+                reliability: '',
                 title: '',
                 start: '',
                 end: '',
@@ -141,6 +147,7 @@
             },
             
             showModal: function() {
+                this.reliability = this.battle.reliability;
                 this.title = this.battle.title;
                 this.start = this.battle.start;
                 this.end = this.battle.end;
